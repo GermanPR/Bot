@@ -4,8 +4,9 @@
   "description": "bot pedidos cafeteria",
   "main": "index.js",
   "dependencies": {
-    "restify": "^4.1.1",
-    "npm": "^2.15.9"
+    "botbuilder": "^3.3.3",
+    "npm": "^2.15.9",
+    "restify": "^4.1.1"
   },
   "devDependencies": {},
   "scripts": {
