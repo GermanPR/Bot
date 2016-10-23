@@ -32,38 +32,12 @@ intents.matches('Despedida', function (session, args, next) {
     session.send('Adios desde la intención despedida');
 });
 
+intents.matches('VerInventario', function (session, args, next) {
+    session.send('Tenemos para comer INVENTARIO');
+});
+
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
 
-// intents.matches(/^cambiar nombre/i, [
-//     function (session, args, next) {
-//         session.beginDialog('/profile');
-//     },
-//     function (session, results) {
-//         session.send('Ok... Ahora te llamas %s', session.userData.name);
-//     }
-// ]);
 
-// intents.onDefault([
-//     function (session, args, next) {
-//         if (!session.userData.name) {
-//             session.beginDialog('/profile');
-//         } else {
-//             next();
-        // }
-//     },
-//     function (session, results) {
-//         session.send('Hola %s!', session.userData.name);
-//     }
-// ]);
-
-// bot.dialog('/profile', [
-//     function (session) {
-//         builder.Prompts.text(session, 'Hola! Como te llamas?');
-//     },
-//     function (session, results) {
-//         session.userData.name = results.response;
-//         session.endDialog();
-//     }
-// ]);
