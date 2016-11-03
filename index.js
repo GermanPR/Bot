@@ -25,20 +25,29 @@ var bot = new builder.UniversalBot(connector);
 bot.dialog('/', intents);
 
 intents.matches('Saludo', function (session, args, next) {
-    session.send('Hola desde la intencion Saludo');
+    session.send('Hola !!');
 });
 
 intents.matches('Despedida', function (session, args, next) {
-    session.send('Adios desde la intención despedida');
+    session.send('Adios, hasta la proxima.');
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send('Tenemos para comer INVENTARIO');
+    session.send('Tenemos para comer bocatas');
 });
 
 intents.matches('Estado', function (session, args, next) {
-    session.send('Muy bien, ¿Y tu?');
+    session.send('Muy bien, ¿Y tu, que quieres comer?');
 });
+
+intents.matches('SaberHoraRecogida', function (session, args, next) {
+    session.send('Estara listo a las 13:00, te viene bien?');
+});
+
+intents.matches('ConfirmaciónPositiva', function (session, args, next) {
+    session.send('Vale, perfecto!');
+});
+
 
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
