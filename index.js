@@ -26,7 +26,7 @@ var bot = new builder.UniversalBot(connector);
 
 server.post('/api/messages', connector.listen());
 
-// var intents = new builder.IntentDialog();
+//var intents = new builder.IntentDialog();
 
 //=========================================================
 // Bots Dialogs
