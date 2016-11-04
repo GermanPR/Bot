@@ -14,18 +14,10 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 });
 
 // Create chat bot
-var connector = new builder.ChatConnector({
-
-    appId: '418d8392-0f66-4268-8870-a68ad9f68f44',
-
-    appPassword: 'FnsKJ0JbC7EYA8vddnhFd3u'
-
-});
-
+var connector = new builder.ConsoleConnector().listen();
 var bot = new builder.UniversalBot(connector);
-
-server.post('/api/messages', connector.listen());
-
+// server.post('/api/messages', connector.listen());
+4
 //var intents = new builder.IntentDialog();
 
 //=========================================================
@@ -55,7 +47,7 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
 });
 
 intents.matches('ConfirmaciónPositiva', function (session, args, next) {
-    session.send('Vale, perfecto!');
+    session.send('Genial');
 });
 
 
