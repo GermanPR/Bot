@@ -52,7 +52,9 @@ mongodb.connect(docDBURL, function (err, db) {
                 console.log('collection.insertMany error: %s', err);
             }
             else{
-               bot.dialog('/', intents);
+               new inventario = resultes;
+
+bot.dialog('/', intents);
 
 intents.matches('Saludo', function (session, args, next) {
     session.send('Hola !!');
@@ -63,7 +65,7 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send(resultes);
+    session.send(inventario);
 
 });
 
