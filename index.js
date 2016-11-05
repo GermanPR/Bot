@@ -69,7 +69,7 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send(db.resultes);
+    session.send(collection.resultes);
 
 });
 
