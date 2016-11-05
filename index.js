@@ -24,7 +24,7 @@ server.post('/api/messages', connector.listen());
 
 //DocumentDB
 var mongodb = require('mongodb').MongoClient,
-    docDBURL = 'AccountEndpoint=https://botcafeteria.documents.azure.com:443/;AccountKey=n6Ftv6MeRaXiqyAKmiE3mYgDaF7j6oggO8VdJ1CVQsq2QApf9ePYVGHIdNxlNa2D6KQUiRRUCllnIb621n9zmg==;';
+    docDBURL = 'https://botcafeteria.documents.azure.com:443';
  
 mongodb.connect(docDBURL, function (err, db) {
  
