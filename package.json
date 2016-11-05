@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "botbuilder": "^3.3.3",
+    "mongodb": "^2.2.11",
     "npm": "^2.15.9",
     "restify": "^4.1.1"
   },

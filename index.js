@@ -22,6 +22,27 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
+//DocumentDB
+var mongodb = require('mongodb').MongoClient,
+    docDBURL = 'AccountEndpoint=https://botcafeteria.documents.azure.com:443/;AccountKey=n6Ftv6MeRaXiqyAKmiE3mYgDaF7j6oggO8VdJ1CVQsq2QApf9ePYVGHIdNxlNa2D6KQUiRRUCllnIb621n9zmg==;';
+ 
+mongodb.connect(docDBURL, function (err, db) {
+ 
+    if (err) {
+        console.log('mongodb.connect error: %s', err);
+    }
+    else {
+        var collection = db.collection('superheroes');
+        collection.insertMany([{ name: 'Batman' }, { name: 'Super-man' }], function (err, results) {
+            if (err) {
+                console.log('collection.insertMany error: %s', err);
+            }
+            else{
+                console.log(results);
+            }
+        });
+    }
+});
 //=========================================================
 // Bots Dialogs
 //=========================================================
