@@ -13,12 +13,14 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
-// Create chat bot
-var connector = new builder.ConsoleConnector().listen();
+//Connection with MS Bot Framework
+var connector = new builder.ChatConnector({
+    appId: '418d8392-0f66-4268-8870-a68ad9f68f44',
+    appPassword: 'FnsKJ0JbC7EYA8vddnhFd3u'
+});
+
 var bot = new builder.UniversalBot(connector);
-// server.post('/api/messages', connector.listen());
-4
-//var intents = new builder.IntentDialog();
+server.post('/api/messages', connector.listen());
 
 //=========================================================
 // Bots Dialogs
