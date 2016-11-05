@@ -52,7 +52,8 @@ mongodb.connect(docDBURL, function (err, db) {
                 console.log('collection.insertMany error: %s', err);
             }
             else{
-                console.log(resultes);
+                var hola = resultes;
+                console.log(hola);
     }
 });
 //=========================================================
