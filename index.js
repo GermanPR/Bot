@@ -65,7 +65,7 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send(inventario[0][1]);
+    session.send(inventario.values);
 
 });
 
