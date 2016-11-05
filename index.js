@@ -33,12 +33,23 @@ mongodb.connect(docDBURL, function (err, db) {
     }
     else {
         var collection = db.collection('superheroes');
-        collection.insertMany([{ name: 'Gisela' }, { name: 'ElChema' }], function (err, results) {
+        collection.insertMany([{ name: 'Bocata de Bacon',
+                                precio: "4,50€",
+                                tipo:'comida',
+                                stock:'10' },
+
+                                { name: 'Coca-cola',
+                                precio: "1€",
+                                tipo:'bebida',
+                                stock:'80' }],
+                                 
+                                 
+                                 function (err, resultes) {
             if (err) {
                 console.log('collection.insertMany error: %s', err);
             }
             else{
-                console.log(results);
+                console.log(resultes);
             }
         });
     }
@@ -58,7 +69,8 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send('Tenemos para comer bocatas');
+    session.send(resultes);
+
 });
 
 intents.matches('Estado', function (session, args, next) {
