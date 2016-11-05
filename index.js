@@ -23,7 +23,7 @@ var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
 //DocumentDB
-var collection2 = db.collection('superheroes');
+
 var mongodb = require('mongodb').MongoClient,
     docDBURL = 'mongodb://botcafeteria1:PB34wQAEOMmYRTBxdclLAY1cPN6AZi3enaV6HDOniTMDo3NY6cN7Ql0gpsKscJUridcpQRQqsIB21FWfhZQ8iA==@botcafeteria1.documents.azure.com:10250/?ssl=true';
  
@@ -44,7 +44,7 @@ mongodb.connect(docDBURL, function (err, db) {
                                 precio: "1€",
                                 tipo:'bebida',
                                 stock:'80' }],
-                                collection2=collection,
+                               
                                  
                                  
                                  function (err, resultes) {
@@ -52,7 +52,8 @@ mongodb.connect(docDBURL, function (err, db) {
                 console.log('collection.insertMany error: %s', err);
             }
             else{
-                console.log(resultes);
+                sessio.send(resultes);
+                
             }
         });
     }
