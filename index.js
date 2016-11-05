@@ -43,17 +43,21 @@ mongodb.connect(docDBURL, function (err, db) {
                                 { name: 'Coca-cola',
                                 precio: "1€",
                                 tipo:'bebida',
-                                stock:'80' }],
+                                stock:'80' },
+                                
+                                { name: 'Mus de chocolaate',
+                                precio: "1,5€",
+                                tipo:'postre',
+                                stock:'15' }],
                                
                                  
                                  
-                                 function (err, resultes) {
+                                 function (err, results) {
             if (err) {
                 console.log('collection.insertMany error: %s', err);
             }
             else{
-                var hola = resultes;
-                console.log(hola);
+                console.log(results);
     }
 });
 //=========================================================
@@ -93,7 +97,7 @@ intents.onDefault(function (session) {
 
                 
             }
-        });
+  });
 
 
 
