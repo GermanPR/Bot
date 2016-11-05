@@ -52,17 +52,7 @@ mongodb.connect(docDBURL, function (err, db) {
                 console.log('collection.insertMany error: %s', err);
             }
             else{
-                session.send(resultes);
-                
-            }
-        });
-    }
-});
-//=========================================================
-// Bots Dialogs
-//=========================================================
-
-bot.dialog('/', intents);
+               bot.dialog('/', intents);
 
 intents.matches('Saludo', function (session, args, next) {
     session.send('Hola !!');
@@ -73,7 +63,7 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send(collection2.resultes);
+    session.send(resultes);
 
 });
 
@@ -93,6 +83,16 @@ intents.matches('ConfirmaciónPositiva', function (session, args, next) {
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
+
+                
+            }
+        });
+    }
+});
+//=========================================================
+// Bots Dialogs
+//=========================================================
+
 
 
 
