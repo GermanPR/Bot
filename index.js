@@ -24,7 +24,7 @@ server.post('/api/messages', connector.listen());
 
 //DocumentDB
 var mongodb = require('mongodb').MongoClient,
-    docDBURL = 'https://botcafeteria.documents.azure.com:443';
+    docDBURL = 'mongodb://botcafeteria1:PB34wQAEOMmYRTBxdclLAY1cPN6AZi3enaV6HDOniTMDo3NY6cN7Ql0gpsKscJUridcpQRQqsIB21FWfhZQ8iA==@botcafeteria1.documents.azure.com:10250/?ssl=true';
  
 mongodb.connect(docDBURL, function (err, db) {
  
@@ -33,7 +33,7 @@ mongodb.connect(docDBURL, function (err, db) {
     }
     else {
         var collection = db.collection('superheroes');
-        collection.insertMany([{ name: 'Batman' }, { name: 'Super-man' }], function (err, results) {
+        collection.insertMany([{ name: 'Gisela' }, { name: 'ElChema' }], function (err, results) {
             if (err) {
                 console.log('collection.insertMany error: %s', err);
             }
