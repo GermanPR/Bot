@@ -57,7 +57,7 @@ mongodb.connect(docDBURL, function (err, db) {
 bot.dialog('/', intents);
 
 intents.matches('Saludo', function (session, args, next) {
-    session.send('Hola !!');
+    session.send('Hola ');
 });
 
 intents.matches('Despedida', function (session, args, next) {
