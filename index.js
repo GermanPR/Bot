@@ -52,7 +52,7 @@ mongodb.connect(docDBURL, function (err, db) {
                 console.log('collection.insertMany error: %s', err);
             }
             else{
-                sessio.send(resultes);
+                session.send(resultes);
                 
             }
         });
