@@ -86,6 +86,8 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
         intents.matches('ConfirmaciónPositiva', function (session, args, next) {
     session.send('Genial');
 });
+intents.matches('ConfirmaciónPositiva', function (session, args, next) {
+    session.send('Que?');
 
 });
 
