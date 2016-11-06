@@ -33,7 +33,7 @@ mongodb.connect(docDBURL, function (err, db) {
         console.log('mongodb.connect error: %s', err);
     }
     else {
-        var collection = db.collection('superheroes');
+        var Bocatas = db.collection('Bocatas');
         
         Bocatas.insertMany([{ name: 'Bocata de Bacon',
                                 precio: "4,50€",
@@ -52,7 +52,7 @@ mongodb.connect(docDBURL, function (err, db) {
                                
                               function (err, results) {
             if (err) {
-                console.log('collection.insertMany error: %s', err);
+                console.log('Bocatas.insertMany error: %s', err);
             }
             else{
                 console.log(results);
