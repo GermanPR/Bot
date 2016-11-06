@@ -35,19 +35,19 @@ mongodb.connect(docDBURL, function (err, db) {
     else {
         var collection = db.collection('superheroes');
         
-        collection.insertMany([{ name: 'Bocata de Bacon',
+        Bocatas.insertMany([{ name: 'Bocata de Bacon',
                                 precio: "4,50€",
                                 tipo:'comida',
                                 stock:'10' },
 
-                                { name: 'Coca-cola',
-                                precio: "1€",
-                                tipo:'bebida',
-                                stock:'80' },
+                                { name: 'Bocata de Jamón',
+                                precio: '4,5€',
+                                tipo:'comida',
+                                stock:'10' },
                                 
-                                { name: 'Mus de chocolaate',
-                                precio: "1,5€",
-                                tipo:'postre',
+                                { name: 'Bocata de Pollo',
+                                precio: "4,5€",
+                                tipo:'comida',
                                 stock:'15' }],
                                
                               function (err, results) {
@@ -72,7 +72,7 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send('tenemos para comer bocatas');
+    session.send('Tenemos: Bocatas, Bebidas, Menus, Postres.');
 
 });
 
