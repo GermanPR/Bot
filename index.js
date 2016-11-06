@@ -87,13 +87,9 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
      intents.matches('ConfirmaciónPositiva', function (session, args, next) {
     session.send('Genial');
 });
-<<<<<<< HEAD
-=======
-        
-  
->>>>>>> 10bc27b0f87869013371e482c5c7b8968e9751c7
-
-
+ intents.matches('Agradecimiento', function (session, args, next) {
+    session.send('De nada');
+});
 
 
 intents.onDefault(function (session) {
