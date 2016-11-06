@@ -22,7 +22,7 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
-//DocumentDB
+//DocumentDB 
 
 var mongodb = require('mongodb').MongoClient,
     docDBURL = 'mongodb://botcafeteria1:PB34wQAEOMmYRTBxdclLAY1cPN6AZi3enaV6HDOniTMDo3NY6cN7Ql0gpsKscJUridcpQRQqsIB21FWfhZQ8iA==@botcafeteria1.documents.azure.com:10250/?ssl=true';
@@ -50,9 +50,7 @@ mongodb.connect(docDBURL, function (err, db) {
                                 tipo:'postre',
                                 stock:'15' }],
                                
-                                 
-                                 
-                                 function (err, results) {
+                              function (err, results) {
             if (err) {
                 console.log('collection.insertMany error: %s', err);
             }
