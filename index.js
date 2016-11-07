@@ -52,7 +52,7 @@ var insertBocatas = function(db, callback) {
   // Get the documents collection 
   var collection = db.collection('Bocatas');
   // Insert some documents 
-  if (collection.count() == 0){
+  if (db.collection('Bocatas').count()== 0){
     collection.insertMany([
         { name: 'Bocata de Bacon',
          precio: "4,50€",
