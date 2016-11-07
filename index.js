@@ -34,66 +34,110 @@ mongodb.connect(docDBURL, function (err, db) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
 
-  insertDocuments(db, function() {
-    updateDocument(db, function() {
-      deleteDocument(db, function() {
-        findDocuments(db, function() {
+  insertBocatas(db, function() {
+     findDocuments(db, function() {
           db.close();
-        });
-      });
-    });
-  });
+       });
+ });
+ insertBebidas(db, function() {
+     findBebidas(db, function() {
+          db.close();
+       });
+ });
+
 
 });
-var insertDocuments = function(db, callback) {
+
+var insertBocatas = function(db, callback) {
   // Get the documents collection 
-  var collection = db.collection('documents');
-  // Insert some documents 
-  collection.insertMany([
-    {a : 1}, {a : 2}, {a : 3}
-  ], function(err, result) {
+  var collection = db.collection('Bocatas');
+  // Insert some documents 
+  if (collection.count() == 0){
+    collection.insertMany([
+        { name: 'Bocata de Bacon',
+         precio: "4,50€",
+         tipo:'comida',
+         stock:'10' },
+    
+        { name: 'Bocata de Jamón',
+        precio: '4,5€',
+        tipo:'comida',
+        stock:'10' },
+
+        { name: 'Bocata de Pollo',
+        precio: "4,5€",
+        tipo:'comida',
+        stock:'15' }],
+
+         function(err, result) {
     assert.equal(err, null);
     assert.equal(3, result.result.n);
     assert.equal(3, result.ops.length);
-    console.log("Inserted 3 documents into the document collection");
+    console.log("Inserted 3 Bocatas");
     callback(result);
   });
+}else{
+    console.log('Bocatas is already filled');
 }
-var findDocuments = function(db, callback) {
+}
+var insertBebidas = function(db, callback) {
   // Get the documents collection 
-  var collection = db.collection('documents');
+  var collection = db.collection('Bebidas');
+  // Insert some documents 
+    var count = db.collection('Bebidas').count();
+if (count != 0){
+  collection.insertMany([
+        { name: 'Coca-Cola',
+         precio: "1€",
+         tipo:'Bebida',
+         stock:'20' },
+    
+        { name: 'Nestea',
+         precio: "1€",
+         tipo:'Bebida',
+         stock:'20' },
+
+        { name: 'Fanta',
+         precio: "1€",
+         tipo:'Bebida',
+         stock:'20' }],
+
+         function(err, result) {
+    assert.equal(err, null);
+    assert.equal(3, result.result.n);
+    assert.equal(3, result.ops.length);
+    console.log("Inserted 3 Bocatas");
+    callback(result);
+  });
+}else{
+    console.log('Bebidas is already filled');
+}
+}
+
+var findBocatas = function(db, callback) {
+  // Get the documents collection 
+  var collection = db.collection('Bocatas');
   // Find some documents 
   collection.find({}).toArray(function(err, docs) {
     assert.equal(err, null);
-    assert.equal(2, docs.length);
     console.log("Found the following records");
     console.dir(docs);
     callback(docs);
   });
 }
-var deleteDocument = function(db, callback) {
+var findBebidas = function(db, callback) {
   // Get the documents collection 
-  var collection = db.collection('documents');
-  // Insert some documents 
-  collection.deleteOne({ a : 3 }, function(err, result) {
+  var collection = db.collection('Bebidas');
+  // Find some documents 
+  collection.find({}).toArray(function(err, docs) {
     assert.equal(err, null);
-    assert.equal(1, result.result.n);
-    console.log("Removed the document with the field a equal to 3");
-    callback(result);
+    console.log("Found the following records");
+    console.dir(docs);
+    callback(docs);
   });
 }
-var updateDocument = function(db, callback) {
-  // Get the documents collection 
-  var collection = db.collection('documents');
-  // Update document where a is 2, set b equal to 1 
-  collection.updateOne({ a : 2 }
-    , { $set: { b : 1 } }, function(err, result) {
-    assert.equal(err, null);
-    assert.equal(1, result.result.n);
-    console.log("Updated the document with the field a equal to 2");
-    callback(result);
-  });  
-}
+
+
   
 
 //=========================================================
