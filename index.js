@@ -85,7 +85,7 @@ var insertBebidas = function(db, callback) {
   var collection = db.collection('Bebidas');
   // Insert some documents 
     var count = db.collection('Bebidas').count();
-if (count != 0){
+if (count == 0){
   collection.insertMany([
         { name: 'Coca-Cola',
          precio: "1€",
