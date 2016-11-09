@@ -180,7 +180,7 @@ intents.matches('Pedir',function (session, args, next) {
     }
     switch(option){
         case 100:
-            session.send('Tu pedido es: \n%s', matchBocatas.entity );
+            session.send('Tu pedido es: %s', matchBocatas.entity );
             break;
 
         case 101:
