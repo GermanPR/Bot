@@ -172,7 +172,7 @@ const entityProductos = builder.EntityRecognizer.findEntity(args.entities, 'prod
 
     } else {
 
-        session.send('Este es el producto que has elegido: %s', match);
+        session.send('Este es el producto que has elegido:'+ match);
 
     }
 
