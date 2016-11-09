@@ -166,13 +166,13 @@ var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas'
 
 
 
-    if (match) {
+    if (!match) {
 
         builder.Prompts.choice(session, 'Ahora mismo tenemos disponibles:', bocatas);
 
     } else {
 
-        session.send('Este es el producto que has elegido:');
+        session.send('Este es el producto que has elegido:',match);
 
     }
 
