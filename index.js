@@ -171,7 +171,7 @@ intents.matches('Pedir', function (session, args, next) {
 
     } else {
 
-        session.send('Este es el producto que has elegido:'+ match.entity);
+        session.send('Este es el producto que has elegido: %s', match.entity);
 
     }
       
