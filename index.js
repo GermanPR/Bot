@@ -155,12 +155,26 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-      var bocatas = builder.EntityRecognizer.findEntity(productos, 'bocatas');
-      if(bocatas){
-          session.send('tenemos bocatas de Jamon y de bacon');
-      }else{
-          session.send('no me has preguntado sobre bocatas');
-      }
+      const productos = ['Bocatas','Bebidas','Menús'];
+const entityProductos = builder.EntityRecognizer.findEntity(args.entities, 'productos');
+
+    if (entityProductos) {
+
+        const match = builder.EntityRecognizer.findBestMatch(productos, entityProductos.entity);
+
+    }
+
+
+
+    if (!match) {
+
+        builder.Prompts.choice(session, 'Ahora mismo tenemos disponibles, ¿Que te gustaría probar?', productos);
+
+    } else {
+
+        session.send('Este es el producto que has elegido: %s', match);
+
+    }
 
 });
 
