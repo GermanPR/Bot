@@ -154,24 +154,33 @@ intents.matches('Despedida', function (session, args, next) {
     session.send('Adios, hasta la proxima.');
 });
 
-intents.matches('Pedir', function (session, args, next) {
-      
+intents.matches('Pedir', ger =  function (session, args, next) {
+      const postres = ['donuts','manzana','cookie'];
+      const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limón','Agua'];
       const bocatas = ['Bocata de jamon','bocata de bacon','bocata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
+      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
+      var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
 
+   
+
     if (entityBocatas) {
-        var match = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity);
-        
+     var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
+    }
+    if (entityBebidas){
+    var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
+    }
+    if (entityPostres){
+    var matchPostres = builder.EntityRecognizer.findBestMatch(postres, entityPostres.entity);
     }
 
-    if (!match) {
 
-        builder.Prompts.choice(session, 'Ahora mismo tenemos disponibles:', bocatas);
-
-    } else {
-
-        session.send('Este es el producto que has elegido: %s', match.entity);
+    switch(ger()){
+        case matchBocatas:
+            session.send('Este es el producto que has elegido:\n%s', matchBocatas.entity);
+            break;
+      
 
     }
       
