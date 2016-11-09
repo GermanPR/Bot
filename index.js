@@ -114,7 +114,7 @@ if (collection.find({}).count() == 0){
 }
 }
 
-var findBocatas = function(db, callback) {
+var getBocatas = function(db, callback) {
   // Get the documents collection 
   var collection = db.collection('Bocatas');
   // Find some documents 
@@ -126,16 +126,15 @@ var findBocatas = function(db, callback) {
     callback(docs);
   });
 }
-var findBebidas = function(db, callback) {
+var getBebidas = function(db, callback) {
+    var bebidasArray = [];
   // Get the documents collection 
-  var collection = db.collection('Bebidas');
+  var cursor = db.collection('Bebidas').find();
   // Find some documents 
-  collection.find({}).toArray(function(err, docs) {
-    assert.equal(err, null);
-    console.log("Found the following records");
-    console.dir(docs);
-    callback(docs);
-  });
+  cursor.forEach(function(docs, err){
+    assert.equals(null,err);
+    bebidasArray.push(docs);
+    console.log(bebidasArray);  });
 }
 
 
