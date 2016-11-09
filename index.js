@@ -155,9 +155,9 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('Pedir',function (session, args, next) {
-      const postres = ['donuts','manzana','cookie'];
+      const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limón','Agua'];
-      const bocatas = ['Bocata de jamon','bocata de bacon','bocata de pollo'];
+      const bocatas = ['Bocata de jamon','Bocata de bacon','Bcata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
@@ -180,7 +180,7 @@ intents.matches('Pedir',function (session, args, next) {
     }
     switch(option){
         case 100:
-            session.send('Tu pedido es: %s', matchBocatas.entity );
+            session.send('Tu pedido es: \n%s', matchBocatas.entity );
             break;
 
         case 101:
