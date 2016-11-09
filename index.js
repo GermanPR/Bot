@@ -52,7 +52,7 @@ var insertBocatas = function(db, callback) {
   // Get the documents collection 
   var collection = db.collection('Bocatas');
   // Insert some documents 
-  if (db.collection('Bocatas').count()== 0){
+  if (collection.find({}).count()== 0){
     collection.insertMany([
         { name: 'Bocata de Bacon',
          precio: "4,50€",
@@ -84,7 +84,7 @@ var insertBebidas = function(db, callback) {
   // Get the documents collection 
   var collection = db.collection('Bebidas');
   // Insert some documents 
-    var count = db.collection('Bebidas').count();
+
 if (count == 0){
   collection.insertMany([
         { name: 'Coca-Cola',
@@ -120,6 +120,7 @@ var findBocatas = function(db, callback) {
   // Find some documents 
   collection.find({}).toArray(function(err, docs) {
     assert.equal(err, null);
+    assert.equal(3, docs.length);
     console.log("Found the following records");
     console.dir(docs);
     callback(docs);
@@ -154,7 +155,12 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    session.send('Tenemos: Bocatas, Bebidas, Menus, Postres.');
+      var bocatas = builder.EntityRecognizer.findEntity(productos, 'bocatas');
+      if(bocatas){
+          session.send('tenemos bocatas de Jamon y de bacon');
+      }else{
+          session.send('no me has preguntado sobre bocatas');
+      }
 
 });
 
@@ -177,7 +183,3 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
-
-  
-
-
