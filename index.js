@@ -166,7 +166,7 @@ const entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocata
 
 
 
-    if (!match) {
+    if (match) {
 
         builder.Prompts.choice(session, 'Ahora mismo tenemos disponibles:', bocatas);
 
