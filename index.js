@@ -209,16 +209,7 @@ intents.matches('Pedir',function (session, args, next) {
             break;
 
             
-}
-
-    
-    
-    
-
-
-  
- 
-      
+}     
 });
 intents.matches('VerInventario', function (session, args, next) {
     session.send('tenemos para comer: bocatas, menus, bebidas y postres');
