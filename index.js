@@ -155,9 +155,10 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('Pedir', function (session, args, next) {
+      if (args.entities.length > 0){
       const bocatas = ['Bocata de jamon','bocata de bacon','bocata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
-      session.send(entityBocatas);
+      
 
     if (entityBocatas) {
         var match = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity);
@@ -174,7 +175,7 @@ intents.matches('Pedir', function (session, args, next) {
         session.send('Este es el producto que has elegido:',match);
 
     }
-
+      }
 });
 intents.matches('VerInventario', function (session, args, next) {
     session.send('tenemos para comer: bocatas, menus, bebidas y postres');
