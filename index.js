@@ -155,12 +155,12 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-      const productos = ['Bocatas','Bebidas','Menús'];
-const entityProductos = builder.EntityRecognizer.findEntity(args.entities, 'productos');
+      const bocatas = ['Bocata de jamon','bocata de bacon','bocata de pollo'];
+const entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
 
-    if (entityProductos) {
+    if (entityBocatas) {
 
-        const match = builder.EntityRecognizer.findBestMatch(productos, entityProductos.entity);
+        const match = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity);
 
     }
 
@@ -168,7 +168,7 @@ const entityProductos = builder.EntityRecognizer.findEntity(args.entities, 'prod
 
     if (!match) {
 
-        builder.Prompts.choice(session, 'Ahora mismo tenemos disponibles, ¿Que te gustaría probar?', productos);
+        builder.Prompts.choice(session, 'Ahora mismo tenemos disponibles:', bocatas);
 
     } else {
 
