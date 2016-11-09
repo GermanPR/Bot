@@ -159,12 +159,9 @@ intents.matches('Pedir', function (session, args, next) {
 var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
 
     if (entityBocatas) {
-
-        var match = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas);
-
+        var match = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity);
+        session.send(match);
     }
-
-
 
     if (!match) {
 
