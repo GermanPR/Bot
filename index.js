@@ -172,7 +172,7 @@ const entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocata
 
     } else {
 
-        session.send('Este es el producto que has elegido:'+ match);
+        session.send('Este es el producto que has elegido:');
 
     }
 
