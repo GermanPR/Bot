@@ -153,17 +153,14 @@ intents.matches('Saludo', function (session, args, next) {
 intents.matches('Despedida', function (session, args, next) {
     session.send('Adios, hasta la proxima.');
 });
+const postres = ['Donuts','Manzana','Cookie'];
+ const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limón','Agua'];
+const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
+ var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
+var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
+ var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
 
-intents.matches('Pedir',function (session, args, next) {
-      const postres = ['Donuts','Manzana','Cookie'];
-      const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limón','Agua'];
-      const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
-      var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
-      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
-      var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
-      
-
-   
+intents.matches('Pedir',function (session, args, next){
     var option = 0;
 
     if (entityBocatas) {
