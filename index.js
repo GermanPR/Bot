@@ -168,7 +168,7 @@ intents.matches('Pedir',function (session, args, next) {
 
     if (entityBocatas) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
-     option +100;
+     option = +100;
     }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
