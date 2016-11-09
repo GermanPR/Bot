@@ -156,11 +156,11 @@ intents.matches('Despedida', function (session, args, next) {
 
 intents.matches('Pedir', function (session, args, next) {
       const bocatas = ['Bocata de jamon','bocata de bacon','bocata de pollo'];
-const entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
+var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
 
     if (entityBocatas) {
 
-        const match = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity);
+        var match = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity);
 
     }
 
