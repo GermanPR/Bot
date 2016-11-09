@@ -154,7 +154,7 @@ intents.matches('Despedida', function (session, args, next) {
     session.send('Adios, hasta la proxima.');
 });
 
-intents.matches('VerInventario', function (session, args, next) {
+intents.matches('Pedir', function (session, args, next) {
       const bocatas = ['Bocata de jamon','bocata de bacon','bocata de pollo'];
 const entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
 
@@ -176,6 +176,9 @@ const entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocata
 
     }
 
+});
+intents.matches('VerInventario', function (session, args, next) {
+    session.send('tenemos para comer: bocatas, menus, bebidas y postres');
 });
 
 intents.matches('Estado', function (session, args, next) {
