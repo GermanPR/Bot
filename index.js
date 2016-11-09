@@ -175,6 +175,8 @@ intents.matches('Pedir', function (session, args, next) {
         session.send('Este es el producto que has elegido:',match);
 
     }
+      }else{
+          session.send('error');
       }
 });
 intents.matches('VerInventario', function (session, args, next) {
