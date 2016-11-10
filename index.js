@@ -180,19 +180,19 @@ intents.matches('Pedir',function (session, args, next) {
     }
     switch(option){
         case 100:
-            session.send('Tu pedido es: %s', matchBocatas.entity );
+            session.send('Tu pedido es: Bocata %s', matchBocatas.entity );
             break;
 
         case 101:
-            session.send('Tu pedido es: %s y %s', matchBocatas.entity , matchPostres.entity);
+            session.send('Tu pedido es:  Bocata %s y %s', matchBocatas.entity , matchPostres.entity);
             break;
 
         case 110:
-            session.send('Tu pedido es: %s con %s', matchBocatas.entity , matchBebidas.entity);
+            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , matchBebidas.entity);
             break;
 
         case 111:    
-            session.send('Tu pedido es: %s con %s y %s', matchBocatas.entity, matchBebidas.entity, matchPostres.entity);
+            session.send('Tu pedido es: Bocata %s con %s y %s', matchBocatas.entity, matchBebidas.entity, matchPostres.entity);
             break;
 
         case 10:
