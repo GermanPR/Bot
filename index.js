@@ -157,7 +157,7 @@ intents.matches('Despedida', function (session, args, next) {
 intents.matches('Pedir',function (session, args, next) {
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limón','Agua'];
-      const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
+      const bocatas = ['de jamon','de bacon','de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
