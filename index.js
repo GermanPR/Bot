@@ -228,6 +228,9 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
  intents.matches('Agradecimiento', function (session, args, next) {
     session.send('De nada');
 });
+intents.matches('EasterEggfisica', function (session, args, next) {
+    session.send('Eh biien ici ee alors ee, alors ouui ');
+});
 
 
 intents.onDefault(function (session) {
