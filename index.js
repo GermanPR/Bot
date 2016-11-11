@@ -129,7 +129,7 @@ var getBebidas = function(db, callback) {
         if(err){
             console.log('Error',err);
         }else{
-            console.log(results[0].name);
+            return results;
         }
     })
 
