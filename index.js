@@ -34,16 +34,11 @@ mongodb.connect(docDBURL, function (err, db) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
 
-  insertBocatas(db, function() {
-     findDocuments(db, function() {
-          db.close();
-       });
- });
- insertBebidas(db, function() {
+ 
      getBebidas(db, function() {
           db.close();
        });
- });
+
 
 
 });
@@ -129,12 +124,15 @@ var getBocatas = function(db, callback) {
 var getBebidas = function(db, callback) {
     var bebidasArray = [];
   // Get the documents collection 
-  var cursor = db.collection('Bebidas').find();
-  // Find some documents 
-  cursor.forEach(function(docs, err){
-    assert.equals(null,err);
-    bebidasArray.push(docs);
-    console.log(bebidasArray);  });
+    var collection = db.collection('Bebidas');
+    collection.find({name: 'Coca-Cola'},{name:1,_id:0}).toArray(function(err,results){
+        if(err){
+            console.log('Error',err);
+        }else{
+            console.log(results[0].name);
+        }
+    })
+
 }
 
 
@@ -188,7 +186,7 @@ intents.matches('Pedir',function (session, args, next) {
             break;
 
         case 110:
-            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , matchBebidas.entity);
+            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas());
             break;
 
         case 111:    
