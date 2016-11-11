@@ -186,7 +186,7 @@ intents.matches('Pedir',function (session, args, next) {
             break;
 
         case 110:
-            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas(results));
+            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas().results);
             break;
 
         case 111:    
