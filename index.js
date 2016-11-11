@@ -125,7 +125,7 @@ var getBebidas = function(db, callback) {
     var bebidasArray = [];
   // Get the documents collection 
     var collection = db.collection('Bebidas');
-    collection.find({name: 'Coca-Cola'},{name:1,_id:0}).toArray(function(err,results){
+    collection.find({name: 'Fanta de Naranja'},{name:1,_id:0}).toArray(function(err,results){
         if(err){
             console.log('Error',err);
         }else{
