@@ -40,7 +40,7 @@ mongodb.connect(docDBURL, function (err, db) {
        });
  });
  insertBebidas(db, function() {
-     findBebidas(db, function() {
+     getBebidas(db, function() {
           db.close();
        });
  });
