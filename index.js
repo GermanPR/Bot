@@ -129,7 +129,7 @@ var getBebidas = function(db, callback) {
         if(err){
             console.log('Error',err);
         }else{
-            return results;
+            return results.name;
         }
     })
 
@@ -186,7 +186,7 @@ intents.matches('Pedir',function (session, args, next) {
             break;
 
         case 110:
-            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas().results);
+            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas(results.name));
             break;
 
         case 111:    
