@@ -157,7 +157,7 @@ intents.matches('Despedida', function (session, args, next) {
 intents.matches('Pedir',function (session, args, next) {
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limón','Agua'];
-      const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
+      const bocatas = ['de jamon','de bacon','de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
@@ -180,19 +180,19 @@ intents.matches('Pedir',function (session, args, next) {
     }
     switch(option){
         case 100:
-            session.send('Tu pedido es: %s', matchBocatas.entity );
+            session.send('Tu pedido es: Bocata %s', matchBocatas.entity );
             break;
 
         case 101:
-            session.send('Tu pedido es: %s y %s', matchBocatas.entity , matchPostres.entity);
+            session.send('Tu pedido es:  Bocata %s y %s', matchBocatas.entity , matchPostres.entity);
             break;
 
         case 110:
-            session.send('Tu pedido es: %s con %s', matchBocatas.entity , matchBebidas.entity);
+            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , matchBebidas.entity);
             break;
 
         case 111:    
-            session.send('Tu pedido es: %s con %s y %s', matchBocatas.entity, matchBebidas.entity, matchPostres.entity);
+            session.send('Tu pedido es: Bocata %s con %s y %s', matchBocatas.entity, matchBebidas.entity, matchPostres.entity);
             break;
 
         case 10:
@@ -227,6 +227,9 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
 });
  intents.matches('Agradecimiento', function (session, args, next) {
     session.send('De nada');
+});
+intents.matches('EasterEggFisica', function (session, args, next) {
+    session.send('Eh biien ici ee alors ee, alors ouui ');
 });
 
 
