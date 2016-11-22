@@ -163,53 +163,27 @@ intents.matches('Pedir',function (session, args, next) {
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
+     session.userData.cart = [];
 
-   
-    var option = 0;
-
-    if (entityBocatas) {
+   if (entityBocatas) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
-     option = option +100;
+     session.userData.cart.push(entityBocatas.entity);
+     session.send(cart);
     }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
-    option = option +10;
+     session.userData.cart.push(entityBebidas.entity);
+     session.send(cart);
     }
     if (entityPostres){
     var matchPostres = builder.EntityRecognizer.findBestMatch(postres, entityPostres.entity);
-    option = option +1;
+    session.userData.cart.push(entityPostres.entity);
+     session.send(cart);
     }
-    switch(option){
-        case 100:
-            session.send('Tu pedido es: Bocata %s', matchBocatas.entity );
-            break;
-
-        case 101:
-            session.send('Tu pedido es:  Bocata %s y %s', matchBocatas.entity , matchPostres.entity);
-            break;
-
-        case 110:
-            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas());
-            break;
-
-        case 111:    
-            session.send('Tu pedido es: Bocata %s con %s y %s', matchBocatas.entity, matchBebidas.entity, matchPostres.entity);
-            break;
-
-        case 10:
-            session.send('Tu pedido es : %s', matchBebidas.entity)    
-            break;
-
-        case 11:
-            session.send('Tu pedido es: %s y %s', matchBebidas.entity, matchPostres.entity);
-            break;
-
-        case 1:
-            session.send('Tu pedido es: %s ', matchPostres.entity);
-            break;
+    
 
             
-}     
+  
 });
 intents.matches('VerInventario', function (session, args, next) {
     session.send('tenemos para comer: bocatas, menus, bebidas y postres');
