@@ -158,17 +158,17 @@ intents.matches('Despedida', function (session, args, next) {
 intents.matches('Pedir',function (session, args, next) {
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
-      const bocatas = ['de jamon','de bacon','de pollo'];
+      const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
-      session.userData.cart = [];
+      var carrito; session.userData.carrito = [];
 
    if (entityBocatas) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
-     session.userData.cart.push(matchBocatas.entity);
-     session.send(matchBocatas.entity);
+     session.userData.carrito.push(matchBocatas.entity);
+     session.send(carrito[0]);
     }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
