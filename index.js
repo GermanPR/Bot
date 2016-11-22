@@ -169,6 +169,7 @@ intents.matches('Pedir',function (session, args, next) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
      session.userData.carrito.push(matchBocatas.entity);
      session.send(carrito[0]);
+     session.send("hola" + matchBocatas.entity);
     }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
