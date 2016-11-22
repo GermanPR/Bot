@@ -164,7 +164,8 @@ intents.matches('Pedir',function (session, args, next) {
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
       var carrito = [];  
-   entityBocatas.forEach(function(element) {
+  
+     builder.EntityRecognizer.findAllEntities(args.entities, 'Bocatas').forEach(function(element) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
      carrito.push(matchBocatas.entity);
         for(var i = 0; i < carrito.length ; i++){
