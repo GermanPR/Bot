@@ -163,13 +163,14 @@ intents.matches('Pedir',function (session, args, next) {
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
-     session.send.carrito = [];
+      var carrito = [];
 
    if (entityBocatas) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
      carrito.push(matchBocatas.entity);
-     session.send(carrito[0]);
-     session.send("hola" + matchBocatas.entity);
+        for(var i = 0; i < carritos.length ; i++){
+            session.send(carritos[i])
+        }
     }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
