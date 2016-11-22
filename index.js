@@ -173,12 +173,12 @@ intents.matches('Pedir',function (session, args, next) {
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
      session.userData.cart.push(matchBebidas.entity);
-     session.send(cart);
+     session.send(cart[0]);
     }
     if (entityPostres){
     var matchPostres = builder.EntityRecognizer.findBestMatch(postres, entityPostres.entity);
     session.userData.cart.push(matchPostres.entity);
-     session.send(cart);
+     session.send(cart[0]);
     }
 
             
