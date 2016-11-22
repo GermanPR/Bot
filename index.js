@@ -163,27 +163,26 @@ intents.matches('Pedir',function (session, args, next) {
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
-     session.userData.cart = [];
+      session.userData.cart = [];
 
    if (entityBocatas) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
-     session.userData.cart.push(entityBocatas.entity);
-     session.send(cart);
+     session.userData.cart.push(matchBocatas.entity);
+     session.send(cart[0]);
     }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
-     session.userData.cart.push(entityBebidas.entity);
+     session.userData.cart.push(matchBebidas.entity);
      session.send(cart);
     }
     if (entityPostres){
     var matchPostres = builder.EntityRecognizer.findBestMatch(postres, entityPostres.entity);
-    session.userData.cart.push(entityPostres.entity);
+    session.userData.cart.push(matchPostres.entity);
      session.send(cart);
     }
-    
 
             
-  
+
 });
 intents.matches('VerInventario', function (session, args, next) {
     session.send('tenemos para comer: bocatas, menus, bebidas y postres');
