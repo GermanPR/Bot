@@ -34,10 +34,9 @@ mongodb.connect(docDBURL, function (err, db) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
 
- 
-     getBebidas(db, function() {
-          db.close();
-       });
+getBebidas(db,function(results){
+    console.log(results[0].name);
+});
 
 
 
@@ -121,17 +120,21 @@ var getBocatas = function(db, callback) {
     callback(docs);
   });
 }
-var getBebidas = function(db, callback) {
-    var bebidasArray = [];
+var getBebidas = function(db,name,callback) {
+ 
+   
   // Get the documents collection 
     var collection = db.collection('Bebidas');
-    collection.find({name: 'Nestea'},{name:1,_id:0}).toArray(function(err,results){
+    collection.find({name:name}).toArray(function(err,results){
         if(err){
             console.log('Error',err);
         }else{
-            return results.name;
-        }
+     
+            return results;
+            }
+
     })
+   
 
 }
 
@@ -153,9 +156,7 @@ intents.matches('Despedida', function (session, args, next) {
 
 
 intents.matches('Pedir',function (session, args, next) {
-      const postres = ['Donuts','Manzana','Cookie'];
-      const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
-      const bocatas = ['de jamon','de bacon','de pollo'];
+      
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
@@ -186,7 +187,7 @@ intents.matches('Pedir',function (session, args, next) {
             break;
 
         case 110:
-            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas(results.name));
+            session.send('Tu pedido es: Bocata %s con %s', matchBocatas.entity , getBebidas());
             break;
 
         case 111:    
