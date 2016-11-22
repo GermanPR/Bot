@@ -163,9 +163,9 @@ intents.matches('Pedir',function (session, args, next) {
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
-      var carrito = [];
-
-   if (entityBocatas) {
+      var carrito = []; 
+      
+   for(Bocatas in args.entities) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
      carrito.push(matchBocatas.entity);
         for(var i = 0; i < carrito.length ; i++){
@@ -174,7 +174,7 @@ intents.matches('Pedir',function (session, args, next) {
     }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
-     session.userData.cart.push(matchBebidas.entity);
+     carrito.push(matchBebidas.entity);
      session.send(cart);
     }
     if (entityPostres){
