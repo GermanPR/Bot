@@ -164,14 +164,13 @@ intents.matches('Pedir',function (session, args, next) {
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
       var carrito = [];  
-      
-   for(IEntity in IEntity[]) {
+   entityBocatas.forEach(function(element) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
      carrito.push(matchBocatas.entity);
         for(var i = 0; i < carrito.length ; i++){
             session.send(carrito[i])
         }
-    }
+    }, this); 
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
      carrito.push(matchBebidas.entity);
