@@ -81,6 +81,7 @@ intents.matches('Pedir',function (session, args, next) {
     for(var i = 0 ; i < results.length ; i++){
     arrayBebidas.push(results[i].tipo);
     }   
+    return arrayBebidas;
 })
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
