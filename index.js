@@ -49,7 +49,7 @@ var connection = new sql.Connection(config, function (err) {
    
 });
 }
-var arrayBebidas = [];
+
 
 /*    getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
@@ -76,6 +76,7 @@ intents.matches('Despedida', function (session, args, next) {
 
 
 intents.matches('Pedir',function (session, args, next) {
+    var arrayBebidas = [];
     getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
     arrayBebidas.push(results[i].tipo);
@@ -86,8 +87,11 @@ intents.matches('Pedir',function (session, args, next) {
       const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
+      if(arrayBebidas.length < 4){
+          session.send("error");
+      }else{
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, arrayBebidas);
-      
+}
       var carrito = [];  
   
      if(entityBocatas) {
