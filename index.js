@@ -159,30 +159,33 @@ intents.matches('Pedir',function (session, args, next) {
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
       const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
-      var entityBocatas = builder.EntityRecognizer.findAllEntities(args.entities, 'Bocatas');
+      var entityBocatas = builder.EntityRecognizer.findEntities(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
       var carrito = [];  
   
-     builder.EntityRecognizer.findAllEntities(args.entities, 'Bocatas').forEach(function(matchBocatas) {
+     if(entityBebidas) {
      var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity); 
      carrito.push(matchBocatas.entity);
-        for(var i = 0; i < carrito.length ; i++){
-            session.send(carrito[i])
-        }
-    }, this); 
+    }
     if (entityBebidas){
     var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
      carrito.push(matchBebidas.entity);
-     session.send(cart);
     }
     if (entityPostres){
     var matchPostres = builder.EntityRecognizer.findBestMatch(postres, entityPostres.entity);
     session.userData.cart.push(matchPostres.entity);
-     session.send(cart[0]);
     }
 
+    if(carrito.length!=0){
+        session.send("Tu pedido es:")
+        for(var i = 0; i < carrito.length ; i++){
+            session.send("&s.&s",i,carrito[i])
+        }
+    }else{
+        session.send("No tenemos ninguno de estos elementos, asegurate de pedir cosas que tengamos.")
+    }
             
 
 });
