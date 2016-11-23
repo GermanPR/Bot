@@ -175,7 +175,7 @@ intents.matches('Pedir',function (session, args, next) {
     }
     if (entityPostres){
     var matchPostres = builder.EntityRecognizer.findBestMatch(postres, entityPostres.entity);
-    session.userData.cart.push(matchPostres.entity);
+    carrito.push(matchPostres.entity);
     }
 
     if(carrito.length!=0){
