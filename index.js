@@ -181,7 +181,7 @@ intents.matches('Pedir',function (session, args, next) {
     if(carrito.length!=0){
         session.send("Tu pedido es:")
         for(var i = 0; i < carrito.length ; i++){
-            session.send("&s.&s",i,carrito[i])
+            session.send(carrito[i])
         }
     }else{
         session.send("No tenemos ninguno de estos elementos, asegurate de pedir cosas que tengamos.")
