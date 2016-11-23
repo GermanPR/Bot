@@ -2,7 +2,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=05cc84c9-6d4a-497f-9981-cbcd438efece&subscription-key=71e4270a84a546fe814e1b0f6d4983cf');
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
-
+var sql = require('mssql');
 //=========================================================
 // Bot Setup
 //=========================================================
@@ -21,123 +21,43 @@ var connector = new builder.ChatConnector({
 
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
-
-//DocumentDB 
-
-var mongodb = require('mongodb').MongoClient,
-    docDBURL = 'mongodb://botcafeteria1:PB34wQAEOMmYRTBxdclLAY1cPN6AZi3enaV6HDOniTMDo3NY6cN7Ql0gpsKscJUridcpQRQqsIB21FWfhZQ8iA==@botcafeteria1.documents.azure.com:10250/?ssl=true';
-var assert = require('assert');
- 
-
-mongodb.connect(docDBURL, function (err, db) {
-     
-  assert.equal(null, err);
-  console.log("Connected correctly to server");
-
-getBebidas(db,function(results){
-    console.log(results[0].name);
-});
-
-
-
-});
-
-var insertBocatas = function(db, callback) {
-  // Get the documents collection 
-  var collection = db.collection('Bocatas');
-  // Insert some documents 
-  if (collection.find({}).count()== 0){
-    collection.insertMany([
-        { name: 'Bocata de Bacon',
-         precio: "4,50€",
-         tipo:'comida',
-         stock:'10' },
-    
-        { name: 'Bocata de Jamón',
-        precio: '4,5€',
-        tipo:'comida',
-        stock:'10' },
-
-        { name: 'Bocata de Pollo',
-        precio: "4,5€",
-        tipo:'comida',
-        stock:'15' }],
-
-         function(err, result) {
-    assert.equal(err, null);
-    assert.equal(3, result.result.n);
-    assert.equal(3, result.ops.length);
-    console.log("Inserted 3 Bocatas");
-    callback(result);
-  });
-}else{
-    console.log('Bocatas is already filled');
-}
-}
-var insertBebidas = function(db, callback) {
-  // Get the documents collection 
-  var collection = db.collection('Bebidas');
-  // Insert some documents 
-
-if (collection.find({}).count() == 0){
-  collection.insertMany([
-        { name: 'Coca-Cola',
-         precio: "1€",
-         tipo:'Bebida',
-         stock:'20' },
-    
-        { name: 'Nestea',
-         precio: "1€",
-         tipo:'Bebida',
-         stock:'20' },
-
-        { name: 'Fanta',
-         precio: "1€",
-         tipo:'Bebida',
-         stock:'20' }],
-
-         function(err, result) {
-    assert.equal(err, null);
-    assert.equal(3, result.result.n);
-    assert.equal(3, result.ops.length);
-    console.log("Inserted 3 Bocatas");
-    callback(result);
-  });
-}else{
-    console.log('Bebidas is already filled');
-}
+function getData(callback){
+var config = {
+    user: 'cafeterialiceodefinitivo',
+    password: 'cvk,9,qp',
+    server: 'cafeterialiceodefinitivo.database.windows.net', 
+    database: 'botgerbas',
+ 
+    options: {
+        encrypt:true// Use this if you're on Windows Azure 
+    }
 }
 
-var getBocatas = function(db, callback) {
-  // Get the documents collection 
-  var collection = db.collection('Bocatas');
-  // Find some documents 
-  collection.find({}).toArray(function(err, docs) {
-    assert.equal(err, null);
-    assert.equal(3, docs.length);
-    console.log("Found the following records");
-    console.dir(docs);
-    callback(docs);
-  });
-}
-var getBebidas = function(db,name,callback) {
- 
-   
-  // Get the documents collection 
-    var collection = db.collection('Bebidas');
-    collection.find({name:name}).toArray(function(err,results){
-        if(err){
-            console.log('Error',err);
+var connection = new sql.Connection(config, function (err) {
+    if(err){
+        console.log(err);
+    }
+    var request = new sql.Request(connection);
+    request.query('select * from bebidas', function(err,results){
+        if (err){
+            console.log(err);
         }else{
-     
-            return results;
-            }
-
+            console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
+            callback(results);
+        }
     })
    
-
+});
 }
+var arrayBebidas = [];
 
+    getData(function(results){
+    for(var i = 0 ; i < results.length ; i++){
+    arrayBebidas.push(results[i].tipo);
+    }   
+    console.log(arrayBebidas);
+})
+ 
 
   
 
@@ -156,11 +76,16 @@ intents.matches('Despedida', function (session, args, next) {
 
 
 intents.matches('Pedir',function (session, args, next) {
+    getData(function(results){
+    for(var i = 0 ; i < results.length ; i++){
+    arrayBebidas.push(results[i].precio);
+    }   
+})
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
       const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
-      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
+      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, arrayBebidas );
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
       var carrito = [];  
@@ -215,3 +140,4 @@ intents.matches('EasterEggFisica', function (session, args, next) {
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
+ 

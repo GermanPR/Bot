@@ -7,6 +7,7 @@
     "botbuilder": "^3.3.3",
     "express": "^4.14.0",
     "mongodb": "^2.2.11",
+    "mssql": "^3.3.0",
     "node-mysql": "^0.4.2",
     "npm": "^2.15.9",
     "restify": "^4.1.1"
