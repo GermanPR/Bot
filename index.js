@@ -51,12 +51,7 @@ var connection = new sql.Connection(config, function (err) {
 }
 var arrayBebidas = [];
 
-    getData(function(results){
-    for(var i = 0 ; i < results.length ; i++){
-    arrayBebidas.push(results[i].tipo);
-    }   
-    console.log(arrayBebidas);
-})
+  
  
 
   
@@ -78,14 +73,14 @@ intents.matches('Despedida', function (session, args, next) {
 intents.matches('Pedir',function (session, args, next) {
     getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
-    arrayBebidas.push(results[i].precio);
+    arrayBebidas.push(results[i].tipo);
     }   
 })
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
       const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
-      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, arrayBebidas );
+      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, arrayBebidas);
       var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
       
       var carrito = [];  
