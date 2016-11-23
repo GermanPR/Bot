@@ -38,7 +38,7 @@ var connection = new sql.Connection(config, function (err) {
         console.log(err);
     }
     var request = new sql.Request(connection);
-    request.query('select * from bocatas', function(err,results){
+    request.query('select * from bebidas', function(err,results){
         if (err){
             console.log(err);
         }else{
@@ -49,14 +49,14 @@ var connection = new sql.Connection(config, function (err) {
    
 });
 }
+var arrayBebidas = [];
 
-
-/*    getData(function(results){
+    getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
-    arrayBebidas.push(results[i].tipo);
+    arrayBebidas.push(results[i]);
     }   
     console.log(arrayBebidas);
-})*/
+})
  
 
   
@@ -76,23 +76,22 @@ intents.matches('Despedida', function (session, args, next) {
 
 
 intents.matches('Pedir',function (session, args, next) {
-    var arrayBebidas = [];
+    /*var arrayBebidas = [];
     getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
     arrayBebidas.push(results[i].tipo);
-    }   
-    return arrayBebidas;
-})
+    } 
+})*/
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
       const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
       var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
       var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
-      if(arrayBebidas.length < 2){
+     /* if(arrayBebidas.length < 2){
           session.send("error");
-      }else{
-      var entityPostres = builder.EntityRecognizer.findEntity(args.entities, arrayBebidas);
-}
+      }else{*/
+      var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
+/*}*/
       var carrito = [];  
   
      if(entityBocatas) {
