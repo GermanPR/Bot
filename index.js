@@ -76,6 +76,7 @@ intents.matches('Pedir',function (session, args, next) {
     arrayBebidas.push(results[i].tipo);
     }   
 })
+    session.send(arrayBebidas);
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
       const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
