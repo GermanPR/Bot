@@ -85,12 +85,12 @@ intents.matches('Pedir',function (session, args, next) {
       const postres = ['Donuts','Manzana','Cookie'];
       const bebidas = ['Cocacola','Fanta de Naranja','Nestea','Aquarius','Fanta de limon','Agua'];
       const bocatas = ['Bocata de jamon','Bocata de bacon','Bocata de pollo'];
-      var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'bocatas');
-      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'bebidas');
+      var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
+      var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
      /* if(arrayBebidas.length < 2){
           session.send("error");
       }else{*/
-      var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'postres');
+      var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
 /*}*/
       var carrito = [];  
   
