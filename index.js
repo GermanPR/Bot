@@ -188,7 +188,7 @@ intents.matches('VerInventario', function (session, args, next) {
         session.send("Tenemos estos postres: ")
           for (var i = 0; i < results.length; i++) {
               var numero = i+1;
-            session.send(numero +"-" + results[i].tipo + " : " + results[i].precio + "€");
+            session.send(numero +"-" + results[i].nombre + " : " + results[i].precio + "€");
         }
      })
     });
