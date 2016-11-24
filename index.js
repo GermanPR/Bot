@@ -165,12 +165,23 @@ intents.matches('EasterEggFisica', function (session, args, next) {
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
- 
+intents.matches('CambiarNombre',function (session, args, next) {
+    session.beginDialog('/ChangeName');
+});
 
 
 bot.dialog('/profile', [
     function (session) {
-        builder.Prompts.text(session, '´Hola!¿como te llamas?');
+        builder.Prompts.text(session, 'Hola!¿como te llamas?');
+    },
+    function (session, results) {
+        session.userData.name = results.response;
+        session.endDialog();
+    }
+]);
+bot.dialog('/ChangeName', [
+    function (session) {
+        builder.Prompts.text(session, 'Vale, ¿como quieres que te llame ahora?');
     },
     function (session, results) {
         session.userData.name = results.response;
