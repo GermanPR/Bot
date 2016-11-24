@@ -39,7 +39,7 @@ function getData(callback) {
             console.log(err);
         }
         var request = new sql.Request(connection);
-        request.query('select * from postres and bebidas', function (err, results) {
+        request.query('select * from postres', function (err, results) {
             if (err) {
                 console.log(err);
             } else {
@@ -130,11 +130,9 @@ intents.matches('VerInventario', function (session, args, next) {
     getData(function (results) {
         session.send("Tenemos estos postres: ")
           for (var i = 0; i < results.length; i++) {
-              session.send(results[i]);
-          }
-             /* var numero = i+1;
+              var numero = i+1;
             session.send(numero +"-" + results[i].tipo + " : " + results[i].precio + "€");
-        }*/
+        }
         /*for (var i = 0; i < results.length; i++) {
             arrayBebidas.push(results[i].tipo);
             arrayBebidas.push(results[i].precio);
