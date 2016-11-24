@@ -33,7 +33,25 @@ server.post('/api/messages', connector.listen());
                     encrypt: true// Use this if you're on Windows Azure 
             }
     }
-function getData(callback) {
+function getPostres(callback) {
+
+    var connection = new sql.Connection(config, function (err) {
+        if (err) {
+            console.log(err);
+        }
+        var request = new sql.Request(connection);
+        request.query('select * from bebidas', function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
+                callback(results);
+            }
+        })
+
+    });
+}
+function getBebidas(callback) {
 
     var connection = new sql.Connection(config, function (err) {
         if (err) {
@@ -41,6 +59,24 @@ function getData(callback) {
         }
         var request = new sql.Request(connection);
         request.query('select * from postres', function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
+                callback(results);
+            }
+        })
+
+    });
+}
+function getBocatas(callback) {
+
+    var connection = new sql.Connection(config, function (err) {
+        if (err) {
+            console.log(err);
+        }
+        var request = new sql.Request(connection);
+        request.query('select * from bocatas', function (err, results) {
             if (err) {
                 console.log(err);
             } else {
@@ -128,21 +164,13 @@ intents.matches('Pedir', function (session, args, next) {
 
 });
 intents.matches('VerInventario', function (session, args, next) {
-    getData(function (results) {
+    getPostres(function (results) {
         session.send("Tenemos estos postres: ")
           for (var i = 0; i < results.length; i++) {
               var numero = i+1;
             session.send(numero +"-" + results[i].tipo + " : " + results[i].precio + "€");
         }
-        /*for (var i = 0; i < results.length; i++) {
-            arrayBebidas.push(results[i].tipo);
-            arrayBebidas.push(results[i].precio);
-        }
-        for (var i = 0; i < results.length; i + 2) {
-            session.send(arrayBebidas[i] + ":" + arrayBebidas[i+1]);
-
-        }*/
-    })
+     })
     });
 
 intents.matches('Estado', function (session, args, next) {
