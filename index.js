@@ -186,6 +186,7 @@ bot.dialog('/ChangeName', [
     },
     function (session, results) {
         session.userData.name = results.response;
+        session.send("Perfecto, a partir de ahora te llamo así.")
         session.endDialog();
     }
 ]);
