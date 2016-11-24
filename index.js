@@ -52,12 +52,14 @@ function getData(callback) {
 }
 var arrayBebidas = [];
 
-getData(function (results) {
+/*getData(function (results) {
     for (var i = 0; i < results.length; i++) {
         arrayBebidas.push(results[i]);
     }
     console.log(arrayBebidas);
-})
+})*/
+
+
 
 
 
@@ -120,8 +122,21 @@ intents.matches('Pedir', function (session, args, next) {
 
 });
 intents.matches('VerInventario', function (session, args, next) {
-    session.send('tenemos para comer: bocatas, menus, bebidas y postres');
-});
+    getData(function (results) {
+        session.send("Tenemos estos postres: ")
+          for (var i = 0; i < results.length; i++) {
+            session.send(results[i].tipo + ":" + results[i].precio);
+        }
+        /*for (var i = 0; i < results.length; i++) {
+            arrayBebidas.push(results[i].tipo);
+            arrayBebidas.push(results[i].precio);
+        }
+        for (var i = 0; i < results.length; i + 2) {
+            session.send(arrayBebidas[i] + ":" + arrayBebidas[i+1]);
+
+        }*/
+
+    });
 
 intents.matches('Estado', function (session, args, next) {
     session.send('Muy bien, ¿Y tu, que quieres comer?');
