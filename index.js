@@ -22,7 +22,7 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
-function getData(callback) {
+
     var  config  =  {
             user:  'cafeterialiceodefinitivo',
             password:  'cvk,9,qp',
@@ -33,6 +33,7 @@ function getData(callback) {
                     encrypt: true// Use this if you're on Windows Azure 
             }
     }
+function getData(callback) {
 
     var connection = new sql.Connection(config, function (err) {
         if (err) {
