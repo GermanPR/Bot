@@ -182,7 +182,6 @@ bot.dialog('/profile', [
 bot.dialog('/ChangeName', [
     function (session) {
         builder.Prompts.text(session, 'Vale, ¿como quieres que te llame ahora?');
-        session.send("Perfecto, a partir de ahora te llamo así.")
     },
     function (session, results) {
         session.userData.name = results.response;
