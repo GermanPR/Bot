@@ -74,12 +74,9 @@ intents.matches('Saludo',
         if (!session.userData.name) {
             session.beginDialog('/profile');
         } else {
-            next();
-        }
-    },
-    function (session, results) {
         session.send('Hola %s!', session.userData.name);
-    });
+        }
+     });        
 
 intents.matches('Despedida', function (session, args, next) {
     session.send('Adios, hasta la proxima.');
