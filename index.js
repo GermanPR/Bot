@@ -135,7 +135,7 @@ intents.matches('VerInventario', function (session, args, next) {
             session.send(arrayBebidas[i] + ":" + arrayBebidas[i+1]);
 
         }*/
-
+    })
     });
 
 intents.matches('Estado', function (session, args, next) {
