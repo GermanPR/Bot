@@ -52,12 +52,12 @@ function getData(callback) {
 }
 var arrayBebidas = [];
 
-/*getData(function (results) {
+getData(function (results) {
     for (var i = 0; i < results.length; i++) {
         arrayBebidas.push(results[i]);
     }
     console.log(arrayBebidas);
-})*/
+})
 
 
 
@@ -69,9 +69,17 @@ var arrayBebidas = [];
 //=========================================================
 bot.dialog('/', intents);
 
-intents.matches('Saludo', function (session, args, next) {
-    session.send('Hola');
-});
+intents.matches('Saludo', 
+     function (session, args, next) {
+        if (!session.userData.name) {
+            session.beginDialog('/profile');
+        } else {
+            next();
+        }
+    },
+    function (session, results) {
+        session.send('Hello %s!', session.userData.name);
+    });
 
 intents.matches('Despedida', function (session, args, next) {
     session.send('Adios, hasta la proxima.');
@@ -112,7 +120,7 @@ intents.matches('Pedir', function (session, args, next) {
 
     if (carrito.length != 0) {
         session.send("Tu pedido es:")
-        for (var i = 0; i < carrito.length; i++) {
+        for (var i = 0; i < carrito.length; i++) {  
             session.send(carrito[i])
         }
     } else {
@@ -161,3 +169,14 @@ intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
  
+
+
+bot.dialog('/profile', [
+    function (session) {
+        builder.Prompts.text(session, 'Hi! What is your name?');
+    },
+    function (session, results) {
+        session.userData.name = results.response;
+        session.endDialog();
+    }
+]);
