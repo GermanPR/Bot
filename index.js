@@ -146,7 +146,7 @@ intents.matches('VerInventario', function (session, args, next) {
               var numero = i+1;
             session.send(numero +"-" + postres[i].tipo + " : " + postres[i].precio + "€");
         }
-        /*for (var i = 0; i < results.length; i++) {
+        /*afor (var i = 0; i < results.length; i++) {
             arrayBebidas.push(results[i].tipo);
             arrayBebidas.push(results[i].precio);
         }
