@@ -78,7 +78,7 @@ intents.matches('Saludo',
         }
     },
     function (session, results) {
-        session.send('Hello %s!', session.userData.name);
+        session.send('Hola %s!', session.userData.name);
     });
 
 intents.matches('Despedida', function (session, args, next) {
@@ -173,7 +173,7 @@ intents.onDefault(function (session) {
 
 bot.dialog('/profile', [
     function (session) {
-        builder.Prompts.text(session, 'Hi! What is your name?');
+        builder.Prompts.text(session, '´Hola!¿como te llamas?');
     },
     function (session, results) {
         session.userData.name = results.response;
