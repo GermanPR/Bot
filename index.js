@@ -149,7 +149,7 @@ intents.matches('Pedir', function (session, args, next) {
         'Tortilla ',
         'Plato del día '] 
     const bebidas = ['Bocata de jamon', 'Bocata de bacon', 'Bocata de pollo'];
-    var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Bocatas');
+    var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Comidas');
     var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
     /* if(arrayBebidas.length < 2){
          session.send("error");
@@ -159,7 +159,7 @@ intents.matches('Pedir', function (session, args, next) {
     var carrito = [];
 
     if (entityBocatas) {
-        var matchBocatas = builder.EntityRecognizer.findBestMatch(bocatas, entityBocatas.entity);
+        var matchBocatas = builder.EntityRecognizer.findBestMatch(comida, entityBocatas.entity);
         carrito.push(matchBocatas.entity);
     }
     if (entityBebidas) {
@@ -185,7 +185,7 @@ intents.matches('Pedir', function (session, args, next) {
 
 intents.matches('VerInventario', function (session, args, next) {
     getPostres(function (results) {
-        session.send("Tenemos estos postres: ")
+        session.send("Tenemos estos platos: ")
           for (var i = 0; i < results.length; i++) {
               var numero = i+1;
             session.send(numero +"-" + results[i].nombre + " : " + results[i].precio + "€");
