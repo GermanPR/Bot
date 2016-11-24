@@ -39,20 +39,12 @@ function getData(callback) {
             console.log(err);
         }
         var request = new sql.Request(connection);
-        request.query('select * from postres', function (err, postres) {
+        request.query('select * from postres', function (err, results) {
             if (err) {
                 console.log(err);
             } else {
-                
-                callback(bebidas);
-            }
-        })
-        request.query('select * from bebidas', function (err, bebidas) {
-            if (err) {
-                console.log(err);
-            } else {
-                
-                callback(bebidas);
+                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
+                callback(results);
             }
         })
 
@@ -135,18 +127,13 @@ intents.matches('Pedir', function (session, args, next) {
 
 });
 intents.matches('VerInventario', function (session, args, next) {
-    getData(function (postres,bebidas) {
-        session.send("Tenemos estas bebidas: ")
-          for (var i = 0; i < bebidas.length; i++) {
-              var numero = i+1;
-            session.send(numero +"-" + bebidas[i].tipo + " : " + bebidas[i].precio + "€");
-        }
+    getPostres(function (results) {
         session.send("Tenemos estos postres: ")
-          for (var i = 0; i < postres.length; i++) {
+          for (var i = 0; i < results.length; i++) {
               var numero = i+1;
-            session.send(numero +"-" + postres[i].tipo + " : " + postres[i].precio + "€");
+            session.send(numero +"-" + results[i].tipo + " : " + results[i].precio + "€");
         }
-        /*afor (var i = 0; i < results.length; i++) {
+        /*for (var i = 0; i < results.length; i++) {
             arrayBebidas.push(results[i].tipo);
             arrayBebidas.push(results[i].precio);
         }
