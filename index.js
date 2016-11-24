@@ -127,7 +127,7 @@ intents.matches('Pedir', function (session, args, next) {
 
 });
 intents.matches('VerInventario', function (session, args, next) {
-    getPostres(function (results) {
+    getData(function (results) {
         session.send("Tenemos estos postres: ")
           for (var i = 0; i < results.length; i++) {
               var numero = i+1;
