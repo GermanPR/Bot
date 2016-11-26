@@ -158,9 +158,9 @@ intents.matches('Pedir', function (session, args, next) {
     /*}*/
     var carrito = [];
 
-    if (entityBocatas) {
-        var matchBocatas = builder.EntityRecognizer.findBestMatch(comida, entityComidas.entity);
-        carrito.push(matchBocatas.entity);
+    if (entityComidas) {
+        var matchComidas = builder.EntityRecognizer.findBestMatch(comida, entityComidas.entity);
+        carrito.push(matchComidas.entity);
     }
     if (entityBebidas) {
         var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
