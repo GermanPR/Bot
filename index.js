@@ -149,7 +149,7 @@ intents.matches('Pedir', function (session, args, next) {
         'Tortilla ',
         'Plato del día '] 
     const bebidas = ['Agua', 'Coca-Cola','Coca-Cola zero','Coca-cola light','Aquarios de Naranja','Aquarios de limon','Fanta de naranja','Fanta de Limon','Vitaminweel drink','Agua gaseosa','Zumo de naranja natura', 'Nestea'];
-    var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Comidas');
+    var entityComidas = builder.EntityRecognizer.findEntity(args.entities, 'Comidas');
     var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
     /* if(arrayBebidas.length < 2){
          session.send("error");
@@ -159,7 +159,7 @@ intents.matches('Pedir', function (session, args, next) {
     var carrito = [];
 
     if (entityBocatas) {
-        var matchBocatas = builder.EntityRecognizer.findBestMatch(comida, entityBocatas.entity);
+        var matchBocatas = builder.EntityRecognizer.findBestMatch(comida, entityComidas.entity);
         carrito.push(matchBocatas.entity);
     }
     if (entityBebidas) {
