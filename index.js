@@ -40,7 +40,7 @@ function getPostres(callback) {
             console.log(err);
         }
         var request = new sql.Request(connection);
-        request.query('select * from comida', function (err, results) {
+        request.query('select * from postres', function (err, results) {
             if (err) {
                 console.log(err);
             } else {
@@ -58,7 +58,7 @@ function getBebidas(callback) {
             console.log(err);
         }
         var request = new sql.Request(connection);
-        request.query('select * from comida', function (err, results) {
+        request.query('select * from Bebidas', function (err, results) {
             if (err) {
                 console.log(err);
             } else {
@@ -69,14 +69,14 @@ function getBebidas(callback) {
 
     });
 }
-function getBocatas(callback) {
+function getComida(callback) {
 
     var connection = new sql.Connection(config, function (err) {
         if (err) {
             console.log(err);
         }
         var request = new sql.Request(connection);
-        request.query('select * from bocatas', function (err, results) {
+        request.query('select * from comida', function (err, results) {
             if (err) {
                 console.log(err);
             } else {
@@ -91,7 +91,7 @@ var arrayBebidas = [];
 
 getPostres(function (results) {
     for (var i = 0; i < results.length; i++) {
-        arrayBebidas.push(results[i].nombre);
+        arrayBebidas.push(results[i]);
     }
     console.log(arrayBebidas);
 })
@@ -127,7 +127,7 @@ intents.matches('Pedir', function (session, args, next) {
     arrayBebidas.push(results[i].tipo);
     } 
 })*/
-    const postres = ['Donuts', 'Manzana', 'Cookie'];
+    const postres = ['Fruta preparada', 'Fruta', 'Yogurt','Muffin de chocolate','Muffin de frutos rojos','Cookie'];
     const comida = ['Ensalada Caesar',
         'Ensalada de bacon y queso de cabra ',
         'Ensalada sweet chili noodles',
@@ -148,7 +148,7 @@ intents.matches('Pedir', function (session, args, next) {
         'Wrap noruego ',
         'Tortilla ',
         'Plato del día '] 
-    const bebidas = ['Bocata de jamon', 'Bocata de bacon', 'Bocata de pollo'];
+    const bebidas = ['Agua', 'Coca-Cola','Coca-Cola zero','Coca-cola light','Aquarios de Naranja','Aquarios de limon','Fanta de naranja','Fanta de Limon','Vitaminweel drink','Agua gaseosa','Zumo de naranja natura', 'Nestea'];
     var entityBocatas = builder.EntityRecognizer.findEntity(args.entities, 'Comidas');
     var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
     /* if(arrayBebidas.length < 2){
