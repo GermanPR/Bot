@@ -1,8 +1,11 @@
-var restify = require('restify');
-var builder = require('botbuilder');
-var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=05cc84c9-6d4a-497f-9981-cbcd438efece&subscription-key=71e4270a84a546fe814e1b0f6d4983cf');
-var intents = new builder.IntentDialog({ recognizers: [recognizer] });
-var  sql  =  require('mssql');
+var restify = require('restify'),
+    config = require('./config'),
+    builder = require('botbuilder'),
+    recognizer = new builder.LuisRecognizer(config.LUIS_URL),
+    intents = new builder.IntentDialog({ recognizers: [recognizer] }),
+    db = require('./db/sql_server')
+// sql = require('mssql');
+
 //=========================================================
 // Bot Setup
 //=========================================================
@@ -15,105 +18,29 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 
 //Connection with MS Bot Framework
 var connector = new builder.ChatConnector({
-    appId: '418d8392-0f66-4268-8870-a68ad9f68f44',
-    appPassword: 'FnsKJ0JbC7EYA8vddnhFd3u'
+    appId: config.AppId,
+    appPassword: config.AppPassword
 });
 
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
-
-
-    var  config  =  {
-            user:  'cafeterialiceodefinitivo',
-            password:  'cvk,9,qp',
-            server:  'cafeterialiceodefinitivo.database.windows.net',
-            database:  'botgerbas',
-
-            options:  {
-                    encrypt: true// Use this if you're on Windows Azure 
-            }
-    }
-function getPostres(callback) {
-
-    var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }
-        var request = new sql.Request(connection);
-        request.query('select * from postres', function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
-                callback(results);
-            }
-        })
-
-    });
-}
-function getBebidas(callback) {
-
-    var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }
-        var request = new sql.Request(connection);
-        request.query('select * from Bebidas', function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
-                callback(results);
-            }
-        })
-
-    });
-}
-function getComida(callback) {
-
-    var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }
-        var request = new sql.Request(connection);
-        request.query('select * from comida', function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
-                callback(results);
-            }
-        })
-
-    });
-}
-var arrayBebidas = [];
-
-getPostres(function (results) {
-    for (var i = 0; i < results.length; i++) {
-        arrayBebidas.push(results[i]);
-    }
-    console.log(arrayBebidas);
-})
-
-
-
-
-
 
 //=========================================================
 // Bots Dialogs
 //=========================================================
 bot.dialog('/', intents);
 
-intents.matches('Saludo', 
-     function (session, args, next) {
-        if (!session.userData.name) {
-            session.beginDialog('/profile');
-        } else {
-        session.send('Hola %s!', session.userData.name);
-        }
-     });        
+intents.matches('Saludo',
+    function (session, args, next) {
+        // if (!session.userData.name) {
+        //     session.beginDialog('/profile');
+        // } else {
+        //     session.send('Hola %s!', session.userData.name);
+        // }
+
+        session.send('¡Hola %s!', session.message.address.user.name)
+
+    });
 
 intents.matches('Despedida', function (session, args, next) {
     session.send('Adios, hasta la proxima.');
@@ -125,9 +52,9 @@ intents.matches('Pedir', function (session, args, next) {
     getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
     arrayBebidas.push(results[i].tipo);
-    } 
+    }
 })*/
-    const postres = ['Fruta preparada', 'Fruta', 'Yogurt','Muffin de chocolate','Muffin de frutos rojos','Cookie'];
+    const postres = ['Fruta preparada', 'Fruta', 'Yogurt', 'Muffin de chocolate', 'Muffin de frutos rojos', 'Cookie'];
     const comida = ['Ensalada Caesar',
         'Ensalada de bacon y queso de cabra ',
         'Ensalada sweet chili noodles',
@@ -147,8 +74,8 @@ intents.matches('Pedir', function (session, args, next) {
         'Wrap de pollo ',
         'Wrap noruego ',
         'Tortilla ',
-        'Plato del día '] 
-    const bebidas = ['Agua', 'Coca-Cola','Coca-Cola zero','Coca-cola light','Aquarios de Naranja','Aquarios de limon','Fanta de naranja','Fanta de Limon','Vitaminweel drink','Agua gaseosa','Zumo de naranja natura', 'Nestea'];
+        'Plato del día ']
+    const bebidas = ['Agua', 'Coca-Cola', 'Coca-Cola zero', 'Coca-cola light', 'Aquarios de Naranja', 'Aquarios de limon', 'Fanta de naranja', 'Fanta de Limon', 'Vitaminweel drink', 'Agua gaseosa', 'Zumo de naranja natura', 'Nestea'];
     var entityComidas = builder.EntityRecognizer.findEntity(args.entities, 'Comidas');
     var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
     /* if(arrayBebidas.length < 2){
@@ -173,7 +100,7 @@ intents.matches('Pedir', function (session, args, next) {
 
     if (carrito.length != 0) {
         session.send("Tu pedido es:")
-        for (var i = 0; i < carrito.length; i++) {  
+        for (var i = 0; i < carrito.length; i++) {
             session.send(carrito[i])
         }
     } else {
@@ -184,14 +111,14 @@ intents.matches('Pedir', function (session, args, next) {
 });
 
 intents.matches('VerInventario', function (session, args, next) {
-    getPostres(function (results) {
+    db.getPostres(function (results) {
         session.send("Tenemos estos platos: ")
-          for (var i = 0; i < results.length; i++) {
-              var numero = i+1;
-            session.send(numero +"-" + results[i].nombre + " : " + results[i].precio + "€");
+        for (var i = 0; i < results.length; i++) {
+            var numero = i + 1;
+            session.send(numero + "-" + results[i].nombre + " : " + results[i].precio + "€");
         }
-     })
-    });
+    })
+});
 
 intents.matches('Estado', function (session, args, next) {
     session.send('Muy bien, ¿Y tu, que quieres comer?');
@@ -215,7 +142,7 @@ intents.matches('EasterEggFisica', function (session, args, next) {
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
-intents.matches('CambiarNombre',function (session, args, next) {
+intents.matches('CambiarNombre', function (session, args, next) {
     session.beginDialog('/ChangeName');
 });
 
