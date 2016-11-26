@@ -152,7 +152,7 @@ intents.matches('Pedir', function (session, args, next) {
     var entityComidas = builder.EntityRecognizer.findEntity(args.entities, 'Comidas');
     var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
     /* if(arrayBebidas.length < 2){
-         session.send("error");
+         session.sen("error");
      }else{*/
     var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
     /*}*/
