@@ -111,7 +111,7 @@ intents.matches('Saludo', [
         if (!session.userData.name) {
             session.beginDialog('/profile');
         } else {
-            builder.Prompts.choice(session,'Hola '+ session.userData.name + '! Que quieres hacer? \n1.  Pedir\n2.   Cancelar');
+            builder.Prompts.text(session,'Hola '+ session.userData.name + '! Que quieres hacer? \n1.  Pedir\n2.   Cancelar');
         }
     },
     function (session, results) {
