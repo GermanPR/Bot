@@ -111,11 +111,11 @@ intents.matches('Saludo', [
         if (!session.userData.name) {
             session.beginDialog('/profile');
         } else {
-            builder.Prompts.choice(session,'Hola'+ session.userData.name + '! Que quieres hacer? \n1.  Pedir\n2.   Cancelar', ["Pedir", "Cancelar"]);
+            builder.Prompts.choice(session,'Hola '+ session.userData.name + '! Que quieres hacer? \n1.  Pedir\n2.   Cancelar', ["Pedir", "Cancelar"]);
         }
     },
     function (session, results) {
-        var selection = result.response.entity;
+        var selection = result.response;
         switch (selection) {
             case "Pedir":
                 return session.beginDialog('/Pedir')
