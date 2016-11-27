@@ -125,7 +125,7 @@ intents.matches('Pedir', function (session, args, next) {
 
                 'Que quieres comer?',
 
-                [Ensalada, Pasta]
+                [Ensalada, Pasta]);
     /*var arrayBebidas = [];
     getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
