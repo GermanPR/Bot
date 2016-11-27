@@ -131,10 +131,10 @@ intents.matches('Despedida', function (session, args, next) {
 });
 
 
-intents.matches('Pedir', function (session, args, next) {
+/*intents.matches('Pedir', function (session, args, next) {
 
 
-});
+});*/
 
 intents.matches('VerInventario', function (session, args, next) {
     getPostres(function (results) {
