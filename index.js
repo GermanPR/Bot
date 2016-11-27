@@ -67,7 +67,6 @@ bot.dialog('/pedir', [
             .attachments([
                 new builder.HeroCard(session)
                     .title("Comida")
-                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
                     .images([
                         builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
                     ])
@@ -75,25 +74,23 @@ bot.dialog('/pedir', [
                         builder.CardAction.imBack(session, "Comida", "Seleccionar")
                     ]),
                 new builder.HeroCard(session)
-                    .title("Comida")
-                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+                    .title("Bebida")
                     .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
                     ])
                     .buttons([
                         builder.CardAction.imBack(session, "Bebida", "Seleccionar")
                     ]),
                 new builder.HeroCard(session)
-                    .title("Comida")
-                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+                    .title("Postre")
                     .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
                     ])
                     .buttons([
                         builder.CardAction.imBack(session, "Postre", "Seleccionar")
                     ])
             ]);
-            
+
         builder.Prompts.choice(session, msg, "Comida|Bebida|Postre");
 
     },
