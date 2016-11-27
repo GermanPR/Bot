@@ -232,13 +232,13 @@ bot.dialog('/pedir', [
 });*/
 
 intents.matches('VerInventario', function (session, args, next) {
-    getPostres(function (results) {
-        session.send("Tenemos estos platos: ")
-        for (var i = 0; i < results.length; i++) {
-            var numero = i + 1;
-            session.send(numero + "-" + results[i].nombre + " : " + results[i].precio + "€");
-        }
-    })
+    // db.getPostres(function (results) {
+    //     session.send("Tenemos estos platos: ")
+    //     for (var i = 0; i < results.length; i++) {
+    //         var numero = i + 1;
+    //         session.send(numero + "-" + results[i].nombre + " : " + results[i].precio + "€");
+    //     }
+    // })
 });
 
 intents.matches('Estado', function (session, args, next) {

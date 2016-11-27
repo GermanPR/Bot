@@ -29,3 +29,7 @@ exports.getProductos = function(categoria) {
             return ['Tortilla francesa', 'Tortilla con patatas', 'Tortilla con pimientos'];
     }
 };
+
+exports.getPostres = function(callback){
+
+}
