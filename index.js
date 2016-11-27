@@ -124,7 +124,7 @@ intents.matches('Pedir', function (session, args, next) {
     /*var arrayBebidas = [];
     getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
-    arrayBebidas.push(results[i].tipo);
+    arrayBebidas.push(esults[i].tipo);
     } 
 })*/
     const postres = ['Fruta preparada', 'Fruta', 'Yogurt','Muffin de chocolate','Muffin de frutos rojos','Cookie'];
