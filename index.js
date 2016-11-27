@@ -193,7 +193,7 @@ bot.dialog('/ChangeName', [
 ]);
 
 bot.dialog('/Pedir',[
-    function(session,args,next){
+    function(session){
         builder.Prompts.choice(session,'Perfecto. ¿Que te gustaria pedir?\n1.  Comida\n2.  Bebida\n3.  Postres', ['Comida','Bebida','Postres']);
     },
     function(session,results){
