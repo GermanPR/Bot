@@ -2,7 +2,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=05cc84c9-6d4a-497f-9981-cbcd438efece&subscription-key=71e4270a84a546fe814e1b0f6d4983cf');
 var intents = new builder.IntentDialog({ recognizers: [recognizer] });
-var  sql  =  require('mssql');
+var sql = require('mssql');
 //=========================================================
 // Bot Setup
 //=========================================================
@@ -23,16 +23,16 @@ var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
 
-    var  config  =  {
-            user:  'cafeterialiceodefinitivo',
-            password:  'cvk,9,qp',
-            server:  'cafeterialiceodefinitivo.database.windows.net',
-            database:  'botgerbas',
+var config = {
+    user: 'cafeterialiceodefinitivo',
+    password: 'cvk,9,qp',
+    server: 'cafeterialiceodefinitivo.database.windows.net',
+    database: 'botgerbas',
 
-            options:  {
-                    encrypt: true// Use this if you're on Windows Azure 
-            }
+    options: {
+        encrypt: true// Use this if you're on Windows Azure 
     }
+}
 function getPostres(callback) {
 
     var connection = new sql.Connection(config, function (err) {
@@ -106,14 +106,25 @@ getPostres(function (results) {
 //=========================================================
 bot.dialog('/', intents);
 
-intents.matches('Saludo', 
-     function (session, args, next) {
+intents.matches('Saludo', [
+    function (session, args, next) {
         if (!session.userData.name) {
             session.beginDialog('/profile');
         } else {
-        session.send('Hola %s!', session.userData.name);
+            builder.Prompts.choice('Hola %s! Que quieres hacer? \n1.  Pedir\n2.   Cancelar', session.userData.name, ["Pedir", "Cancelar"]);
         }
-     });        
+    },
+    function (session, results) {
+        var selection = result.response.entity;
+        switch (selection) {
+            case "Pedir":
+                return session.beginDialog('/Pedir')
+            case "Cancelar":
+                return session.beginDialog('/Cancelar')
+        }
+    }]);
+
+
 
 intents.matches('Despedida', function (session, args, next) {
     session.send('Adios, hasta la proxima.');
@@ -121,82 +132,19 @@ intents.matches('Despedida', function (session, args, next) {
 
 
 intents.matches('Pedir', function (session, args, next) {
-    builder.Prompts.choice( session,
 
-                'Que quieres comer?',
-
-                [Ensalada, Pasta]);
-    /*var arrayBebidas = [];
-    getData(function(results){
-    for(var i = 0 ; i < results.length ; i++){
-    arrayBebidas.push(esults[i].tipo);
-    } 
-})*/
-    /*const postres = ['Fruta preparada', 'Fruta', 'Yogurt','Muffin de chocolate','Muffin de frutos rojos','Cookie'];
-    const comida = ['Ensalada Caesar',
-        'Ensalada de bacon y queso de cabra ',
-        'Ensalada sweet chili noodles',
-        'Ensalada de jamon y queso  ',
-        'Sopa del dia ',
-        'Yatekomo',
-        'Yakisoba',
-        'Bocata de tortilla ',
-        'Bocata de bacon y queso fundido',
-        'Bocata de lomo y queso fundido ',
-        'Bocata de jamón serran y queso brie',
-        'Dandwich vegetariano',
-        'Pizza margarita',
-        'Pizza de jamón y queso',
-        'Pizza de champiñones y jamón ',
-        'Pizza peperoni ',
-        'Wrap de pollo ',
-        'Wrap noruego ',
-        'Tortilla ',
-        'Plato del día '] 
-    const bebidas = ['Agua', 'Coca-Cola','Coca-Cola zero','Coca-cola light','Aquarios de Naranja','Aquarios de limon','Fanta de naranja','Fanta de Limon','Vitaminweel drink','Agua gaseosa','Zumo de naranja natura', 'Nestea'];
-    var entityComidas = builder.EntityRecognizer.findEntity(args.entities, 'Comidas');
-    var entityBebidas = builder.EntityRecognizer.findEntity(args.entities, 'Bebidas');
-    /* if(arrayBebidas.length < 2){
-         session.sen("error");
-     }else{*/
-   /* var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
-    
-    var carrito = [];
-
-    if (entityComidas) {
-        var matchComidas = builder.EntityRecognizer.findBestMatch(comida, entityComidas.entity);
-        carrito.push(matchComidas.entity);
-    }
-    if (entityBebidas) {
-        var matchBebidas = builder.EntityRecognizer.findBestMatch(bebidas, entityBebidas.entity);
-        carrito.push(matchBebidas.entity);
-    }
-    if (entityPostres) {
-        var matchPostres = builder.EntityRecognizer.findBestMatch(postres, entityPostres.entity);
-        carrito.push(matchPostres.entity);
-    }
-
-    if (carrito.length != 0) {
-        session.send("Tu pedido es:")
-        for (var i = 0; i < carrito.length; i++) {  
-            session.send(carrito[i])
-        }
-    } else {
-        session.send("No tenemos ninguno de estos elementos, asegurate de pedir cosas que tengamos.")
-    }*/
-    
 
 });
 
 intents.matches('VerInventario', function (session, args, next) {
     getPostres(function (results) {
         session.send("Tenemos estos platos: ")
-          for (var i = 0; i < results.length; i++) {
-              var numero = i+1;
-            session.send(numero +"-" + results[i].nombre + " : " + results[i].precio + "€");
+        for (var i = 0; i < results.length; i++) {
+            var numero = i + 1;
+            session.send(numero + "-" + results[i].nombre + " : " + results[i].precio + "€");
         }
-     })
-    });
+    })
+});
 
 intents.matches('Estado', function (session, args, next) {
     session.send('Muy bien, ¿Y tu, que quieres comer?');
@@ -220,7 +168,7 @@ intents.matches('EasterEggFisica', function (session, args, next) {
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
-intents.matches('CambiarNombre',function (session, args, next) {
+intents.matches('CambiarNombre', function (session, args, next) {
     session.beginDialog('/ChangeName');
 });
 
@@ -241,5 +189,11 @@ bot.dialog('/ChangeName', [
     function (session, results) {
         session.userData.name = results.response;
         session.endDialog();
+    }
+]);
+
+bot.dialog('/Pedir',[
+    function(session,args,next){
+        builder.Prompts.choice(session,'Perfecto. ¿Que te gustaria pedir?\n1.  Comida\n2.  Bebida\n3.  Postres', ['Comida','Bebida','Postres']);
     }
 ]);
