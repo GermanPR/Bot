@@ -4,7 +4,7 @@ var restify = require('restify'),
     recognizer = new builder.LuisRecognizer(config.LUIS_URL),
     intents = new builder.IntentDialog({ recognizers: [recognizer] }),
     // db = require('./db/sql_server');
-    db = require('./db/fakedb');
+    db = require('./db/fakedb');/* Esto está simulando una base de datos hasta que montemos la definitiva*/
 
 //=========================================================
 // Bot Setup
@@ -30,17 +30,14 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 bot.dialog('/', intents);
 
-intents.matches('Saludo',
-    function (session, args, next) {
-        //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
-        // session.send('¡Hola %s! (wave)', session.message.address.user.name)
-        //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
-        session.send('¡Hola %s! (wave)\n ¿Qué te gustaría hacer?', getName(session));
 
-        //Mostrar menú con las opciones disponibles*
-
-
-    });
+intents.matches('Saludo', function (session, args, next) {
+    //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
+    // session.send('¡Hola %s! (wave)', session.message.address.user.name)
+    //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
+    session.send('¡Hola %s! (wave)\n ¿Qué te gustaría hacer?', getName(session));
+    //Mostrar menú con las opciones disponibles *recomendación
+});
 
 intents.matches('Despedida', function (session, args, next) {
     session.send('Adios %s, hasta la proxima.', getName(session));
@@ -86,11 +83,6 @@ bot.dialog('/pedir', [
         }
     }
 ]);
-
-intents.matches('Despedida', function (session, args, next) {
-    session.send('Adios, hasta la proxima.');
-});
-
 
 // intents.matches('Pedir', function (session, args, next) {
 //     builder.Prompts.choice(session,
@@ -234,6 +226,11 @@ intents.matches('Despedida', function (session, args, next) {
 
 // });
 
+/*intents.matches('Pedir', function (session, args, next) {
+ 
+ 
+});*/
+
 intents.matches('VerInventario', function (session, args, next) {
     getPostres(function (results) {
         session.send("Tenemos estos platos: ")
@@ -271,21 +268,31 @@ intents.matches('CambiarNombre', function (session, args, next) {
 });
 
 
-bot.dialog('/profile', [
-    function (session) {
-        builder.Prompts.text(session, 'Hola!¿como te llamas?');
-    },
-    function (session, results) {
-        session.userData.name = results.response;
-        session.endDialog();
-    }
-]);
-bot.dialog('/ChangeName', [
-    function (session) {
-        builder.Prompts.text(session, 'Vale, ¿como quieres que te llame ahora?');
-    },
-    function (session, results) {
-        session.userData.name = results.response;
-        session.endDialog();
-    }
-]);
+// bot.dialog('/profile', [
+//     function (session) {
+//         builder.Prompts.text(session, 'Hola!¿como te llamas?');
+//     },
+//     function (session, results) {
+//         session.userData.name = results.response;
+//         session.endDialog();
+//     }
+// ]);
+// bot.dialog('/ChangeName', [
+//     function (session) {
+//         builder.Prompts.text(session, 'Vale, ¿como quieres que te llame ahora?');
+//     },
+//     function (session, results) {
+//         session.userData.name = results.response;
+//         session.endDialog();
+//     }
+// ]);
+
+// bot.dialog('/Pedir', [
+//     function (session) {
+//         builder.Prompts.choice(session, 'Perfecto. ¿Que te gustaria pedir?\n1.  Comida\n2.  Bebida\n3.  Postres', ['Comida', 'Bebida', 'Postres']);
+//     },
+//     function (session, results) {
+//         session.userData.pedido = results.response;
+//     }
+
+// ]);
