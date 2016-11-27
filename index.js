@@ -121,13 +121,18 @@ intents.matches('Despedida', function (session, args, next) {
 
 
 intents.matches('Pedir', function (session, args, next) {
+    builder.Prompts.choice( session,
+
+                'Que quieres comer?',
+
+                [Ensalada, Pasta]
     /*var arrayBebidas = [];
     getData(function(results){
     for(var i = 0 ; i < results.length ; i++){
     arrayBebidas.push(esults[i].tipo);
     } 
 })*/
-    const postres = ['Fruta preparada', 'Fruta', 'Yogurt','Muffin de chocolate','Muffin de frutos rojos','Cookie'];
+    /*const postres = ['Fruta preparada', 'Fruta', 'Yogurt','Muffin de chocolate','Muffin de frutos rojos','Cookie'];
     const comida = ['Ensalada Caesar',
         'Ensalada de bacon y queso de cabra ',
         'Ensalada sweet chili noodles',
@@ -154,8 +159,8 @@ intents.matches('Pedir', function (session, args, next) {
     /* if(arrayBebidas.length < 2){
          session.sen("error");
      }else{*/
-    var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
-    /*}*/
+   /* var entityPostres = builder.EntityRecognizer.findEntity(args.entities, 'Postres');
+    
     var carrito = [];
 
     if (entityComidas) {
@@ -178,8 +183,8 @@ intents.matches('Pedir', function (session, args, next) {
         }
     } else {
         session.send("No tenemos ninguno de estos elementos, asegurate de pedir cosas que tengamos.")
-    }
-
+    }*/
+    
 
 });
 
