@@ -118,9 +118,9 @@ intents.matches('Saludo', [
         var selection = result.response.entity;
         switch (selection) {
             case "Pedir":
-                return session.beginDialog('/Pedir')
+                return session.beginDialog('/Pedir');
             case "Cancelar":
-                return session.beginDialog('/Cancelar')
+                return session.beginDialog('/Cancelar');
         }
     }]);
 
