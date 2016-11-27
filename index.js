@@ -115,7 +115,7 @@ intents.matches('Saludo', [
         }
     },
     function (session, results) {
-        var selection = result.response.entity;
+        var selection = result.response;
         if(selection ==  'Pedir'){
             session.beginDialog('/Pedir');
         }
