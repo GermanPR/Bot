@@ -125,7 +125,7 @@ bot.dialog('/pedir', [
 
 
 intents.matches('VerInventario', function (session, args, next) {
-    begin.dialog('/pedir');
+   /* begin.dialog('/pedir');*/
 });
 
 intents.matches('Estado', function (session, args, next) {
