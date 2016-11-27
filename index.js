@@ -118,7 +118,7 @@ bot.dialog('/pedir', [
     function (session, results) {
         console.dir(results);
         if (results.response) {
-            session.send('¡Perfecto! Marchando **%s**', results.response.entity);
+            session.endDialog('¡Perfecto! Marchando **%s**', results.response.entity);
         }
     }
 ]);
