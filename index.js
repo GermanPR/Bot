@@ -125,13 +125,13 @@ bot.dialog('/pedir', [
                 .attachments([
                     new builder.HeroCard(session)
                         .buttons([
-                            builder.CardAction.imBack(session, 'Yes')
+                            builder.CardAction.imBack(session, 'Si','Si')
                         ])
                         .buttons([
-                            builder.CardAction.imBack(session, 'No')
+                            builder.CardAction.imBack(session, 'No','No')
                         ])
                 ]);
-            builder.Prompts.choice(session, confirmacion,"Yes|No");
+            builder.Prompts.choice(session, confirmacion,"Si|No");
         }
     },
     function (session, results) {
