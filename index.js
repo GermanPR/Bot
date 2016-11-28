@@ -120,18 +120,18 @@ bot.dialog('/pedir', [
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
             var confirmacion = new builder.Message(session)
-    .textFormat(builder.TextFormat.xml)
-    .attachmentLayout(builder.AttachmentLayout.carousel)
-    .attachments([
-        new builder.HeroCard(session)
-            .buttons([
-                builder.CardAction.imBack(session, 'Yes')
-            ])
-            .buttons([
-                builder.CardAction.imBack(session, 'No')
-            ])
-    ]);
-            builder.Prompts.choice(session, 'Quieres algo más?', confirmacion);
+                .textFormat(builder.TextFormat.xml)
+                .attachmentLayout(builder.AttachmentLayout.carousel)
+                .attachments([
+                    new builder.HeroCard(session)
+                        .buttons([
+                            builder.CardAction.imBack(session, 'Yes')
+                        ])
+                        .buttons([
+                            builder.CardAction.imBack(session, 'No')
+                        ])
+                ]);
+            builder.Prompts.choice(session, confirmacion,"Yes|No");
         }
     },
     function (session, results) {
