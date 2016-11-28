@@ -119,8 +119,9 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
+            session.dialogData.pedido.push(results.response.entity);
             var confirmacion = new builder.Message(session)
-                .textFormat(builder.TextFormat.markdown)
+                .textFormat(builder.TextFormat.xml)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
                 .attachments([
                     new builder.HeroCard(session)
@@ -141,6 +142,7 @@ bot.dialog('/pedir', [
                 break;
             case 'No':
                 session.endDialog('Vale! Hasta la proxima y que aproveche!');
+                session.send('Tu pedido es: **%s**',session.dialogData.pedido[0]);
                 break;
         }
     }
