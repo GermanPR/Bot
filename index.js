@@ -142,7 +142,11 @@ bot.dialog('/pedir', [
                 session.beginDialog('/pedir');
                 break;
             case 'No':
-                session.send('Tu pedido es: **%s**',session.userData.pedido[0]);
+                session.send("Tu pedido es:")
+                for( var i = 0 ; i < session.userData.pedido.length ; i++){
+                session.send(session.userData.pedido[i]);
+                }
+                session.userData.pedido.clear();
                 session.endDialog('Vale! Hasta la proxima y que aproveche!');
                 break;
         }
