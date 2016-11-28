@@ -33,6 +33,18 @@ server.get(/\/public\/?.*/, restify.serveStatic({
 // Bots Dialogs
 //=========================================================
 bot.dialog('/', intents);
+var confirmacion = new builder.Message(session)
+    .textFormat(builder.TextFormat.xml)
+    .attachmentLayout(builder.AttachmentLayout.carousel)
+    .attachments([
+        new builder.HeroCard(session)
+            .buttons([
+                builder.CardAction.imBack(session, 'Yes')
+            ])
+            .buttons([
+                builder.CardAction.imBack(session, 'No')
+            ])
+    ]);
 
 
 intents.matches('Saludo', function (session, args, next) {
@@ -53,7 +65,6 @@ function getName(session) {
     return user.split(' ')[0];
 }
 
-var confirmacion = ['Si','No'];
 
 intents.matches('Pedir', '/pedir');
 
@@ -121,16 +132,16 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
-            builder.Prompts.choice(session,'Quieres algo más?', confirmacion);
+            builder.Prompts.choice(session, 'Quieres algo más?', confirmacion);
         }
     },
-    function(session, results){
-        switch(results.response.entity){
+    function (session, results) {
+        switch (results.response.entity) {
             case 'Si':
                 session.beginDialog('/pedir');
                 break;
             case 'No':
-                session.endDialog('Vale! Hasta la proxima!');
+                session.endDialog('Vale! Hasta la proxima y que aproveche!');
                 break;
         }
     }
