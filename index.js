@@ -120,10 +120,11 @@ bot.dialog('/pedir', [
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
             var confirmacion = new builder.Message(session)
-                .textFormat(builder.TextFormat.xml)
+                .textFormat(builder.TextFormat.markdown)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
                 .attachments([
                     new builder.HeroCard(session)
+                        .title("¿Quieres pedir algo más?")
                         .buttons([
                             builder.CardAction.imBack(session, 'Si','Si'),
                             builder.CardAction.imBack(session, 'No','No')
