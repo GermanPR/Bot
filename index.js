@@ -62,7 +62,7 @@ bot.dialog('/pedir', [
         session.userData.pedido;
         //Formato carrusel
         var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
+            .textFormat(builder.TextFormat.plain)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
@@ -121,7 +121,7 @@ bot.dialog('/pedir', [
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
             session.userData.pedido.push(results.response.entity);
             var confirmacion = new builder.Message(session)
-                .textFormat(builder.TextFormat.xml)
+                .textFormat(builder.TextFormat.plain)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
                 .attachments([
                     new builder.HeroCard(session)
