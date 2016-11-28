@@ -119,7 +119,8 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
-            session.dialogData.pedido.push(results.response.entity);
+            session.userData.pedido = [];
+            session.userData.pedido.push(results.response.entity);
             var confirmacion = new builder.Message(session)
                 .textFormat(builder.TextFormat.xml)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
@@ -141,7 +142,7 @@ bot.dialog('/pedir', [
                 session.beginDialog('/pedir');
                 break;
             case 'No':
-                session.send('Tu pedido es: **%s**',session.dialogData.pedido[0]);
+                session.send('Tu pedido es: **%s**',session.userData.pedido[0]);
                 session.endDialog('Vale! Hasta la proxima y que aproveche!');
                 break;
         }
