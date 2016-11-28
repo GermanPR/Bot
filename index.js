@@ -146,7 +146,17 @@ bot.dialog('/pedir', [
                 session.send(session.userData.pedido[i]);
                 }
                 session.userData.pedido = [];
-                session.endDialog('Vale! Hasta la proxima y que aproveche!');
+                builder.Prompts.choice(session, '**Es correcto?**', 'Si|No');
+                break;
+        }
+    },
+    function(session,results){
+        switch (results.response.entity) {
+            case 'Si':
+                session.endDialog('Vale, Perfecto! Que aproveche!');
+                break;
+            case 'No':
+                session.endDialog('Vale, pedido cancelado');
                 break;
         }
     }
