@@ -33,19 +33,6 @@ server.get(/\/public\/?.*/, restify.serveStatic({
 // Bots Dialogs
 //=========================================================
 bot.dialog('/', intents);
-var confirmacion = new builder.Message(session)
-    .textFormat(builder.TextFormat.xml)
-    .attachmentLayout(builder.AttachmentLayout.carousel)
-    .attachments([
-        new builder.HeroCard(session)
-            .buttons([
-                builder.CardAction.imBack(session, 'Yes')
-            ])
-            .buttons([
-                builder.CardAction.imBack(session, 'No')
-            ])
-    ]);
-
 
 intents.matches('Saludo', function (session, args, next) {
     //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
@@ -132,6 +119,18 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
+            var confirmacion = new builder.Message(session)
+    .textFormat(builder.TextFormat.xml)
+    .attachmentLayout(builder.AttachmentLayout.carousel)
+    .attachments([
+        new builder.HeroCard(session)
+            .buttons([
+                builder.CardAction.imBack(session, 'Yes')
+            ])
+            .buttons([
+                builder.CardAction.imBack(session, 'No')
+            ])
+    ]);
             builder.Prompts.choice(session, 'Quieres algo más?', confirmacion);
         }
     },
