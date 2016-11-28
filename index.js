@@ -141,8 +141,8 @@ bot.dialog('/pedir', [
                 session.beginDialog('/pedir');
                 break;
             case 'No':
-                session.endDialog('Vale! Hasta la proxima y que aproveche!');
                 session.send('Tu pedido es: **%s**',session.dialogData.pedido[0]);
+                session.endDialog('Vale! Hasta la proxima y que aproveche!');
                 break;
         }
     }
