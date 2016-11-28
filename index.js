@@ -39,6 +39,7 @@ intents.matches('Saludo', function (session, args, next) {
     // session.send('¡Hola %s! (wave)', session.message.address.user.name)
     //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
     session.send('¡Hola %s! (wave)\n ¿Qué te gustaría hacer?', getName(session));
+    session.userData.pedido = [];
     //Mostrar menú con las opciones disponibles *recomendación
 });
 
