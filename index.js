@@ -59,7 +59,7 @@ bot.dialog('/pedir', [
     function (session, args, next) {
         // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
         session.send(session, 'Ok (y) ¿Qué te gustaría pedir?');
-        session.userData.pedido;
+        
         //Formato carrusel
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.plain)
