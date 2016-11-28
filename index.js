@@ -119,7 +119,6 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
-            session.userData.pedido = [];
             session.userData.pedido.push(results.response.entity);
             var confirmacion = new builder.Message(session)
                 .textFormat(builder.TextFormat.xml)
@@ -146,7 +145,7 @@ bot.dialog('/pedir', [
                 for( var i = 0 ; i < session.userData.pedido.length ; i++){
                 session.send(session.userData.pedido[i]);
                 }
-                session.userData.pedido.clear();
+                session.userData.pedido = [];
                 session.endDialog('Vale! Hasta la proxima y que aproveche!');
                 break;
         }
