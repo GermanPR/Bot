@@ -58,11 +58,11 @@ intents.matches('Pedir', '/pedir');
 bot.dialog('/pedir', [
     function (session, args, next) {
         // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
-        session.send(session, 'Ok (y) ¿Qué te gustaría pedir?');
+        session.send( 'Ok (y) ¿Qué te gustaría pedir?');
         
         //Formato carrusel
         var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.plain)
+            .textFormat(builder.TextFormat.xml)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
@@ -119,10 +119,9 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
-            session.userData.pedido = [];
             session.userData.pedido.push(results.response.entity);
             var confirmacion = new builder.Message(session)
-                .textFormat(builder.TextFormat.plain)
+                .textFormat(builder.TextFormat.xml)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
                 .attachments([
                     new builder.HeroCard(session)
