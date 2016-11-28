@@ -119,6 +119,7 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
+            session.userData.pedido;
             session.userData.pedido.push(results.response.entity);
             var confirmacion = new builder.Message(session)
                 .textFormat(builder.TextFormat.plain)
