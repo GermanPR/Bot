@@ -53,10 +53,7 @@ function getName(session) {
     return user.split(' ')[0];
 }
 
-/*function confimation (){
-    var confirmation = ['Si','No'];
-    return confirmation;
-}*/
+var confirmacion = ['Si','No'];
 
 intents.matches('Pedir', '/pedir');
 
@@ -124,7 +121,7 @@ bot.dialog('/pedir', [
         console.dir(results);
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
-            builder.Prompts.choice(session,'Quieres algo más?', ['Si','No']);
+            builder.Prompts.choice(session,'Quieres algo más?', confirmacion);
         }
     },
     function(session, results){
