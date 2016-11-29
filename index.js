@@ -121,7 +121,7 @@ bot.dialog('/pedir', [
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
             session.userData.pedido.push(results.response.entity);
-            var confirmacion = new builder.Message(session)
+            /*var confirmacion = new builder.Message(session)
                 .textFormat(builder.TextFormat.xml)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
                 .attachments([
@@ -130,10 +130,10 @@ bot.dialog('/pedir', [
                         .buttons([
                             builder.CardAction.imBack(session, 'Si', 'Si'),
                             builder.CardAction.imBack(session, 'No', 'No')
-                        ])
+                        ])*/
 
-                ]);
-            builder.Prompts.choice(session, confirmacion, "Si|No");
+                /*]);*/
+            builder.Prompts.choice(session, getConfirmation('¿Quieres algo mas?'), "Si|No");
         }
     },
     function (session, results) {
