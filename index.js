@@ -59,8 +59,8 @@ intents.matches('Pedir', '/pedir');
 bot.dialog('/pedir', [
     function (session, args, next) {
         // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
-        session.send( 'Ok (y) ¿Qué te gustaría pedir?');
-        
+        session.send('Ok (y) ¿Qué te gustaría pedir?');
+
         //Formato carrusel
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
@@ -128,12 +128,12 @@ bot.dialog('/pedir', [
                     new builder.HeroCard(session)
                         .title("¿Quieres pedir algo más?")
                         .buttons([
-                            builder.CardAction.imBack(session, 'Si','Si'),
-                            builder.CardAction.imBack(session, 'No','No')
+                            builder.CardAction.imBack(session, 'Si', 'Si'),
+                            builder.CardAction.imBack(session, 'No', 'No')
                         ])
-                        
+
                 ]);
-            builder.Prompts.choice(session, confirmacion,"Si|No");
+            builder.Prompts.choice(session, confirmacion, "Si|No");
         }
     },
     function (session, results) {
@@ -143,15 +143,32 @@ bot.dialog('/pedir', [
                 break;
             case 'No':
                 session.send("Tu pedido es:")
-                for( var i = 0 ; i < session.userData.pedido.length ; i++){
-                session.send(session.userData.pedido[i]);
+                for (var i = 0; i < session.userData.pedido.length; i++) {
+                    session.send(session.userData.pedido[i]);
                 }
                 session.userData.pedido = [];
-                builder.Prompts.choice(session, '**Es correcto?**', 'Si|No');
+                getConfirmation = function (pregunta) {
+                    var confirmacion = new builder.Message(session)
+                        .textFormat(builder.TextFormat.xml)
+                        .attachmentLayout(builder.AttachmentLayout.carousel)
+                        .attachments([
+                            new builder.HeroCard(session)
+                                .title(pregunta)
+                                .buttons([
+                                    builder.CardAction.imBack(session, 'Si', 'Si'),
+                                    builder.CardAction.imBack(session, 'No', 'No')
+                                ])
+
+                        ]);
+                    return confirmacion;
+
+                }
+
+                builder.Prompts.choice(session, getConfirmation("Es correcto?"), 'Si|No');
                 break;
         }
     },
-    function(session,results){
+    function (session, results) {
         switch (results.response.entity) {
             case 'Si':
                 session.endDialog('Vale, Perfecto! Que aproveche!');
