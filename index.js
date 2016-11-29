@@ -82,7 +82,7 @@ bot.dialog('/pedir', [
             builder.Prompts.choice(session,msg,"12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
 
     },
-    function(session,results){
+    function(session,results,next){
          session.userData.time = null;
         switch(results.response.entity){
             case '12:15 - 13:15':
@@ -91,8 +91,9 @@ bot.dialog('/pedir', [
              return  session.userData.time = results.response.entity;
             case '14:15 - 15:15':
                 return  session.userData.time = results.response.entity;
-
+            
         }
+        next();
     },
     function (session, args, next) {
         // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
