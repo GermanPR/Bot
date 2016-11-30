@@ -227,7 +227,7 @@ bot.dialog('/pedir', [
                 session.send("Y llegará a las **%s**", session.userData.time)
                 session.userData.pedido = [];
 
-                builder.Prompts.choice(session, getConfirmation(session,"¿Es correcto?"), 'Si|No');
+                builder.Prompts.choice(session, getConfirmacion(session,"¿Es correcto?"), 'Si|No');
                 break;
         }
     },
