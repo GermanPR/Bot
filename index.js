@@ -64,17 +64,17 @@ bot.dialog('/pedir', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                    .title("**12:15 - 13:15**")
+                    .title("12:15 - 13:15")
                     .buttons([
                         builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
                     ]),
                 new builder.HeroCard(session)
-                    .title("**13:15 - 14:15**")
+                    .title("13:15 - 14:15")
                     .buttons([
                         builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
                     ]),
                 new builder.HeroCard(session)
-                    .title("**14:15 - 15:15**")
+                    .title("14:15 - 15:15")
                     .buttons([
                         builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
                     ]),
@@ -87,12 +87,15 @@ bot.dialog('/pedir', [
         switch (results.response.entity) {
             case '12:15 - 13:15':
                 session.userData.time = results.response.entity;
+                next();
                 break;
             case '13:15 - 14:15':
                 session.userData.time = results.response.entity;
+                next();
                 break;
             case '14:15 - 15:15':
                 session.userData.time = results.response.entity;
+                next();
                 break;
 
         }
