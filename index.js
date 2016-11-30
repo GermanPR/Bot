@@ -171,7 +171,7 @@ bot.dialog('/pedir', [
     function (session, results) {
         if (results.response) {
             var categoria = results.response.entity;
-            session.send('Has elegido %s(cool)', categoria);
+            session.send('Has elegido **%s**(cool)', categoria);
 
             //Dentro de esa categoría habría que mostar los productos que hay
             var productos = db.getProductos(categoria);
