@@ -70,7 +70,7 @@ intents.matches('Pedir', '/SaberHora');
 
 bot.dialog('/SaberHora', [
     function (session, args, next) {
-        session.send('Genial! ¿A que hora comes?');
+        session.send('Genial! ¿A que hora comes?(o)');
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
             .attachmentLayout(builder.AttachmentLayout.carousel)
@@ -164,7 +164,7 @@ bot.dialog('/pedir', [
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
             var categorias = db.getCategorias(results.response.entity) //la base de datos es de mentira de momento          
 
-            builder.Prompts.choice(session, '¿Qué tipo te apetece?', categorias);
+            builder.Prompts.choice(session, '¿Qué tipo te apetece?:P', categorias);
 
         }
     },
@@ -175,7 +175,7 @@ bot.dialog('/pedir', [
 
             //Dentro de esa categoría habría que mostar los productos que hay
             var productos = db.getProductos(categoria);
-            builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', productos);
+            builder.Prompts.choice(session, 'Esto es lo que tenemos hoy(cool)', productos);
         }
     },
     function (session, results) {
