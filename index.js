@@ -57,7 +57,7 @@ function getName(session) {
 intents.matches('Pedir', '/pedir');
 
 bot.dialog('/pedir', [
-    /*function(session,args,next){
+    function(session,args,next){
         session.send('Genial! ¿A que hora comes?');
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
@@ -93,9 +93,7 @@ bot.dialog('/pedir', [
                 return  session.userData.time = results.response.entity;
             
         }
-        next();
-    },*/
-    function (session, args, next) {
+        
         // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
         session.send('Ok (y) ¿Qué te gustaría pedir?');
 
@@ -184,7 +182,7 @@ bot.dialog('/pedir', [
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
                 }
-                /*session.send("Y llegará a las **%s**",session.userData.time)*/
+                session.send("Y llegará a las **%s**",session.userData.time)
                 session.userData.pedido = [];
                 getConfirmation = function (pregunta) {
                     var confirmacion = new builder.Message(session)
