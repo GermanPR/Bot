@@ -186,7 +186,7 @@ intents.matches('EasterEggFisica', function (session, args, next) {
 });
 
 intents.matches('TeamCounter', function (session, args, next) {
-    session.send('Eres de TEAM COUNTER?! Carlmante que el proximo pedido te lo hago gratis tío.');
+    session.send('Eres de TEAM COUNTER?! Carlamente que el proximo pedido te lo hago gratis tío.');
 });
 
 intents.onDefault(function (session) {
