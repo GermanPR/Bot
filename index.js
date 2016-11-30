@@ -171,11 +171,11 @@ bot.dialog('/pedir', [
     function (session, results) {
         if (results.response) {
             var categoria = results.response.entity;
-            session.send('Has elegido %s', categoria);
+            session.send('Has elegido %s(cool)', categoria);
 
             //Dentro de esa categoría habría que mostar los productos que hay
             var productos = db.getProductos(categoria);
-            builder.Prompts.choice(session, 'Esto es lo que tenemos hoy(cool)', productos);
+            builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', productos);
         }
     },
     function (session, results) {
