@@ -33,7 +33,7 @@ server.get(/\/public\/?.*/, restify.serveStatic({
 // Bots Dialogs
 //=========================================================
 bot.dialog('/', intents);
-
+//Si un usuario 
 intents.matches('Saludo', '/Saludo');
 
 bot.dialog('/Saludo', [
@@ -56,12 +56,10 @@ bot.dialog('/Saludo', [
     }
 ]);
 
-intents.matches('Despedida', function (session, args, next) {
-    session.send('Adios %s, hasta la proxima.', getName(session));
-});
-
+//En caso de que el usuario quiera hacer un pedido se empieza por preguntarle cuando quiere recogerlo.
 intents.matches('Pedir', '/SaberHora');
 
+//Pregunta por la hora a la que el pedido sera recogido a traves de una HeroCard
 bot.dialog('/SaberHora', [
     function (session, args, next) {
         session.send('Genial! ¿A que hora comes?(o)');
@@ -150,14 +148,26 @@ bot.dialog('/pedir', [
     }
 ]);
 
-
 intents.matches('VerInventario', function (session, args, next) {
     session.beginDialog('/pedir');
 });
 
-intents.matches('Estado', function (session, args, next) {
-    session.send('Muy bien, ¿Y tu, que quieres hacer?');
-});
+intents.matches('Estado', [
+    function(session,args,next){
+    session.send('Aqui vamos... con mucho trabajo.')
+    builder.Prompts.choice(session, getConfirmacion(session, '¿Quieres comer?'), "Si|No");
+        //Mostrar menú con las opciones disponibles *recomendación
+    }, function (session, results) {
+        switch (results.response.entity) {
+            case 'Si':
+                session.beginDialog('/SaberHora');
+                break;
+            case 'No':
+                session.endDialog('Sin problema!(y) Cuando quieras dimelo!')
+        }
+    }
+]);
+
 
 intents.matches('SaberHoraRecogida', function (session, args, next) {
     session.send('Estara listo a las 13:00, te viene bien?');
@@ -166,16 +176,21 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
 intents.matches('ConfirmaciónPositiva', function (session, args, next) {
     session.send('Genial');
 });
+
 intents.matches('Agradecimiento', function (session, args, next) {
     session.send('De nada');
 });
+
 intents.matches('EasterEggFisica', function (session, args, next) {
     session.send('Eh biien ici ee alors ee, alors ouui ');
 });
 
-
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
+});
+
+intents.matches('Despedida', function (session, args, next) {
+    session.send('Adios %s, hasta la proxima.', getName(session));
 });
 
 //FUNCTIONS
