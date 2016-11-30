@@ -42,7 +42,7 @@ bot.dialog('/Saludo',[
         // session.send('¡Hola %s! (wave)', session.message.address.user.name)
         //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
         session.userData.pedido = [];
-        builder.Prompts.choice(session, '¡Hola '+ getName(session) +'! (wave)\n ¿Quieres pedir?',  "Si|No");
+        builder.Prompts.choice(session, getPreguntas('¡Hola '+ getName(session) +'! (wave)\n ¿Quieres pedir?'),  "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     }, function (session, results) {
         switch (results.response.entity) {
@@ -64,7 +64,22 @@ function getName(session) {
     console.log(user);
     return user.split(' ')[0];
 }
+function getPreguntas(pregunta) {
+                    var confirmacion = new builder.Message(session)
+                        .textFormat(builder.TextFormat.xml)
+                        .attachmentLayout(builder.AttachmentLayout.carousel)
+                        .attachments([
+                            new builder.HeroCard(session)
+                                .title(pregunta)
+                                .buttons([
+                                    builder.CardAction.imBack(session, 'Si', 'Si'),
+                                    builder.CardAction.imBack(session, 'No', 'No')
+                                ])
 
+                        ]);
+                    return confirmacion;
+
+                }
 
 intents.matches('Pedir', '/SaberHora');
 
@@ -210,22 +225,6 @@ bot.dialog('/pedir', [
                 }
                 session.send("Y llegará a las **%s**", session.userData.time)
                 session.userData.pedido = [];
-                getConfirmation = function (pregunta) {
-                    var confirmacion = new builder.Message(session)
-                        .textFormat(builder.TextFormat.xml)
-                        .attachmentLayout(builder.AttachmentLayout.carousel)
-                        .attachments([
-                            new builder.HeroCard(session)
-                                .title(pregunta)
-                                .buttons([
-                                    builder.CardAction.imBack(session, 'Si', 'Si'),
-                                    builder.CardAction.imBack(session, 'No', 'No')
-                                ])
-
-                        ]);
-                    return confirmacion;
-
-                }
 
                 builder.Prompts.choice(session, getConfirmation("¿Es correcto?"), 'Si|No');
                 break;
