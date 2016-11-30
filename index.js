@@ -34,7 +34,9 @@ server.get(/\/public\/?.*/, restify.serveStatic({
 //=========================================================
 bot.dialog('/', intents);
 
-intents.matches('Saludo', [
+intents.matches('Saludo','/Saludo' );
+
+bot.dialog('/Saludo',[
     function (session, args, next) {
         //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
         // session.send('¡Hola %s! (wave)', session.message.address.user.name)
