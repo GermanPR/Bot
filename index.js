@@ -200,7 +200,7 @@ bot.dialog('/pedir', [
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
             session.userData.pedido.push(results.response.entity);
             
-            builder.Prompts.choice(session, getConfirmacion(session, 'Quieres pedir algo más?'), "Si|No");
+            builder.Prompts.choice(session, getConfirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
         }
     },
     function (session, results) {
