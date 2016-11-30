@@ -43,7 +43,7 @@ bot.dialog('/Saludo',[
         //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
         session.userData.pedido = [];
         var nombre = '¡Hola '+ getName(session) +'! (wave)\n ¿Quieres pedir?';
-        builder.Prompts.choice(session, getPreguntas(session,nombre),  "Si|No");
+        builder.Prompts.choice(session, getConfirmacion(session,nombre),  "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     }, function (session, results) {
         switch (results.response.entity) {
@@ -65,7 +65,7 @@ function getName(session) {
     console.log(user);
     return user.split(' ')[0];
 }
-function getPreguntas(session,pregunta) {
+function getConfirmacion(session,pregunta) {
                     var confirmacion = new builder.Message(session)
                         .textFormat(builder.TextFormat.xml)
                         .attachmentLayout(builder.AttachmentLayout.carousel)
