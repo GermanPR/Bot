@@ -185,6 +185,10 @@ intents.matches('EasterEggFisica', function (session, args, next) {
     session.send('Eh biien ici ee alors ee, alors ouui ');
 });
 
+intents.matches('TeamCounter', function (session, args, next) {
+    session.send('Eres de TEAM COUNTER?! Carlmante que el proximo pedido te lo hago gratis tío.');
+});
+
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
