@@ -57,7 +57,7 @@ function getName(session) {
 intents.matches('Pedir', '/pedir');
 
 bot.dialog('/pedir', [
-    /*function(session,args,next){
+    function (session, args, next) {
         session.send('Genial! ¿A que hora comes?');
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
@@ -79,25 +79,12 @@ bot.dialog('/pedir', [
                         builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
                     ]),
             ]);
-            builder.Prompts.choice(session,msg,"12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
+        builder.Prompts.choice(session, msg, "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
 
     },
-    function(session,results,next){
-         session.userData.time = null;
-        switch(results.response.entity){
-            case '12:15 - 13:15':
-              return  session.userData.time = results.response.entity;
-            case '13:15 - 14:15':
-             return  session.userData.time = results.response.entity;
-            case '14:15 - 15:15':
-                return  session.userData.time = results.response.entity;
-            
-        }
-        next();
-    },*/
-    function (session, args, next) {
-        // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
-        session.send('Ok (y) ¿Qué te gustaría pedir?');
+    function (session, results, next) {
+        var pregunta = function(){
+            session.send('Ok (y) ¿Qué te gustaría pedir?');
 
         //Formato carrusel
         var msg = new builder.Message(session)
@@ -132,6 +119,62 @@ bot.dialog('/pedir', [
 
         builder.Prompts.choice(session, msg, "Comida|Bebida|Postre");
 
+
+        }
+        session.userData.time = null;
+        switch (results.response.entity) {
+            case '12:15 - 13:15':
+                session.userData.time = results.response.entity;
+                pregunta();
+                break;
+
+            case '13:15 - 14:15':
+                session.userData.time = results.response.entity;
+                pregunta();
+                break;
+            case '14:15 - 15:15':
+                session.userData.time = results.response.entity;
+                pregunta();
+                break
+
+        }
+
+        // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
+        /*session.send('Ok (y) ¿Qué te gustaría pedir?');
+
+        //Formato carrusel
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                new builder.HeroCard(session)
+                    .title("Comida")
+                    .images([
+                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+                    ])
+                    .buttons([
+                        builder.CardAction.imBack(session, "Comida", "Seleccionar")
+                    ]),
+                new builder.HeroCard(session)
+                    .title("Bebida")
+                    .images([
+                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
+                    ])
+                    .buttons([
+                        builder.CardAction.imBack(session, "Bebida", "Seleccionar")
+                    ]),
+                new builder.HeroCard(session)
+                    .title("Postre")
+                    .images([
+                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
+                    ])
+                    .buttons([
+                        builder.CardAction.imBack(session, "Postre", "Seleccionar")
+                    ])
+            ]);
+
+        builder.Prompts.choice(session, msg, "Comida|Bebida|Postre");
+*/
     },
     function (session, results) {
         if (results.response) {
@@ -171,7 +214,7 @@ bot.dialog('/pedir', [
                         ])
 
                 ]);
-            builder.Prompts.choice(session,confirmacion, "Si|No");
+            builder.Prompts.choice(session, confirmacion, "Si|No");
         }
     },
     function (session, results) {
@@ -184,7 +227,7 @@ bot.dialog('/pedir', [
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
                 }
-                /*session.send("Y llegará a las **%s**",session.userData.time)*/
+                session.send("Y llegará a las **%s**", session.userData.time)
                 session.userData.pedido = [];
                 getConfirmation = function (pregunta) {
                     var confirmacion = new builder.Message(session)
