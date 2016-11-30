@@ -35,22 +35,22 @@ server.get(/\/public\/?.*/, restify.serveStatic({
 bot.dialog('/', intents);
 
 intents.matches('Saludo', [
-        function (session, args, next) {
-    //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
-    // session.send('¡Hola %s! (wave)', session.message.address.user.name)
-    //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
-    builder.Prompts.choice(session,'¡Hola %s! (wave)\n ¿Quieres pedir?', getName(session),"Si|No");
-    session.userData.pedido = [];
-    //Mostrar menú con las opciones disponibles *recomendación
-},function(session, results){
-    switch(results.response.entity){
-        case 'Si':
-        session.beginDialog('/SaberHora');
-        break;
-        case 'No':
-        session.endDialog('Sin problema!(y) Cuando quieras dimelo!')
+    function (session, args, next) {
+        //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
+        // session.send('¡Hola %s! (wave)', session.message.address.user.name)
+        //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
+        session.userData.pedido = [];
+        builder.Prompts.choice(session, '¡Hola %s! (wave)\n ¿Quieres pedir?', getName(session), "Si|No");
+        //Mostrar menú con las opciones disponibles *recomendación
+    }, function (session, results) {
+        switch (results.response.entity) {
+            case 'Si':
+                session.beginDialog('/SaberHora');
+                break;
+            case 'No':
+                session.endDialog('Sin problema!(y) Cuando quieras dimelo!')
+        }
     }
-}
 ]);
 
 intents.matches('Despedida', function (session, args, next) {
@@ -66,7 +66,7 @@ function getName(session) {
 
 intents.matches('Pedir', '/SaberHora');
 
-bot.dialog('/SaberHora',[
+bot.dialog('/SaberHora', [
     function (session, args, next) {
         session.send('Genial! ¿A que hora comes?');
         var msg = new builder.Message(session)
@@ -91,7 +91,7 @@ bot.dialog('/SaberHora',[
             ]);
         builder.Prompts.choice(session, msg, "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
     },
-    function(session,results){
+    function (session, results) {
         session.userData.time = null;
         switch (results.response.entity) {
             case '12:15 - 13:15':
@@ -113,11 +113,11 @@ bot.dialog('/SaberHora',[
 ]);
 
 bot.dialog('/pedir', [
-    
-   
+
+
     function (session, results, next) {
-        
-            session.send('Ok (y) ¿Qué te gustaría pedir?');
+
+        session.send('Ok (y) ¿Qué te gustaría pedir?');
 
         //Formato carrusel
         var msg = new builder.Message(session)
@@ -151,9 +151,9 @@ bot.dialog('/pedir', [
             ]);
 
         builder.Prompts.choice(session, msg, "Comida|Bebida|Postre");
-        
 
-        
+
+
     },
     function (session, results) {
         if (results.response) {
