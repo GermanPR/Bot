@@ -42,7 +42,8 @@ bot.dialog('/Saludo',[
         // session.send('¡Hola %s! (wave)', session.message.address.user.name)
         //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
         session.userData.pedido = [];
-        builder.Prompts.choice(session, getPreguntas('¡Hola '+ getName(session) +'! (wave)\n ¿Quieres pedir?'),  "Si|No");
+        var nombre = '¡Hola '+ getName(session) +'! (wave)\n ¿Quieres pedir?';
+        builder.Prompts.choice(session, getPreguntas(nombre),  "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     }, function (session, results) {
         switch (results.response.entity) {
