@@ -54,9 +54,9 @@ function getName(session) {
 }
 
 
-intents.matches('Pedir', '/pedir');
+intents.matches('Pedir', '/SaberHora');
 
-bot.dialog('/pedir', [
+bot.dialog('/SaberHora',[
     function (session, args, next) {
         session.send('Genial! ¿A que hora comes?');
         var msg = new builder.Message(session)
@@ -80,10 +80,33 @@ bot.dialog('/pedir', [
                     ]),
             ]);
         builder.Prompts.choice(session, msg, "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
-
     },
+    function(session,results){
+        session.userData.time = null;
+        switch (results.response.entity) {
+            case '12:15 - 13:15':
+                session.userData.time = results.response.entity;
+                session.beginDialog('/pedir');
+                break;
+
+            case '13:15 - 14:15':
+                session.userData.time = results.response.entity;
+                session.beginDialog('/pedir');
+                break;
+            case '14:15 - 15:15':
+                session.userData.time = results.response.entity;
+                session.beginDialog('/pedir');
+                break
+
+        }
+    }
+]);
+
+bot.dialog('/pedir', [
+    
+   
     function (session, results, next) {
-        var pregunta = function(){
+        
             session.send('Ok (y) ¿Qué te gustaría pedir?');
 
         //Formato carrusel
@@ -118,63 +141,9 @@ bot.dialog('/pedir', [
             ]);
 
         builder.Prompts.choice(session, msg, "Comida|Bebida|Postre");
+        
 
-
-        }
-        session.userData.time = null;
-        switch (results.response.entity) {
-            case '12:15 - 13:15':
-                session.userData.time = results.response.entity;
-                pregunta();
-                break;
-
-            case '13:15 - 14:15':
-                session.userData.time = results.response.entity;
-                pregunta();
-                break;
-            case '14:15 - 15:15':
-                session.userData.time = results.response.entity;
-                pregunta();
-                break
-
-        }
-
-        // builder.Prompts.choice(session, 'Ok (y) ¿Qué te gustaría pedir?', 'Comida|Bebida|Postre');
-        /*session.send('Ok (y) ¿Qué te gustaría pedir?');
-
-        //Formato carrusel
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                new builder.HeroCard(session)
-                    .title("Comida")
-                    .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
-                    ])
-                    .buttons([
-                        builder.CardAction.imBack(session, "Comida", "Seleccionar")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Bebida")
-                    .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
-                    ])
-                    .buttons([
-                        builder.CardAction.imBack(session, "Bebida", "Seleccionar")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Postre")
-                    .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
-                    ])
-                    .buttons([
-                        builder.CardAction.imBack(session, "Postre", "Seleccionar")
-                    ])
-            ]);
-
-        builder.Prompts.choice(session, msg, "Comida|Bebida|Postre");
-*/
+        
     },
     function (session, results) {
         if (results.response) {
