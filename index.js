@@ -34,16 +34,16 @@ server.get(/\/public\/?.*/, restify.serveStatic({
 //=========================================================
 bot.dialog('/', intents);
 
-intents.matches('Saludo','/Saludo' );
+intents.matches('Saludo', '/Saludo');
 
-bot.dialog('/Saludo',[
+bot.dialog('/Saludo', [
     function (session, args, next) {
         //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
         // session.send('¡Hola %s! (wave)', session.message.address.user.name)
         //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
         session.userData.pedido = [];
-        var nombre = '¡Hola '+ getName(session) +'! (wave)\n ¿Quieres pedir?';
-        builder.Prompts.choice(session, getConfirmacion(session,nombre),  "Si|No");
+        var nombre = '¡Hola ' + getName(session) + '! (wave)\n ¿Quieres pedir?';
+        builder.Prompts.choice(session, getConfirmacion(session, nombre), "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     }, function (session, results) {
         switch (results.response.entity) {
@@ -60,54 +60,13 @@ intents.matches('Despedida', function (session, args, next) {
     session.send('Adios %s, hasta la proxima.', getName(session));
 });
 
-function getName(session) {
-    var user = session.message.address.user.name;
-    console.log(user);
-    return user.split(' ')[0];
-}
-function getConfirmacion(session,pregunta) {
-                    var confirmacion = new builder.Message(session)
-                        .textFormat(builder.TextFormat.xml)
-                        .attachmentLayout(builder.AttachmentLayout.carousel)
-                        .attachments([
-                            new builder.HeroCard(session)
-                                .title(pregunta)
-                                .buttons([
-                                    builder.CardAction.imBack(session, 'Si', 'Si'),
-                                    builder.CardAction.imBack(session, 'No', 'No')
-                                ])
-
-                        ]);
-                    return confirmacion;
-
-                }
-
 intents.matches('Pedir', '/SaberHora');
 
 bot.dialog('/SaberHora', [
     function (session, args, next) {
         session.send('Genial! ¿A que hora comes?(o)');
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                new builder.HeroCard(session)
-                    .title("12:15 - 13:15")
-                    .buttons([
-                        builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("13:15 - 14:15")
-                    .buttons([
-                        builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("14:15 - 15:15")
-                    .buttons([
-                        builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
-                    ]),
-            ]);
-        builder.Prompts.choice(session, msg, "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
+
+        builder.Prompts.choice(session, elegirHoraRecogida(session), "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
     },
     function (session, results) {
         session.userData.time = null;
@@ -131,47 +90,9 @@ bot.dialog('/SaberHora', [
 ]);
 
 bot.dialog('/pedir', [
-
-
     function (session, results, next) {
-
         session.send('Ok (y) ¿Qué te gustaría pedir?');
-
-        //Formato carrusel
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                new builder.HeroCard(session)
-                    .title("Comida")
-                    .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
-                    ])
-                    .buttons([
-                        builder.CardAction.imBack(session, "Comida", "Seleccionar")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Bebida")
-                    .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
-                    ])
-                    .buttons([
-                        builder.CardAction.imBack(session, "Bebida", "Seleccionar")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Postre")
-                    .images([
-                        builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
-                    ])
-                    .buttons([
-                        builder.CardAction.imBack(session, "Postre", "Seleccionar")
-                    ])
-            ]);
-
-        builder.Prompts.choice(session, msg, "Comida|Bebida|Postre");
-
-
-
+        builder.Prompts.choice(session, elegirTipoAlimento(session), "Comida|Bebida|Postre");
     },
     function (session, results) {
         if (results.response) {
@@ -179,9 +100,7 @@ bot.dialog('/pedir', [
 
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
             var categorias = db.getCategorias(results.response.entity) //la base de datos es de mentira de momento          
-
             builder.Prompts.choice(session, '¿Qué tipo te apetece?:P', categorias);
-
         }
     },
     function (session, results) {
@@ -199,8 +118,7 @@ bot.dialog('/pedir', [
         if (results.response) {
             session.send('¡Perfecto! Marchando **%s**', results.response.entity);
             session.userData.pedido.push(results.response.entity);
-            
-            builder.Prompts.choice(session, getConfirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
+            builder.Prompts.choice(session, confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
         }
     },
     function (session, results) {
@@ -216,7 +134,7 @@ bot.dialog('/pedir', [
                 session.send("Y llegará a las **%s**", session.userData.time)
                 session.userData.pedido = [];
 
-                builder.Prompts.choice(session, getConfirmacion(session,"¿Es correcto?"), 'Si|No');
+                builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
                 break;
         }
     },
@@ -259,3 +177,88 @@ intents.matches('EasterEggFisica', function (session, args, next) {
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
 });
+
+//FUNCTIONS
+
+//Devuelve el Nombre sin apellido del usuario
+function getName(session) {
+    var user = session.message.address.user.name;
+    console.log(user);
+    return user.split(' ')[0];
+}
+//Te permite crear una HeroCard con una pregunta cualquiera y que tenga por respuesta Si y No
+function confirmacion(session, pregunta) {
+    var confirmacion = new builder.Message(session)
+        .textFormat(builder.TextFormat.xml)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments([
+            new builder.HeroCard(session)
+                .title(pregunta)
+                .buttons([
+                    builder.CardAction.imBack(session, 'Si', 'Si'),
+                    builder.CardAction.imBack(session, 'No', 'No')
+                ])
+
+        ]);
+    return confirmacion;
+
+}
+
+//Función para elegir el tipo de alimento que el usuario quiere
+function elegirTipoAlimento(session) {
+    var msg = new builder.Message(session)
+        .textFormat(builder.TextFormat.xml)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments([
+            new builder.HeroCard(session)
+                .title("Comida")
+                .images([
+                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+                ])
+                .buttons([
+                    builder.CardAction.imBack(session, "Comida", "Seleccionar")
+                ]),
+            new builder.HeroCard(session)
+                .title("Bebida")
+                .images([
+                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
+                ])
+                .buttons([
+                    builder.CardAction.imBack(session, "Bebida", "Seleccionar")
+                ]),
+            new builder.HeroCard(session)
+                .title("Postre")
+                .images([
+                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
+                ])
+                .buttons([
+                    builder.CardAction.imBack(session, "Postre", "Seleccionar")
+                ])
+        ]);
+    return msg;
+}
+
+//Función que permite preguntar a traves de una HeroCard en que intervalo de tiempo el usuario quiere recoger el pedido.
+function elegirHoraRecogida(session) {
+    var msg = new builder.Message(session)
+        .textFormat(builder.TextFormat.xml)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments([
+            new builder.HeroCard(session)
+                .title("12:15 - 13:15")
+                .buttons([
+                    builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
+                ]),
+            new builder.HeroCard(session)
+                .title("13:15 - 14:15")
+                .buttons([
+                    builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
+                ]),
+            new builder.HeroCard(session)
+                .title("14:15 - 15:15")
+                .buttons([
+                    builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
+                ]),
+        ]);
+        return msg;
+}
