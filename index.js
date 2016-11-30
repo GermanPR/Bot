@@ -64,17 +64,17 @@ bot.dialog('/SaberHora',[
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                    .title("**12:15 - 13:15**")
+                    .title("12:15 - 13:15")
                     .buttons([
                         builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
                     ]),
                 new builder.HeroCard(session)
-                    .title("**13:15 - 14:15**")
+                    .title("13:15 - 14:15")
                     .buttons([
                         builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
                     ]),
                 new builder.HeroCard(session)
-                    .title("**14:15 - 15:15**")
+                    .title("14:15 - 15:15")
                     .buttons([
                         builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
                     ]),
