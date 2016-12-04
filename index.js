@@ -209,13 +209,14 @@ function getName(session) {
     }else if( user == 'Paola Boudouresques'){
         user = 'pringada';
         return user;
-    }else if(user == 'Germen Parada'){
+    }else if(user == 'German Parada'){
         user = 'jefe';
         return user;
     }else{
         return user.split(' ')[0];
     }
 }
+
 //Te permite crear una HeroCard con una pregunta cualquiera y que tenga por respuesta Si y No
 function confirmacion(session, pregunta) {
     var confirmacion = new builder.Message(session)
