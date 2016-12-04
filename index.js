@@ -203,7 +203,7 @@ intents.matches('Despedida', function (session, args, next) {
 function getName(session) {
     var user = session.message.address.user.name;
     console.log(user);
-    return user.split(' ')[1];
+    return user.split(' ')[0];
 }
 //Te permite crear una HeroCard con una pregunta cualquiera y que tenga por respuesta Si y No
 function confirmacion(session, pregunta) {
