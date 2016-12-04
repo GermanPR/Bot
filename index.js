@@ -154,7 +154,7 @@ intents.matches('VerInventario', function (session, args, next) {
 
 intents.matches('Estado', [
     function(session,args,next){
-    session.send('Hasta los h****s de los niños!')
+    session.send('Muy bien!')
     builder.Prompts.choice(session, confirmacion(session, '¿Quieres comer?'), "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     }, function (session, results) {
@@ -203,7 +203,7 @@ intents.matches('Despedida', function (session, args, next) {
 function getName(session) {
     var user = session.message.address.user.name;
     console.log(user);
-    return user.split(' ')[0];
+    return user.split(' ')[1];
 }
 //Te permite crear una HeroCard con una pregunta cualquiera y que tenga por respuesta Si y No
 function confirmacion(session, pregunta) {
@@ -280,4 +280,46 @@ function elegirHoraRecogida(session) {
                 ]),
         ]);
         return msg;
+}
+
+sql = require('mssql');
+ 
+    config = {
+        user: 'cafeterialiceodefinitivo',
+        password: 'cvk,9,qp',
+        server: 'cafeterialiceodefinitivo.database.windows.net',
+        database: 'botgerbas',
+
+        options: {
+            encrypt: true// Use this if you're on Windows Azure 
+        }
+    };
+var connection = new sql.Connection(config, function (err) {
+        if (err) {
+            console.log(err);
+        }else{
+            console.log('Conectado');
+            console.log(getgg());
+            }
+});
+
+function getgg() {
+        var hola;
+        var request = new sql.Request(connection);
+
+         request.query('select * from Comida', function (err, results) {
+            if (err) {
+                console.log(err);
+            }else{
+                console.log('conected');
+                console.log(results);
+               hola = results;
+            }
+            
+            
+        })
+        return hola;
+        
+        
+        
 }

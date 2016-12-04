@@ -10,26 +10,31 @@ var sql = require('mssql'),
             encrypt: true// Use this if you're on Windows Azure 
         }
     };
-
-exports.getPostres = function (callback) {
-    var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }
-        var request = new sql.Request(connection);
-        request.query('select * from postres', function (err, results) {
+exports.query = function(cosa, tipo){
+    var request = new sql.Request(connection);
+     return request.query('select '+ cosa +' from '+tipo, function (err, results) {
             if (err) {
                 console.log(err);
             } else {
-                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
-                callback(results);
+                return results;
             }
         })
+        
+}
 
+exports.getInfo = function (cosa, tipo) {
+    var connection = new sql.Connection(config, function (err) {
+        if (err) {
+            console.log(err);
+        }else{
+        var request = new sql.Request(connection);
+
+        }
     });
+    
 };
 
-exports.getBebidas = function (callback) {
+exports.getBbidas = function (callback) {
     var connection = new sql.Connection(config, function (err) {
         if (err) {
             console.log(err);

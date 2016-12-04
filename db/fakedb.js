@@ -20,7 +20,7 @@ exports.getProductos = function(categoria) {
         case 'Fruta':
             return ['Plátano', 'Manzana', 'Melón'];
         case 'Bocata':
-            return ['Bocata de tortilla', 'Bocata de bacon y queso fundido', 'Bocata de lomo y queso fundido', 'Bocata de jamón serran y queso brie'];
+            return ['Bocata de tortilla', 'Bocata de bacon y queso fundido', 'Bocata de lomo y queso fundido', 'Bocata de jamón serrano y queso brie'];
         case 'Pizza':
             return ['Pizza margarita', 'Pizza de jamón y queso', 'Pizza de champiñones y jamón', 'Pizza peperoni'];
         case 'Wrap':
