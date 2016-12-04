@@ -206,10 +206,10 @@ function getName(session) {
     if( user == 'Xaquín Fernández' || user == 'Adrián Gabas' ){
         user = 'guapo';
         return user;
-    }else if( user = 'Paola Boudouresques'){
+    }else if( user == 'Paola Boudouresques'){
         user = 'pringada';
         return user;
-    }else if(user = 'Germen Parada'){
+    }else if(user == 'Germen Parada'){
         user = 'jefe';
         return user;
     }else{
