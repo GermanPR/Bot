@@ -203,11 +203,17 @@ intents.matches('Despedida', function (session, args, next) {
 function getName(session) {
     var user = session.message.address.user.name;
     console.log(user);
-    if( user == 'Xaquín Fernández'){
+    if( user == 'Xaquín Fernández' || user == 'Adrián Gabas' ){
         user = 'guapo';
         return user;
+    }else if( user = 'Paola Boudouresques'){
+        user = 'pringada';
+        return user;
+    }else if(user = 'Germen Parada'){
+        user = 'jefe';
+        return user;
     }else{
-    return user.split(' ')[0];
+        return user.split(' ')[0];
     }
 }
 //Te permite crear una HeroCard con una pregunta cualquiera y que tenga por respuesta Si y No
