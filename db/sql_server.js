@@ -1,4 +1,4 @@
-var mysql = require('mysql'),
+/*var mysql = require('mysql'),
     mySQLconnString = process.env.MYSQLCONNSTR_localdb,
     exports = module.exports = {};
  
@@ -73,4 +73,4 @@ exports.test = function() {
     });
  
     connection.end();
-};
+};*/
