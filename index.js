@@ -155,7 +155,7 @@ intents.matches('VerInventario', function (session, args, next) {
 
 intents.matches('Estado', [
     function(session,args,next){
-    session.send('Muy bien!')
+    session.send('Muy bien!!')
     builder.Prompts.choice(session, confirmacion(session, '¿Quieres comer?'), "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     }, function (session, results) {
