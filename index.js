@@ -200,7 +200,7 @@ intents.matches('Despedida', function (session, args, next) {
 
 //FUNCTIONS
 
-//Devuelve el Nombre sin apellido del usuario
+//Devuelve el Nombre sin apellido del usuario.
 function getName(session) {
     var user = session.message.address.user.name;
     console.log(user);
