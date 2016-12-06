@@ -16,6 +16,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
+
 //Connection with MS Bot Framework
 var connector = new builder.ChatConnector({
     appId: config.AppId,
@@ -294,44 +295,5 @@ function elegirHoraRecogida(session) {
         return msg;
 }
 
-sql = require('mssql');
- 
-    config = {
-        user: 'cafeterialiceodefinitivo',
-        password: 'cvk,9,qp',
-        server: 'cafeterialiceodefinitivo.database.windows.net',
-        database: 'botgerbas',
 
-        options: {
-            encrypt: true// Use this if you're on Windows Azure 
-        }
-    };
-var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }else{
-            console.log('Conectado');
-            console.log(getgg());
-            }
-});
-
-function getgg() {
-        var hola;
-        var request = new sql.Request(connection);
-
-         request.query('select * from Comida', function (err, results) {
-            if (err) {
-                console.log(err);
-            }else{
-                console.log('conected');
-                console.log(results);
-               hola = results;
-            }
-            
-            
-        })
-        return hola;
-        
-        
-        
-}
+mysql.test();

@@ -1,80 +1,76 @@
-var sql = require('mssql'),
-    exports = module.exports = {},
-    config = {
-        user: 'cafeterialiceodefinitivo',
-        password: 'cvk,9,qp',
-        server: 'cafeterialiceodefinitivo.database.windows.net',
-        database: 'botgerbas',
-
-        options: {
-            encrypt: true// Use this if you're on Windows Azure 
-        }
-    };
-exports.query = function(cosa, tipo){
-    var request = new sql.Request(connection);
-     return request.query('select '+ cosa +' from '+tipo, function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                return results;
-            }
-        })
-        
-}
-
-exports.getInfo = function (cosa, tipo) {
-    var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }else{
-        var request = new sql.Request(connection);
-
-        }
-    });
-    
-};
-
-exports.getBbidas = function (callback) {
-    var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }
-        var request = new sql.Request(connection);
-        request.query('select * from Bebidas', function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
-                callback(results);
-            }
-        })
-
-    });
-};
-
-exports.getComida = function (callback) {
-    var connection = new sql.Connection(config, function (err) {
-        if (err) {
-            console.log(err);
-        }
-        var request = new sql.Request(connection);
-        request.query('select * from comida', function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("el producto es un " + results[0].tipo + " que vale " + results[0].precio + "€");
-                callback(results);
-            }
-        })
-
-    });
-};
-
-
-exports.getPostres = function (results) {
-    var arrayBebidas = [];
-    for (var i = 0; i < results.length; i++) {
-        arrayBebidas.push(results[i]);
-    }
-    console.log(arrayBebidas);
+var mysql = require('mysql'),
+    mySQLconnString = process.env.MYSQLCONNSTR_localdb,
+    exports = module.exports = {};
+ 
+exports.test = function() {
+ 
+    console.log('MYSQLCONNSTR_localdb');
+    console.log(process.env.MYSQLCONNSTR_localdb);
+ 
+    function getElement(params, key) {
+        for (var i = 0; i < params.length; i++) { if (params[i].indexOf(key) > -1) {
+                return params[i].substring(params[i].indexOf('=') + 1);
+            }
+        }
+ 
+        throw "Key doesn't exist!";
+    }
+ 
+    var params = mySQLconnString.split(';'),
+        dbhost = getElement(params, 'Data Source'),
+        dbport = dbhost.substring(dbhost.indexOf(':') + 1),
+        dbhost = dbhost.substring(0, dbhost.indexOf(':')); //host without port    
+ 
+    var connection = mysql.createConnection({
+        host: dbhost,
+        port: dbport,
+        user: getElement(params, 'User Id'),
+        password: getElement(params, 'Password'),
+        database: getElement(params, 'Database')
+ 
+    });
+ 
+    connection.connect(function(error) {
+        if (error);
+        console.error(error);
+    });
+ 
+    connection.query('DROP TABLE test', function(err, result) {
+ 
+        if (!err) {
+            console.log('Result: ', result);
+        }
+        else {
+            console.error(err);
+        }
+    });
+ 
+    connection.query('CREATE TABLE test (id INT(100) NOT NULL AUTO_INCREMENT, name VARCHAR(50), PRIMARY KEY(id))', function(err, result) {
+ 
+        if (!err) {
+            console.log('Result: ', result);
+        }
+        else {
+            console.error(err);
+        }
+    });
+ 
+    var values = { name: 'Gisela' };
+    connection.query('INSERT INTO test SET ?', values, function(err, result) {
+        if (err) {
+            console.error(err);
+        }
+    });
+ 
+    connection.query('SELECT * from test', function(err, rows, fields) {
+ 
+        if (!err) {
+            console.log('Rows: ', rows);
+        }
+        else {
+            console.log('error:', err);
+        }
+    });
+ 
+    connection.end();
 };
