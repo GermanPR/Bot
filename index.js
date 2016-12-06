@@ -295,5 +295,5 @@ function elegirHoraRecogida(session) {
         return msg;
 }
 
-
+var mysql = require('./db/sql_server.js');
 mysql.test();
