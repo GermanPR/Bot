@@ -140,7 +140,7 @@ bot.dialog('/pedir', [
     function (session, results) {
         switch (results.response.entity) {
             case 'Si':
-                session.endDialog('Vale, Perfecto! Que aproveche!');
+                session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
                 break;
             case 'No':
                 session.endDialog('Vale, pedido cancelado');
