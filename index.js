@@ -204,13 +204,13 @@ intents.matches('Despedida', function (session, args, next) {
 function getName(session) {
     var user = session.message.address.user.name;
     console.log(user);
-    if( user == 'Xaquín Fernández' || user == 'Adrián Gabas' ){
+    if( user == 'Xaquín Fernández'){
         user = 'guapo';
         return user;
     }else if( user == 'Paola Boudouresques'){
         user = 'pringada';
         return user;
-    }else if(user == 'German Parada'){
+    }else if(user == 'German Parada' || user == 'Adrian Gabas'){
         user = 'jefe';
         return user;
     }else{
