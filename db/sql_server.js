@@ -31,8 +31,9 @@ exports.test = function() {
     });
  
     connection.connect(function(error) {
-        if (error);
+        if (error){
         console.error(error);
+        }
     });
  
     connection.query('DROP TABLE test', function(err, result) {
