@@ -213,6 +213,9 @@ function getName(session) {
     }else if( user == 'Aitana López'){
         user = 'sisster';
         return user;
+    }else if( user == 'PLSY'){
+        user = 'chache tu eres mi sielo';
+        return user;
     }else if(user == 'German Parada' || user == 'Adrian Gabas'){
         user = 'jefe';
         return user;
