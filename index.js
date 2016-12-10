@@ -211,7 +211,7 @@ function getName(session) {
         user = 'pringada';
         return user;
     }else if(user == 'German Parada' || user == 'Adrian Gabas'){
-        user = 'jefe';
+        user = 'JEFAZO';
         return user;
     }else{
         return user.split(' ')[0];
