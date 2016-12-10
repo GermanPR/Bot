@@ -210,11 +210,11 @@ function getName(session) {
     }else if( user == 'Paola Boudouresques'){
         user = 'pringada';
         return user;
-    }else if( user == 'Aitana López'){
+    }else if( user == 'Aitana0101'){
         user = 'Sister';
         return user;
     }else if(user == 'German Parada' || user == 'Adrian Gabas'){
-        user = 'JEFAZO';
+        user = 'jefe';
         return user;
     }else{
         return user.split(' ')[0];
