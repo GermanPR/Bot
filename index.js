@@ -303,4 +303,4 @@ function elegirHoraRecogida(session) {
 }
 
 var mysql = require('./db/sql_server.js');
-mysql.test();
+/*mysql.test();*/
