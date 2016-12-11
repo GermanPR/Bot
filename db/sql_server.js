@@ -110,15 +110,16 @@ exports.testy = function (session) {
                         console.error(error);
                 }
         });
-       connection.query('SELECT * from test', function (session,err, rows, fields) {
+      session.userData.jd = connection.query('SELECT * from test', function (err, results) {
 
                 if (!err) {
-                        session.send('Rows: ', rows);
+                        return results;
                 }
                 else {
-                        session.send('error:', err);
+                        console.log('error:', err);
                 }
         });
+        session.send(session.userData.jd);
 
         connection.end();
 }
