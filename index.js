@@ -192,6 +192,7 @@ intents.matches('TeamCounter', function (session, args, next) {
 
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
+    mysql.testy();
 });
 
 intents.matches('Despedida', function (session, args, next) {

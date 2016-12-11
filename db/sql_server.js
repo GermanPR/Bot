@@ -2,7 +2,7 @@ var mysql = require('mysql'),
     mySQLconnString = process.env.MYSQLCONNSTR_localdb,
     exports = module.exports = {};
  
-exports.test = function() {
+/*exports.test = function() {
  
     console.log('MYSQLCONNSTR_localdb');
     console.log(process.env.MYSQLCONNSTR_localdb);
@@ -74,4 +74,50 @@ exports.test = function() {
     });
  
     connection.end();
-};
+};*/
+
+exports.testy = function() {
+ 
+    /*console.log('MYSQLCONNSTR_localdb');
+    console.log(process.env.MYSQLCONNSTR_localdb);*/
+ 
+    function getElement(params, key) {
+        for (var i = 0; i < params.length; i++) { if (params[i].indexOf(key) > -1) {
+                return params[i].substring(params[i].indexOf('=') + 1);
+            }
+        }
+ 
+        throw "Key doesn't exist!";
+    }
+ 
+    var params = mySQLconnString.split(';'),
+        dbhost = getElement(params, 'Data Source'),
+        dbport = dbhost.substring(dbhost.indexOf(':') + 1),
+        dbhost = dbhost.substring(0, dbhost.indexOf(':')); //host without port    
+ 
+    var connection = mysql.createConnection({
+        host: dbhost,
+        port: dbport,
+        user: getElement(params, 'User Id'),
+        password: getElement(params, 'Password'),
+        database: getElement(params, 'Database')
+ 
+    });
+ 
+    connection.connect(function(error) {
+        if (error){
+        console.error(error);
+        }
+    });
+        connection.query('SELECT * from test', function(err, rows, fields) {
+ 
+        if (!err) {
+            session.send('Rows: ', rows);
+        }
+        else {
+            session.send('error:', err);
+        }
+    });
+ 
+    connection.end();
+}
