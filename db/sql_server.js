@@ -76,7 +76,7 @@ var mysql = require('mysql'),
     connection.end();
 };*/
 
-exports.testy = function () {
+exports.testy = function (session) {
 
         /*console.log('MYSQLCONNSTR_localdb');
         console.log(process.env.MYSQLCONNSTR_localdb);*/
@@ -110,13 +110,13 @@ exports.testy = function () {
                         console.error(error);
                 }
         });
-        connection.query('SELECT * from test', function (session,err, rows, fields) {
+       connection.query('SELECT * from test', function (session,err, rows, fields) {
 
                 if (!err) {
-                        session.send('Rows: ', rows);
+                        console.log('Rows: ', rows);
                 }
                 else {
-                        session.send('error:', err);
+                        console.log('error:', err);
                 }
         });
 
