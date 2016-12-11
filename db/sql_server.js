@@ -113,10 +113,10 @@ exports.testy = function (session) {
        connection.query('SELECT * from test', function (session,err, rows, fields) {
 
                 if (!err) {
-                        console.log('Rows: ', rows);
+                        session.send('Rows: ', rows);
                 }
                 else {
-                        console.log('error:', err);
+                        session.send('error:', err);
                 }
         });
 
