@@ -5,6 +5,7 @@ var restify = require('restify'),
     intents = new builder.IntentDialog({ recognizers: [recognizer] }),
     db = require('./db/fakedb'), /* Esto está simulando una base de datos hasta que montemos la definitiva*/
     fs = require('fs');
+    var mysql = require('./db/sql_server.js');
 
 //=========================================================
 // Bot Setup
@@ -302,5 +303,5 @@ function elegirHoraRecogida(session) {
         return msg;
 }
 
-var mysql = require('./db/sql_server.js');
+
 /*mysql.test();*/
