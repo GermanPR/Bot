@@ -119,7 +119,7 @@ exports.testy = function (session) {
                         console.log('error:', err);
                 }
         });
-        session.send(session.userData.jd);
+        session.send(session.userData.jd + 'j');
 
         connection.end();
 }
