@@ -110,7 +110,7 @@ exports.testy = function (session) {
                         console.error(error);
                 }
         });
-      session.userData.jd = connection.query('SELECT * from test', function (err, results) {
+      session.userData.jd = connection.query('SELECT * from tipo', function (err, results) {
 
                 if (!err) {
                         return results;
