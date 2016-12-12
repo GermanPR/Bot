@@ -104,7 +104,6 @@ exports.testy = function (session) {
                 database: getElement(params, 'Database')
 
         });
-        session.send(mySQLconnString);
 
         connection.connect(function (error) {
                 if (error) {
