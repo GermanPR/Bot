@@ -110,7 +110,7 @@ exports.getData = function (session, tabla, id , field) {
                         console.error(error);
                 }
         });
-      connection.query('SELECT * from'+ tabla +' where id=' + id, function (err, results) {
+      connection.query('SELECT * from '+ tabla +' where id=' + id, function (err, results) {
 
                 if (!err) {
                         session.send(results[0].field);
