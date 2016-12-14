@@ -110,7 +110,7 @@ exports.testy = function (session) {
                         console.error(error);
                 }
         });
-      connection.query('SELECT * from tipo where id=1', function (err, results) {
+      connection.query('SELECT * from tipo where id=2', function (err, results) {
 
                 if (!err) {
                         session.send(results[0].Nombre);
