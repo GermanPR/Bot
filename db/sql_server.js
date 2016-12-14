@@ -76,7 +76,7 @@ exports.test = function() {
     connection.end();
 };
 
-exports.testy = function (session) {
+exports.getData = function (session, tabla, id , field) {
 
         console.log('MYSQLCONNSTR_localdb');
         console.log(process.env.MYSQLCONNSTR_localdb);
@@ -110,10 +110,10 @@ exports.testy = function (session) {
                         console.error(error);
                 }
         });
-      connection.query('SELECT * from tipo where id=2', function (err, results) {
+      connection.query('SELECT * from'+ tabla +' where id=' + id, function (err, results) {
 
                 if (!err) {
-                        session.send(results[0].Nombre);
+                        session.send(results[0].field);
                 }
                 else {
                         console.log('error:', err);
