@@ -76,7 +76,7 @@ exports.test = function() {
     connection.end();
 };
 
-/*exports.testy = function (session) {
+exports.testy = function (session) {
 
         console.log('MYSQLCONNSTR_localdb');
         console.log(process.env.MYSQLCONNSTR_localdb);
@@ -110,16 +110,17 @@ exports.test = function() {
                         console.error(error);
                 }
         });
-      session.userData.jd = connection.query('SELECT * from tipo', function (err, results) {
+      connection.query('SELECT * from tipo where id=1', function (err, results) {
 
                 if (!err) {
-                        return results;
+                        session.send(results[0].Nombre);
                 }
                 else {
                         console.log('error:', err);
                 }
         });
-        session.send(session.userData.jd + 'j');
+        
 
         connection.end();
-}*/
+        
+}
