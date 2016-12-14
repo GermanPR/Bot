@@ -2,7 +2,7 @@ var mysql = require('mysql'),
         mySQLconnString = process.env.MYSQLCONNSTR_localdb,
         exports = module.exports = {};
 
-/*exports.test = function() {
+exports.test = function() {
  
     console.log('MYSQLCONNSTR_localdb');
     console.log(process.env.MYSQLCONNSTR_localdb);
@@ -74,12 +74,12 @@ var mysql = require('mysql'),
     });
  
     connection.end();
-};*/
+};
 
-exports.testy = function (session) {
+/*exports.testy = function (session) {
 
-        /*console.log('MYSQLCONNSTR_localdb');
-        console.log(process.env.MYSQLCONNSTR_localdb);*/
+        console.log('MYSQLCONNSTR_localdb');
+        console.log(process.env.MYSQLCONNSTR_localdb);
 
         function getElement(params, key) {
                 for (var i = 0; i < params.length; i++) {
@@ -122,4 +122,4 @@ exports.testy = function (session) {
         session.send(session.userData.jd + 'j');
 
         connection.end();
-}
+}*/
