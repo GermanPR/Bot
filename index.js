@@ -304,4 +304,4 @@ function elegirHoraRecogida(session) {
 }
 
 
-/*mysql.test();*/
+mysql.test();
