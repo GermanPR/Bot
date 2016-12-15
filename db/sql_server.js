@@ -43,7 +43,7 @@ exports.changeStock = function() {
  
  
     connection.end();
-};
+}
 
 exports.getData = function (session, tabla, id , field) {
 
