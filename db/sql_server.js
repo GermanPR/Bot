@@ -46,7 +46,7 @@ exports.changeStock = function (session, tabla, poner, where) {
             connection.end();
 }
 
-exports.getData = function (session, tabla, id, field, callback) {
+exports.getData = function (session, tabla, nombre, field, callback) {
 
         function getElement(params, key) {
                 for (var i = 0; i < params.length; i++) {
