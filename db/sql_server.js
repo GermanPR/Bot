@@ -46,7 +46,7 @@ exports.changeStock = function (session, tabla, poner, where) {
             connection.end();
 }
 
-exports.getData = function (session, tabla, callback) {
+exports.getData = function (session, tabla,field, callback) {
 
         function getElement(params, key) {
                 for (var i = 0; i < params.length; i++) {
@@ -78,10 +78,10 @@ exports.getData = function (session, tabla, callback) {
                 }
         });
         connection.query('SELECT * from ' + tabla , function (err, results) {
-                var resultados;
+                var resultados = [];
                 if (!err) {
                         for (var i = 0; i < results.length; i++) {
-                                resultados.push(results[0].Nombre);
+                                resultados.push(results[i].field);
                                 
                         }
                         callback(null,resultados);
