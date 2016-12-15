@@ -109,8 +109,14 @@ bot.dialog('/pedir', [
             session.send('Has elegido **%s**(cool)', categoria);
 
             //Dentro de esa categoría habría que mostar los productos que hay
-            var productos = db.getProductos(categoria);
-            builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', productos);
+          /*  var productos = db.getProductos(categoria);*/
+          session.userData.productos=[];
+          mysql.getData(session,'tipo','Nombre',function(err,resultados){
+             session.userData.productos = resultados;
+             builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', session.userData.productos);
+          });
+          
+          
         }
     },
     function (session, results) {
@@ -193,7 +199,6 @@ intents.matches('TeamCounter', function (session, args, next) {
 
 intents.onDefault(function (session) {
     session.send('Lo siento, no lo he entendido.');
-    mysql.getData(session,'tipo','3','Nombre');
 });
 
 intents.matches('Despedida', function (session, args, next) {
@@ -208,12 +213,6 @@ function getName(session) {
     console.log(user);
     if( user == 'Xaquín Fernández'){
         user = 'guapo';
-        return user;
-    }else if( user == 'Paola Boudouresques'){
-        user = 'pringada';
-        return user;
-    }else if( user == 'Aitana López'){
-        user = 'sisster';
         return user;
     }else if( user == 'PLSY'){
         user = 'chache tu eres mi sielo';
@@ -302,6 +301,3 @@ function elegirHoraRecogida(session) {
         ]);
         return msg;
 }
-
-
-mysql.test();
