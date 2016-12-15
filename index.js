@@ -110,7 +110,7 @@ bot.dialog('/pedir', [
 
             //Dentro de esa categoría habría que mostar los productos que hay
           /*  var productos = db.getProductos(categoria);*/
-          session.userData.productos=[];
+          session.userData.productos;
           mysql.getData(session,'tipo','Nombre',function(err,resultados){
              session.userData.productos = resultados;
              builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', session.userData.productos);
