@@ -2,12 +2,9 @@ var mysql = require('mysql'),
         mySQLconnString = process.env.MYSQLCONNSTR_localdb,
         exports = module.exports = {};
 
-exports.test = function() {
+exports.changeStock = function() {
  
-    console.log('MYSQLCONNSTR_localdb');
-    console.log(process.env.MYSQLCONNSTR_localdb);
- 
-    function getElement(params, key) {
+ function getElement(params, key) {
         for (var i = 0; i < params.length; i++) { if (params[i].indexOf(key) > -1) {
                 return params[i].substring(params[i].indexOf('=') + 1);
             }
@@ -35,43 +32,15 @@ exports.test = function() {
         console.error(error);
         }
     });
+    
+    connection.query('Update %s Set %s where %s',tabla,set,where,function(err,results){
+            if(err){
+                    console.log(err);
+            }else{
+                    console.log(results);
+            }
+    }
  
-    connection.query('DROP TABLE test', function(err, result) {
- 
-        if (!err) {
-            console.log('Result: ', result);
-        }
-        else {
-            console.error(err);
-        }
-    });
- 
-    connection.query('CREATE TABLE test (id INT(100) NOT NULL AUTO_INCREMENT, name VARCHAR(50), PRIMARY KEY(id))', function(err, result) {
- 
-        if (!err) {
-            console.log('Result: ', result);
-        }
-        else {
-            console.error(err);
-        }
-    });
- 
-    var values = { name: 'Gisela' };
-    connection.query('INSERT INTO test SET ?', values, function(err, result) {
-        if (err) {
-            console.error(err);
-        }
-    });
- 
-    connection.query('SELECT * from test', function(err, rows, fields) {
- 
-        if (!err) {
-            console.log('Rows: ', rows);
-        }
-        else {
-            console.log('error:', err);
-        }
-    });
  
     connection.end();
 };
