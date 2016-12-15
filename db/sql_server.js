@@ -77,11 +77,11 @@ exports.getData = function (session, tabla, nombre, field, callback) {
                         console.error(error);
                 }
         });
-        connection.query('SELECT * from ' + tabla + ' where nombre=' + nombre, function (err, results) {
+        connection.query('SELECT * from ' + tabla , function (err, results) {
                 var resultados;
                 if (!err) {
                         for (var i = 0; i < results.length; i++) {
-                                resultados.push(results[0].Nombre);
+                                resultados.push(results[0].nombre);
                                 
                         }
                         callback(null,resultados);
