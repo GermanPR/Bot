@@ -2,7 +2,7 @@ var mysql = require('mysql'),
         mySQLconnString = process.env.MYSQLCONNSTR_localdb,
         exports = module.exports = {};
 
-exports.changeStock = function() {
+exports.changeStock = function(session,tabla,poner,where) {
  
  function getElement(params, key) {
         for (var i = 0; i < params.length; i++) { if (params[i].indexOf(key) > -1) {
@@ -33,13 +33,13 @@ exports.changeStock = function() {
         }
     });
     
-    connection.query('Update %s Set %s where %s',tabla,set,where,function(err,results){
+    connection.query('Update %s Set %s where %s',tabla,poner,where,function(err,results){
             if(err){
                     console.log(err);
             }else{
                     console.log(results);
             }
-    }
+    });
  
  
     connection.end();
