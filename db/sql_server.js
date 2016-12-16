@@ -77,7 +77,7 @@ exports.getData = function (session, tabla,id,field, callback) {
                         console.error(error);
                 }
         });
-        connection.query('SELECT * from ' + tabla + 'where Id_tipo=' + id, function (err, results) {
+        connection.query('SELECT * from ' + tabla + ' where Id_tipo=' + id, function (err, results) {
                 var resultados = [];
                 if (!err) {
                         for (var i = 0; i < results.length; i++) {
