@@ -96,7 +96,23 @@ bot.dialog('/pedir', [
     },
     function (session, results) {
         if (results.response) {
+            
             session.send('Ok, empecemos con **%s**', results.response.entity);
+            switch(results.response.entity){
+                case 'Comida': 
+                results.response.entity = 1;
+                break;
+                case 'Bebida': 
+                results.response.entity = 2;
+                break;
+                case 'Postre': 
+                results.response.entity = 3;
+                break;
+            }
+            mysql.getData(session,'producto',results.response.entity,'Nombre',function(err,resultados){
+             session.userData.productos = resultados;
+             builder.Prompts.choice(session, '¿Que tipo te apetece?:P', session.userData.productos);
+          });
 
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
             var categorias = db.getCategorias(results.response.entity) //la base de datos es de mentira de momento          

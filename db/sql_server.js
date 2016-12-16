@@ -46,7 +46,7 @@ exports.changeStock = function (session, tabla, poner, where) {
             connection.end();
 }
 
-exports.getData = function (session, tabla,field, callback) {
+exports.getData = function (session, tabla,id,field, callback) {
 
         function getElement(params, key) {
                 for (var i = 0; i < params.length; i++) {
@@ -77,7 +77,7 @@ exports.getData = function (session, tabla,field, callback) {
                         console.error(error);
                 }
         });
-        connection.query('SELECT * from ' + tabla , function (err, results) {
+        connection.query('SELECT * from ' + tabla + 'where id_tipo=' + id, function (err, results) {
                 var resultados = [];
                 if (!err) {
                         for (var i = 0; i < results.length; i++) {
