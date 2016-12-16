@@ -100,13 +100,13 @@ bot.dialog('/pedir', [
             session.send('Ok, empecemos con **%s**', results.response.entity);
             switch(results.response.entity){
                 case 'Comida': 
-                session.userData.Id_tipo = 1;
+                session.userData.Id_tipo = '1';
                 break;
                 case 'Bebida': 
-                session.userData.Id_tipo = 2;
+                session.userData.Id_tipo = '2';
                 break;
                 case 'Postre': 
-                session.userData.Id_tipo = 3;
+                session.userData.Id_tipo = '3';
                 break;
             }
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
