@@ -100,34 +100,50 @@ bot.dialog('/pedir', [
             session.send('Ok, empecemos con **%s**', results.response.entity);
             switch(results.response.entity){
                 case 'Comida': 
-                results.response.entity = 1;
+                session.userData.Id_tipo = 1;
                 break;
                 case 'Bebida': 
-                results.response.entity = 2;
+                session.userData.Id_tipo = 2;
                 break;
                 case 'Postre': 
-                results.response.entity = 3;
+                session.userData.Id_tipo = 3;
                 break;
             }
-            mysql.getData(session,'categoria',results.response.entity,'Nombre',function(err,resultados){
+            //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
+            mysql.getData(session,'categoria',session.userData.Id_tipo,'Nombre',function(err,resultados){
              session.userData.productos = resultados;
              builder.Prompts.choice(session, '¿Que tipo te apetece?:P', session.userData.productos);
           });
-
-            //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
-            var categorias = db.getCategorias(results.response.entity) //la base de datos es de mentira de momento          
-            builder.Prompts.choice(session, '¿Qué tipo te apetece?:P', categorias);
+            
         }
     },
     function (session, results) {
         if (results.response) {
             var categoria = results.response.entity;
             session.send('Has elegido **%s**(cool)', categoria);
+            switch(results.response.entity){
+                case 'Ensalada': 
+                session.userData.Id_categoria = 1;
+                break;
+                case 'Sopas': 
+                session.userData.Id_categoria = 2;
+                break;
+                case 'Sandwich': 
+                session.userData.Id_categoria = 3;
+                break;
+                case 'Pizzas': 
+                session.userData.Id_categoria = 4;
+                break;
+                case 'Plato del día': 
+                session.userData.Id_categoria = 5;
+                break;
+            }
+
 
             //Dentro de esa categoría habría que mostar los productos que hay
-          /*  var productos = db.getProductos(categoria);*/
+          
           session.userData.productos;
-          mysql.getData(session,'producto','Nombre',function(err,resultados){
+          mysql.getData(session,'producto',session.userData.Id_categoria,'Nombre',function(err,resultados){
              session.userData.productos = resultados;
              builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', session.userData.productos);
           });
