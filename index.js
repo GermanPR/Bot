@@ -109,7 +109,7 @@ bot.dialog('/pedir', [
                 results.response.entity = 3;
                 break;
             }
-            mysql.getData(session,'producto',results.response.entity,'Nombre',function(err,resultados){
+            mysql.getData(session,'categoria',results.response.entity,'Nombre',function(err,resultados){
              session.userData.productos = resultados;
              builder.Prompts.choice(session, '¿Que tipo te apetece?:P', session.userData.productos);
           });
