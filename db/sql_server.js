@@ -127,7 +127,7 @@ exports.getPrice = function (session,nombre, callback) {
                         console.error(error);
                 }
         });
-        connection.query('SELECT * from producto where Nombre='+nombre, function (err, results) {
+        connection.query('SELECT * from producto where Nombre=\''+nombre+'\'', function (err, results) {
                 var resultados = [];
                 if (!err) {
                         for (var i = 0; i < results.length; i++) {
