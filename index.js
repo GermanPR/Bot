@@ -92,7 +92,7 @@ bot.dialog('/SaberHora', [
 bot.dialog('/pedir', [
     function (session, results, next) {
         session.send('Ok (y) ¿Qué te gustaría pedir?');
-        builder.Prompts.choice(session, elegirTipoAlimento(session), "Comida|Bebida|Postre");
+        /*builder.Prompts.choice(session, elegirTipoAlimento(session), "Comida|Bebida|Postre");*/
     },
     function (session, results) {
         if (results.response) {
