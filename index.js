@@ -170,7 +170,7 @@ bot.dialog('/pedir', [
             session.userData.pedido.push(results.response.entity);
 
             mysql.getPrice(session, results.response.entity, function (err, resultados) {
-                session.userData.precio_pedido += resultados;
+                session.userData.precio_pedido = session.userData.precio_pedido + parseInt(resultados);
                 session.send('¡Perfecto! Marchando **%s** por **%s**€', results.response.entity, resultados);
                 builder.Prompts.choice(session, confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
             });
