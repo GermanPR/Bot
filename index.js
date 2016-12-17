@@ -98,7 +98,7 @@ bot.dialog('/pedir', [
         if (results.response) {
             
             session.send('Ok, empecemos con **%s**', results.response.entity);
-            switch(results.response.entity){
+            /*switch(results.response.entity){
                 case 'Comida': 
                 session.userData.Id_tipo = '1';
                 session.endDialog('adios');
@@ -111,7 +111,7 @@ bot.dialog('/pedir', [
                 session.userData.Id_tipo = '3';
                 session.endDialog('adios');
                 break;
-            }
+            }*/
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
             mysql.getData(session,'categoria',session.userData.Id_tipo,'Nombre',function(err,resultados){
              session.userData.productos = resultados;
