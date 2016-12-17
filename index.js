@@ -5,7 +5,7 @@ var restify = require('restify'),
     intents = new builder.IntentDialog({ recognizers: [recognizer] }),
     db = require('./db/fakedb'), /* Esto está simulando una base de datos hasta que montemos la definitiva*/
     fs = require('fs');
-    var mysql = require('./db/sql_server.js');
+var mysql = require('./db/sql_server.js');
 
 //=========================================================
 // Bot Setup
@@ -96,82 +96,83 @@ bot.dialog('/pedir', [
     },
     function (session, results) {
         if (results.response) {
-            
+
             session.send('Ok, empecemos con **%s**', results.response.entity);
-            switch(results.response.entity){
-                case 'Comida': 
-                session.userData.Id_tipo = '1';
-                break;
-                case 'Bebida': 
-                session.userData.Id_tipo = '2';
-                break;
-                case 'Postre': 
-                session.userData.Id_tipo = '3';
-                break;
+            switch (results.response.entity) {
+                case 'Comida':
+                    session.userData.Id_tipo = '1';
+                    break;
+                case 'Bebida':
+                    session.userData.Id_tipo = '2';
+                    break;
+                case 'Postre':
+                    session.userData.Id_tipo = '3';
+                    break;
             }
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
-            mysql.getData(session,'categoria','Id_tipo ='+session.userData.Id_tipo,'Nombre',function(err,resultados){
-             session.userData.productos = resultados;
-             builder.Prompts.choice(session, '¿Que tipo te apetece?:P', session.userData.productos);
-          });
-            
+            mysql.getData(session, 'categoria', 'Id_tipo =' + session.userData.Id_tipo, 'Nombre', function (err, resultados) {
+                session.userData.productos = resultados;
+                builder.Prompts.choice(session, '¿Que tipo te apetece?:P', session.userData.productos);
+            });
+
         }
     },
     function (session, results) {
         if (results.response) {
             var categoria = results.response.entity;
             session.send('Has elegido **%s**(cool)', categoria);
-            switch(results.response.entity){
-                case 'Ensalada': 
-                session.userData.Id_categoria = 1;
-                break;
-                case 'Sopas': 
-                session.userData.Id_categoria = 2;
-                break;
-                case 'Sandwich': 
-                session.userData.Id_categoria = 3;
-                break;
-                case 'Pizzas': 
-                session.userData.Id_categoria = 4;
-                break;
-                case 'Plato del día': 
-                session.userData.Id_categoria = 5;
-                break;
-                case 'Aguas y Zumos': 
-                session.userData.Id_categoria = 6;
-                break;
-                case 'Refrescos': 
-                session.userData.Id_categoria = 7;
-                break;
-                case 'Frutas': 
-                session.userData.Id_categoria = 8;
-                break;
-                case 'Bolleria': 
-                session.userData.Id_categoria = 9;
-                break;
+            switch (results.response.entity) {
+                case 'Ensalada':
+                    session.userData.Id_categoria = 1;
+                    break;
+                case 'Sopas':
+                    session.userData.Id_categoria = 2;
+                    break;
+                case 'Sandwich':
+                    session.userData.Id_categoria = 3;
+                    break;
+                case 'Pizzas':
+                    session.userData.Id_categoria = 4;
+                    break;
+                case 'Plato del día':
+                    session.userData.Id_categoria = 5;
+                    break;
+                case 'Aguas y Zumos':
+                    session.userData.Id_categoria = 6;
+                    break;
+                case 'Refrescos':
+                    session.userData.Id_categoria = 7;
+                    break;
+                case 'Frutas':
+                    session.userData.Id_categoria = 8;
+                    break;
+                case 'Bolleria':
+                    session.userData.Id_categoria = 9;
+                    break;
             }
 
 
             //Dentro de esa categoría habría que mostar los productos que hay
-          
-          session.userData.productos;
-          mysql.getData(session,'producto','Id_categoria='+session.userData.Id_categoria,'Nombre',function(err,resultados){
-             session.userData.productos = resultados;
-             builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', session.userData.productos);
-          });
-          
-          
+
+            session.userData.productos;
+            mysql.getData(session, 'producto', 'Id_categoria=' + session.userData.Id_categoria, 'Nombre', function (err, resultados) {
+                session.userData.productos = resultados;
+                builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', session.userData.productos);
+            });
+
+
         }
     },
     function (session, results) {
-        console.dir(results);
+
         if (results.response) {
-            mysql.getPrice(session,results.response.entity,function(err,resultados){
-            
-            session.send('¡Perfecto! Marchando **%s** por **%s**', results.response.entity,resultados);
             session.userData.pedido.push(results.response.entity);
+
+            mysql.getPrice(session, results.response.entity, function (err, resultados) {
+                session.send('¡Perfecto! Marchando **%s** por **%s**€', results.response.entity, resultados);
+                builder.Prompts.choice(session, confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
             });
-            builder.Prompts.choice(session, confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
+
         }
     },
     function (session, results) {
@@ -208,9 +209,9 @@ intents.matches('VerInventario', function (session, args, next) {
 });
 
 intents.matches('Estado', [
-    function(session,args,next){
-    session.send('Muy bien!!')
-    builder.Prompts.choice(session, confirmacion(session, '¿Quieres comer?'), "Si|No");
+    function (session, args, next) {
+        session.send('Muy bien!!')
+        builder.Prompts.choice(session, confirmacion(session, '¿Quieres comer?'), "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     }, function (session, results) {
         switch (results.response.entity) {
@@ -258,16 +259,16 @@ intents.matches('Despedida', function (session, args, next) {
 function getName(session) {
     var user = session.message.address.user.name;
     console.log(user);
-    if( user == 'Xaquín Fernández'){
+    if (user == 'Xaquín Fernández') {
         user = 'guapo';
         return user;
-    }else if( user == 'PLSY'){
+    } else if (user == 'PLSY') {
         user = 'chache tu eres mi sielo';
         return user;
-    }else if(user == 'German Parada' || user == 'Adrian Gabas'){
+    } else if (user == 'German Parada' || user == 'Adrian Gabas') {
         user = 'jefe';
         return user;
-    }else{
+    } else {
         return user.split(' ')[0];
     }
 }
@@ -346,5 +347,5 @@ function elegirHoraRecogida(session) {
                     builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
                 ]),
         ]);
-        return msg;
+    return msg;
 }
