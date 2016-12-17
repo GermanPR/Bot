@@ -81,7 +81,7 @@ exports.getData = function (session, tabla,id,field, callback) {
                 var resultados = [];
                 if (!err) {
                         for (var i = 0; i < results.length; i++) {
-                                resultados.push(results[i].field);
+                                resultados.push(results[i].Nombre);
                                 
                         }
                         callback(null,resultados);
