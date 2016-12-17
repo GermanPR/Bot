@@ -137,6 +137,18 @@ bot.dialog('/pedir', [
                 case 'Plato del día': 
                 session.userData.Id_categoria = 5;
                 break;
+                case 'Aguas y Zumos': 
+                session.userData.Id_categoria = 6;
+                break;
+                case 'Refrescos': 
+                session.userData.Id_categoria = 7;
+                break;
+                case 'Frutas': 
+                session.userData.Id_categoria = 8;
+                break;
+                case 'Bolleria': 
+                session.userData.Id_categoria = 9;
+                break;
             }
 
 
