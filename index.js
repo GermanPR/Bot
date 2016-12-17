@@ -113,7 +113,7 @@ bot.dialog('/pedir', [
                 break;
             }
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
-            mysql.getData(session,'categoria',session.userData.Id_tipo,'Nombre',function(err,resultados){
+            mysql.getData(session,'categoria','Id_tipo ='+session.userData.Id_tipo,'Nombre',function(err,resultados){
              session.userData.productos = resultados;
              builder.Prompts.choice(session, '¿Que tipo te apetece?:P', session.userData.productos);
           });
@@ -146,7 +146,7 @@ bot.dialog('/pedir', [
             //Dentro de esa categoría habría que mostar los productos que hay
           
           session.userData.productos;
-          mysql.getData(session,'producto',session.userData.Id_categoria,'Nombre',function(err,resultados){
+          mysql.getData(session,'producto','Id_categoria='+session.userData.Id_categoria,'Nombre',function(err,resultados){
              session.userData.productos = resultados;
              builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', session.userData.productos);
           });
