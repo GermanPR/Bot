@@ -65,6 +65,7 @@ intents.matches('Pedir', '/SaberHora');
 bot.dialog('/SaberHora', [
     function (session, args, next) {
         session.send('Genial! ¿A que hora comes?(o)');
+        session.userData.precio_pedido = 0;
 
         builder.Prompts.choice(session, elegirHoraRecogida(session), "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
     },
@@ -169,6 +170,7 @@ bot.dialog('/pedir', [
             session.userData.pedido.push(results.response.entity);
 
             mysql.getPrice(session, results.response.entity, function (err, resultados) {
+                session.userData.precio_pedido += resultados;
                 session.send('¡Perfecto! Marchando **%s** por **%s**€', results.response.entity, resultados);
                 builder.Prompts.choice(session, confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
             });
@@ -185,9 +187,10 @@ bot.dialog('/pedir', [
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
                 }
-                session.send("Y llegará a las **%s**", session.userData.time)
+                session.send('Por el precio de **%s**€',session.userData.precio_pedido);
+                session.send("Y llegará a las **%s**", session.userData.time);
                 session.userData.pedido = [];
-
+                session.userData.precio_pedido = 0;
                 builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
                 break;
         }
