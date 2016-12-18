@@ -73,16 +73,16 @@ bot.dialog('/SaberHora', [
         session.userData.time = null;
         switch (results.response.entity) {
             case '12:15 - 13:15':
-                session.userData.time = results.response.entity;
+                session.userData.time = '12:';
                 session.beginDialog('/pedir');
                 break;
 
             case '13:15 - 14:15':
-                session.userData.time = results.response.entity;
+                session.userData.time = '13:';
                 session.beginDialog('/pedir');
                 break;
             case '14:15 - 15:15':
-                session.userData.time = results.response.entity;
+                session.userData.time = '14:';
                 session.beginDialog('/pedir');
                 break
 
@@ -135,7 +135,7 @@ bot.dialog('/pedir', [
                 case 'Pizzas':
                     session.userData.Id_categoria = 4;
                     break;
-                case 'Plato del día':
+                case 'Platos':
                     session.userData.Id_categoria = 5;
                     break;
                 case 'Aguas y Zumos':
@@ -170,7 +170,7 @@ bot.dialog('/pedir', [
             session.userData.pedido.push(results.response.entity);
 
             mysql.getPrice(session, results.response.entity, function (err, resultados) {
-                session.userData.precio_pedido = session.userData.precio_pedido + parseInt(resultados);
+                session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
                 session.send('¡Perfecto! Marchando **%s** por **%s**€', results.response.entity, resultados);
                 builder.Prompts.choice(session, confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
             });
@@ -188,7 +188,16 @@ bot.dialog('/pedir', [
                     session.send(session.userData.pedido[i]);
                 }
                 session.send('Por el precio de **%s**€',session.userData.precio_pedido);
-                session.send("Y llegará a las **%s**", session.userData.time);
+
+                mysql.horaPedido(session,function(err,results){
+                    var tiempo = results.length * 1;
+
+                    session.send("Y llegará a las **%s%s**", session.userData.time,toString(tiempo));
+
+                })
+
+
+                
                 session.userData.pedido = [];
                 session.userData.precio_pedido = 0;
                 builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
@@ -352,3 +361,7 @@ function elegirHoraRecogida(session) {
         ]);
     return msg;
 }
+mysql.horaPedido(session,ñlakjd,ñlakjd,function(err,results){
+
+})
+

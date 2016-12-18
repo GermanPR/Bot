@@ -145,4 +145,95 @@ exports.getPrice = function (session,nombre, callback) {
         connection.end();
 
 }
+exports.horaPedido = function (session, callback) {
 
+        function getElement(params, key) {
+                for (var i = 0; i < params.length; i++) {
+                        if (params[i].indexOf(key) > -1) {
+                                return params[i].substring(params[i].indexOf('=') + 1);
+                        }
+                }
+
+                throw "Key doesn't exist!";
+        }
+
+        var params = mySQLconnString.split(';'),
+                dbhost = getElement(params, 'Data Source'),
+                dbport = dbhost.substring(dbhost.indexOf(':') + 1),
+                dbhost = dbhost.substring(0, dbhost.indexOf(':')); //host without port    
+
+        var connection = mysql.createConnection({
+                host: dbhost,
+                port: dbport,
+                user: getElement(params, 'User Id'),
+                password: getElement(params, 'Password'),
+                database: getElement(params, 'Database')
+
+        });
+
+        connection.connect(function (error) {
+                if (error) {
+                        console.error(error);
+                }
+        });
+        connection.query('Select * from pedidos',function(err,results){
+               if(err){
+                       console.log(err);
+               }else{
+                       callback(null,results);
+               }
+        });
+
+        
+}
+
+exports.insertarPedido = function( session , nombre_usuario , hora_pedido){
+
+        function getElement(params, key) {
+                for (var i = 0; i < params.length; i++) {
+                        if (params[i].indexOf(key) > -1) {
+                                return params[i].substring(params[i].indexOf('=') + 1);
+                        }
+                }
+
+                throw "Key doesn't exist!";
+        }
+
+        var params = mySQLconnString.split(';'),
+                dbhost = getElement(params, 'Data Source'),
+                dbport = dbhost.substring(dbhost.indexOf(':') + 1),
+                dbhost = dbhost.substring(0, dbhost.indexOf(':')); //host without port    
+
+        var connection = mysql.createConnection({
+                host: dbhost,
+                port: dbport,
+                user: getElement(params, 'User Id'),
+                password: getElement(params, 'Password'),
+                database: getElement(params, 'Database')
+
+        });
+
+        connection.connect(function (error) {
+                if (error) {
+                        console.error(error);
+                }
+
+        var values = {
+                Nombre : nombre_usuario,
+                Hora : hora_pedido
+
+        }
+        connection.query('Insert into Set ?',values,function(err,results) {
+                
+                if (err){
+                        console.log('error:', err);
+                }else{
+                        console.log(results);
+                }
+        });
+
+
+        connection.end();
+
+
+}
