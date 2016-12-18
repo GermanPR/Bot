@@ -361,7 +361,5 @@ function elegirHoraRecogida(session) {
         ]);
     return msg;
 }
-mysql.horaPedido(session,ñlakjd,ñlakjd,function(err,results){
 
-})
 
