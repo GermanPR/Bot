@@ -187,7 +187,7 @@ exports.horaPedido = function (session, callback) {
         
 }
 
-exports.insertarPedido = function( session , nombre_usuario , hora_pedido){
+exports.insertarPedido = function( session ,id , nombre_usuario , hora_pedido){
 
         function getElement(params, key) {
                 for (var i = 0; i < params.length; i++) {
@@ -219,12 +219,8 @@ exports.insertarPedido = function( session , nombre_usuario , hora_pedido){
                 }
         });
 
-        var values = {
-                Nombre : nombre_usuario,
-                Hora : hora_pedido
-
-        }
-        connection.query('Insert into Set ?',values,function(err,results) {
+        
+        connection.query('INSERT INTO `pedidos`(`id`, `Nombre`, `Hora`) VALUES (%d,%s,%d)',id,nombre_usuario,hora_pedido,function(err,results) {
                 
                 if (err){
                         console.log('error:', err);
@@ -235,6 +231,4 @@ exports.insertarPedido = function( session , nombre_usuario , hora_pedido){
 
 
         connection.end();
-
-
 }
