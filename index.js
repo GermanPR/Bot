@@ -194,7 +194,7 @@ bot.dialog('/pedir', [
 
                     session.send("Y llegará a las **%s%s**", session.userData.time,toString(tiempo));
 
-                })
+                });
 
 
                 

@@ -217,6 +217,7 @@ exports.insertarPedido = function( session , nombre_usuario , hora_pedido){
                 if (error) {
                         console.error(error);
                 }
+        });
 
         var values = {
                 Nombre : nombre_usuario,
