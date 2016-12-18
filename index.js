@@ -187,17 +187,18 @@ bot.dialog('/pedir', [
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
                 }
-                session.send('Por el precio de **%s**€',session.userData.precio_pedido);
+                session.send('Por el precio de **%s**€', session.userData.precio_pedido);
 
-                mysql.horaPedido(session,function(err,results){
-                    var tiempo = results.length * 1;
+                mysql.horaPedido(session, function (err, results) {
+                    var tiempo = 15 + (results.length * 1);
 
-                    session.send("Y llegará a las **%s%s**", session.userData.time,toString(tiempo));
+                    session.send("Y llegará a las **%s%f**", session.userData.time, tiempo);
 
+                    builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
                 });
 
 
-                
+
                 session.userData.pedido = [];
                 session.userData.precio_pedido = 0;
                 builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
@@ -208,11 +209,14 @@ bot.dialog('/pedir', [
         switch (results.response.entity) {
             case 'Si':
                 session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
+                mysql.insertarPedido(session,session.message.address.user.name,session.userData.time + tiempo);
                 break;
             case 'No':
                 session.endDialog('Vale, pedido cancelado');
                 break;
         }
+        session.userData.pedido = [];
+        session.userData.precio_pedido = 0;
     }
 ]);
 
