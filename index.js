@@ -187,9 +187,10 @@ bot.dialog('/pedir', [
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
                 }
-                session.send('Por el precio de **%s**€', session.userData.precio_pedido);
+                
 
                 mysql.horaPedido(session, function (err, results) {
+                    session.send('Por el precio de **%s**€', session.userData.precio_pedido);
                     var tiempo = 15 + (results.length * 1);
                     session.userData.final_time = session.userData.time + tiempo;
                     session.send("Y llegará a las **%s%f**", session.userData.time, tiempo);
