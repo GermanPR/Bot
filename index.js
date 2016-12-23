@@ -192,7 +192,7 @@ bot.dialog('/pedir', [
                 mysql.horaPedido(session, function (err, results) {
                     session.send('Por el precio de **%s**€', session.userData.precio_pedido);
                     var tiempo = 15 + (results.length * 1);
-                    /*session.userData.final_time = session.userData.time + tiempo;*/
+                    session.userData.final_time = session.userData.time + tiempo;
                     session.send("Y llegará a las **%s%f**", session.userData.time, tiempo);
 
                     builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
@@ -210,7 +210,7 @@ bot.dialog('/pedir', [
         switch (results.response.entity) {
             case 'Si':
                 session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
-                mysql.insertarPedido(session,1,'German','12:13');
+                mysql.insertarPedido(4,session.message.address.user.name,session.userData.final_time);
                 break;
             case 'No':
                 session.endDialog('Vale, pedido cancelado');
@@ -366,7 +366,5 @@ function elegirHoraRecogida(session) {
         ]);
     return msg;
 }
-
-
 
 
