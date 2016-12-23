@@ -219,8 +219,9 @@ exports.insertarPedido = function( session ,id , nombre_usuario , hora_pedido){
                 }
         });
 
-        
-        connection.query('INSERT INTO `pedidos`(`id`, `Nombre`, `Hora`) VALUES (%d,%s,%d)',id,nombre_usuario,hora_pedido,function(err,results) {
+        var busqueda = ('INSERT INTO `pedidos`(`id`, `Nombre`, `Hora`) VALUES (%d,\'%s\',\'%s\')',id,nombre_usuario,hora_pedido);
+        console.log(busqueda);
+        connection.query(busqueda,function(err,results) {
                 
                 if (err){
                         console.log('error:', err);
