@@ -210,7 +210,7 @@ bot.dialog('/pedir', [
         switch (results.response.entity) {
             case 'Si':
                 session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
-                mysql.insertarPedido(session,1,session.message.address.user.name,1);
+                mysql.insertarPedido(session,1,'German','12:13');
                 break;
             case 'No':
                 session.endDialog('Vale, pedido cancelado');
@@ -366,5 +366,7 @@ function elegirHoraRecogida(session) {
         ]);
     return msg;
 }
+
+
 
 
