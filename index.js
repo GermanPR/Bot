@@ -202,7 +202,6 @@ bot.dialog('/pedir', [
 
                 session.userData.pedido = [];
                 session.userData.precio_pedido = 0;
-                builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
                 break;
         }
     },
