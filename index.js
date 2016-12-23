@@ -196,12 +196,13 @@ bot.dialog('/pedir', [
                     session.send("Y llegará a las **%s%f**", session.userData.time, tiempo);
 
                     builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
+                    session.userData.pedido = [];
+                    session.userData.precio_pedido = 0;
                 });
 
 
 
-                session.userData.pedido = [];
-                session.userData.precio_pedido = 0;
+                
                 break;
         }
     },
