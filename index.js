@@ -201,7 +201,7 @@ bot.dialog('/pedir', [
         switch (results.response.entity) {
             case 'Si':
                 session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
-                mysql.insertarPedido(4, session.message.address.user.name, session.userData.final_time);
+                mysql.insertarPedido( session.message.address.user.name, session.userData.final_time);
                 break;
             case 'No':
                 session.endDialog('Vale, pedido cancelado');
