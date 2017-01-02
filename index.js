@@ -5,8 +5,6 @@ var restify = require('restify'),
     intents = new builder.IntentDialog({
         recognizers: [recognizer]
     }),
-    db = require('./db/fakedb'),
-    /* Esto está simulando una base de datos hasta que montemos la definitiva*/
     fs = require('fs'),
     util = require('util');
 
@@ -49,27 +47,7 @@ bot.dialog('/', intents);
 //Si un usuario 
 intents.matches('Saludo', '/Saludo');
 
-bot.dialog('/Saludo', [
-    function (session, args, next) {
-        //Con session.message.address.user.name recuperas el nombre del usuario en la red social. En este caso el nombre de Skype
-        // session.send('¡Hola %s! (wave)', session.message.address.user.name)
-        //si quieres sólo recuperar el nombre, sin los apellidos puedes hacer lo siguiente
-        session.userData.pedido = [];
-        // var nombre = '¡Hola ' + getName(session) + '! (wave)\n ¿Quieres pedir?';
-        var nombre = util.format(session.localizer.gettext(session.preferredLocale(), "greeting"), getName(session));
-        builder.Prompts.choice(session, confirmacion(session, nombre), "Si|No");
-        //Mostrar menú con las opciones disponibles *recomendación
-    },
-    function (session, results) {
-        switch (results.response.entity) {
-            case 'Si':
-                session.beginDialog('/SaberHora');
-                break;
-            case 'No':
-                session.endDialog('no_problem');
-        }
-    }
-]);
+bot.dialog('/Saludo', require('./dialogs/greeting'));
 
 //En caso de que el usuario quiera hacer un pedido se empieza por preguntarle cuando quiere recogerlo.
 intents.matches('Pedir', '/SaberHora');
