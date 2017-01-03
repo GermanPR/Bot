@@ -265,25 +265,6 @@ intents.matches('Despedida', function (session, args, next) {
 
 //FUNCTIONS
 
-
-//Te permite crear una HeroCard con una pregunta cualquiera y que tenga por respuesta Si y No
-function confirmacion(session, pregunta) {
-    var confirmacion = new builder.Message(session)
-        .textFormat(builder.TextFormat.xml)
-        .attachmentLayout(builder.AttachmentLayout.carousel)
-        .attachments([
-            new builder.HeroCard(session)
-                .title(pregunta)
-                .buttons([
-                    builder.CardAction.imBack(session, 'Si', 'Si'),
-                    builder.CardAction.imBack(session, 'No', 'No')
-                ])
-
-        ]);
-    return confirmacion;
-
-}
-
 //Función para elegir el tipo de alimento que el usuario quiere
 function elegirTipoAlimento(session) {
     var msg = new builder.Message(session)
