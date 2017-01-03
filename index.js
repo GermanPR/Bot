@@ -164,7 +164,7 @@ bot.dialog('/pedir', [
             mysql.getPrice(session, results.response.entity, function (err, resultados) {
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
                 session.send('¡Perfecto! Marchando **%s** por **%s**€', results.response.entity, resultados);
-                builder.Prompts.choice(session, confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
+                builder.Prompts.choice(session, core.confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
             });
 
         }
@@ -187,7 +187,7 @@ bot.dialog('/pedir', [
                     session.userData.final_time = session.userData.time + tiempo;
                     session.send("Y llegará a las **%s%f**", session.userData.time, tiempo);
 
-                    builder.Prompts.choice(session, confirmacion(session, "¿Es correcto?"), 'Si|No');
+                    builder.Prompts.choice(session, core.confirmacion(session, "¿Es correcto?"), 'Si|No');
                     session.userData.pedido = [];
                     session.userData.precio_pedido = 0;
                 });
@@ -220,7 +220,7 @@ intents.matches('VerInventario', function (session, args, next) {
 intents.matches('Estado', [
     function (session, args, next) {
         session.send('Muy bien!!')
-        builder.Prompts.choice(session, confirmacion(session, '¿Quieres comer?'), "Si|No");
+        builder.Prompts.choice(session, core.confirmacion(session, '¿Quieres comer?'), "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     },
     function (session, results) {
