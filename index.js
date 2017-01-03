@@ -6,7 +6,8 @@ var restify = require('restify'),
         recognizers: [recognizer]
     }),
     fs = require('fs'),
-    util = require('util');
+    util = require('util'),
+    core = require('./core/core');
 
 var mysql = require('./db/sql_server.js');
 
@@ -201,7 +202,7 @@ bot.dialog('/pedir', [
         switch (results.response.entity) {
             case 'Si':
                 session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
-                mysql.insertarPedido( session.message.address.user.name, session.userData.final_time);
+                mysql.insertarPedido(session.message.address.user.name, session.userData.final_time);
                 break;
             case 'No':
                 session.endDialog('Vale, pedido cancelado');
@@ -259,28 +260,11 @@ intents.onDefault(function (session) {
 });
 
 intents.matches('Despedida', function (session, args, next) {
-    session.send('Adios %s, hasta la proxima.', getName(session));
+    session.send('Adios %s, hasta la proxima.', core.getName(session));
 });
 
 //FUNCTIONS
 
-//Devuelve el Nombre sin apellido del usuario.
-function getName(session) {
-    var user = session.message.address.user.name;
-    console.log(user);
-    if (user == 'Xaquín Fernández') {
-        user = 'guapo';
-        return user;
-    } else if (user == 'PLSY') {
-        user = 'chache tu eres mi sielo';
-        return user;
-    } else if (user == 'German Parada' || user == 'Adrian Gabas') {
-        user = 'jefe';
-        return user;
-    } else {
-        return user.split(' ')[0];
-    }
-}
 
 //Te permite crear una HeroCard con una pregunta cualquiera y que tenga por respuesta Si y No
 function confirmacion(session, pregunta) {
@@ -289,11 +273,11 @@ function confirmacion(session, pregunta) {
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
             new builder.HeroCard(session)
-            .title(pregunta)
-            .buttons([
-                builder.CardAction.imBack(session, 'Si', 'Si'),
-                builder.CardAction.imBack(session, 'No', 'No')
-            ])
+                .title(pregunta)
+                .buttons([
+                    builder.CardAction.imBack(session, 'Si', 'Si'),
+                    builder.CardAction.imBack(session, 'No', 'No')
+                ])
 
         ]);
     return confirmacion;
@@ -307,29 +291,29 @@ function elegirTipoAlimento(session) {
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
             new builder.HeroCard(session)
-            .title("Comida")
-            .images([
-                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
-            ])
-            .buttons([
-                builder.CardAction.imBack(session, "Comida", "Seleccionar")
-            ]),
+                .title("Comida")
+                .images([
+                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+                ])
+                .buttons([
+                    builder.CardAction.imBack(session, "Comida", "Seleccionar")
+                ]),
             new builder.HeroCard(session)
-            .title("Bebida")
-            .images([
-                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
-            ])
-            .buttons([
-                builder.CardAction.imBack(session, "Bebida", "Seleccionar")
-            ]),
+                .title("Bebida")
+                .images([
+                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
+                ])
+                .buttons([
+                    builder.CardAction.imBack(session, "Bebida", "Seleccionar")
+                ]),
             new builder.HeroCard(session)
-            .title("Postre")
-            .images([
-                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
-            ])
-            .buttons([
-                builder.CardAction.imBack(session, "Postre", "Seleccionar")
-            ])
+                .title("Postre")
+                .images([
+                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
+                ])
+                .buttons([
+                    builder.CardAction.imBack(session, "Postre", "Seleccionar")
+                ])
         ]);
     return msg;
 }
@@ -341,20 +325,20 @@ function elegirHoraRecogida(session) {
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
             new builder.HeroCard(session)
-            .title("12:15 - 13:15")
-            .buttons([
-                builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
-            ]),
+                .title("12:15 - 13:15")
+                .buttons([
+                    builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
+                ]),
             new builder.HeroCard(session)
-            .title("13:15 - 14:15")
-            .buttons([
-                builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
-            ]),
+                .title("13:15 - 14:15")
+                .buttons([
+                    builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
+                ]),
             new builder.HeroCard(session)
-            .title("14:15 - 15:15")
-            .buttons([
-                builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
-            ]),
+                .title("14:15 - 15:15")
+                .buttons([
+                    builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
+                ]),
         ]);
     return msg;
 }
