@@ -18,3 +18,20 @@ exports.getName = function (session) {
         return user.split(' ')[0];
     }
 };
+
+exports.confirmacion = function(session, pregunta) {
+    var confirmacion = new builder.Message(session)
+        .textFormat(builder.TextFormat.xml)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments([
+            new builder.HeroCard(session)
+                .title(pregunta)
+                .buttons([
+                    builder.CardAction.imBack(session, 'Si', 'Si'),
+                    builder.CardAction.imBack(session, 'No', 'No')
+                ])
+
+        ]);
+    return confirmacion;
+
+}
