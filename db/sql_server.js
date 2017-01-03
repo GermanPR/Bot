@@ -219,7 +219,7 @@ exports.insertarPedido = function(nombre_usuario , hora_pedido){
                 }
         });
 
-        var busqueda = ('INSERT INTO `pedidos`(`id`, `Nombre`, `Hora`) VALUES ('+id+',\''+nombre_usuario+'\',\''+hora_pedido+'\')');
+        var busqueda = ('INSERT INTO `pedidos`( `Nombre`, `Hora`) VALUES (\''+nombre_usuario+'\',\''+hora_pedido+'\')');
         connection.query(busqueda,function(err,results) {
                 
                 if (err){
