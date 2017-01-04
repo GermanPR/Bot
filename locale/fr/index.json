@@ -1,4 +1,19 @@
 {
-    "greeting": "Bonjour %s! tu veux faire une commande?",
-    "no_problem": "Sans problème! (y) Parle moi quand tu veux!"
+    "greeting": "Bonjour %s! (wave)\n Tu veux faire ta commande?",
+    "no_problem": "Aucun problème!(y) Quand tu voudras la faire dit le moi!",
+    "what_time": "Parfait! A quelle heure mange-tu?(o)",
+    "what_you_want_to_eat?":"Ok (y) ¿Que voudrais tu commander?",
+    "which_type?":" De quoi as-tu envie? ?:P",
+    "you_chose":"Has elegido *%s*(cool)",
+    "this_we_have":"Aujourd'hui nous avons ça pour manger",
+    "perfect,food_ordered":"¡Parfait! La commande a bien était envoyé   *%s* por *%s*€",
+    "anything_else?":"Tu veux demander quelque chose d'autre?",
+    "your_request_is":"Ta commande est:",
+    "for_the_price_of":"Pour le prix de *%s*€",
+    "arrival_time":"et elle sera prète à *%s%f*",
+    "is_it_correct?":"C'est correcte?",
+    "ok_perfect":"Ok, parfait. L'achat sera effectuée en caisse.",
+    "ok_canceled":"Ok, la comande est annulée",
+    "want_to_eat?":"Tu veux manger?",
+    "very_well":"Parfait!!"
 }
