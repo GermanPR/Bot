@@ -1,4 +1,19 @@
 {
     "greeting": "Hola %s! (wave)\n ¿Quieres pedir?",
-    "no_problem": "Sin problema!(y) Cuando quieras dimelo!"
+    "no_problem": "Sin problema!(y) Cuando quieras dimelo!",
+    "what_time": "Genial! ¿A que hora comes?(o)",
+    "what_you_want_to_eat?":"Ok (y) ¿Qué te gustaría pedir?",
+    "which_type?":"¿Que tipo te apetece?:P",
+    "you_chose":"Has elegido **%s**(cool)",
+    "this_we_have":"Esto es lo que tenemos hoy",
+    "perfect,food_ordered":"¡Perfecto! Marchando **%s** por **%s**€",
+    "anything_else?":"¿Quieres pedir algo más?",
+    "your_request_is":"Tu pedido es:",
+    "for_the_price_of":"Por el precio de **%s**€",
+    "arrival_time":"Y llegará a las **%s%f**",
+    "is_it_correct?":"¿Es correcto?",
+    "ok_perfect":"Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.",
+    "ok_canceled":"Vale, pedido cancelado",
+    "want_to_eat?":"¿Quieres comer?",
+    "very_well":"Muy bien!!"
 }

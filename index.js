@@ -136,7 +136,7 @@ bot.dialog('/pedir', [
                 case 'Refrescos':
                     session.userData.Id_categoria = 7;
                     break;
-                case 'Frutas':
+                case 'Frutas y yogures':
                     session.userData.Id_categoria = 8;
                     break;
                 case 'Bolleria':
@@ -202,7 +202,7 @@ bot.dialog('/pedir', [
         switch (results.response.entity) {
             case 'Si':
                 session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
-                mysql.insertarPedido(session.message.address.user.name, session.userData.final_time);
+                mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
                 break;
             case 'No':
                 session.endDialog('Vale, pedido cancelado');
@@ -229,7 +229,7 @@ intents.matches('Estado', [
                 session.beginDialog('/SaberHora');
                 break;
             case 'No':
-                session.endDialog('Sin problema!(y) Cuando quieras dimelo!')
+                session.endDialog("no_problem")
         }
     }
 ]);
