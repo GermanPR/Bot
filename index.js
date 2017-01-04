@@ -181,7 +181,7 @@ bot.dialog('/pedir', [
                 }
 
 
-                mysql.horaPedido(session, function (err, results) {
+                mysql.horaPedido(session, session.userData.time, function (err, results) {
                     session.send('Por el precio de **%s**€', session.userData.precio_pedido);
                     var tiempo = 15 + (results.length * 1);
                     session.userData.final_time = session.userData.time + tiempo;

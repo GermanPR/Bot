@@ -145,7 +145,7 @@ exports.getPrice = function (session,nombre, callback) {
         connection.end();
 
 }
-exports.horaPedido = function (session, callback) {
+exports.horaPedido = function (session, id_hora, callback) {
 
         function getElement(params, key) {
                 for (var i = 0; i < params.length; i++) {
@@ -176,7 +176,7 @@ exports.horaPedido = function (session, callback) {
                         console.error(error);
                 }
         });
-        connection.query('Select * from pedidos',function(err,results){
+        connection.query('Select * from pedidos where id_hora =\''+id_hora+'\'',function(err,results){
                if(err){
                        console.log(err);
                }else{
