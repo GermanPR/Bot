@@ -165,17 +165,17 @@ bot.dialog('/pedir', [
                 
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
                 session.send(util.format(session.localizer.gettext(session.preferredLocale(),'perfect,food_ordered'), results.response.entity, resultados));
-                builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "yes|no");
+                builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "Si|No");
             });
 
         }
     },
     function (session, results) {
         switch (results.response.entity) {
-            case 'yes':
+            case 'Si':
                 session.beginDialog('/pedir');
                 break;
-            case 'no':
+            case 'No':
                 session.send("your_request_is")
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
@@ -188,7 +188,7 @@ bot.dialog('/pedir', [
                     session.userData.final_time = session.userData.time + tiempo;
                     session.send(util.format(session.localizer.gettext(session.preferredLocale(),"arrival_time"), session.userData.time, tiempo));
 
-                    builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'yes|no');
+                    builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
                     session.userData.pedido = [];
                     session.userData.precio_pedido = 0;
                 });
@@ -201,11 +201,11 @@ bot.dialog('/pedir', [
     },
     function (session, results) {
         switch (results.response.entity) {
-            case 'yes':
+            case 'Si':
                 session.endDialog('ok_perfect');
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
                 break;
-            case 'no':
+            case 'No':
                 session.endDialog('ok_canceled');
                 break;
         }
@@ -221,7 +221,7 @@ intents.matches('VerInventario', function (session, args, next) {
 intents.matches('Estado', [
     function (session, args, next) {
         session.send('very_well')
-        builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "yes|no");
+        builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     },
     function (session, results) {
