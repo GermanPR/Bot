@@ -10,7 +10,7 @@
     "anything_else?":"¿Quieres pedir algo más?",
     "your_request_is":"Tu pedido es:",
     "for_the_price_of":"Por el precio de **%s**€",
-    "arrival_time":"Y llegará a las **%s%f**",
+    "arrival_time":"Y llegará a las **%s**",
     "is_it_correct?":"¿Es correcto?",
     "ok_perfect":"Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.",
     "ok_canceled":"Vale, pedido cancelado",
