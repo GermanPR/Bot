@@ -31,7 +31,7 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector, {
     localizerSettings: {
         botLocalePath: './locale',
-        defaultLocale: 'es'
+        defaultLocale: 'fr'
     }
 });
 
