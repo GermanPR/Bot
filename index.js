@@ -56,7 +56,7 @@ intents.matches('Pedir', '/SaberHora');
 //Pregunta por la hora a la que el pedido sera recogido a traves de una HeroCard
 bot.dialog('/SaberHora', [
     function (session, args, next) {
-        session.send('Genial! ¿A que hora comes?(o)');
+        session.send("what_time");
         session.userData.precio_pedido = 0;
 
         builder.Prompts.choice(session, elegirHoraRecogida(session), "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
@@ -84,7 +84,7 @@ bot.dialog('/SaberHora', [
 
 bot.dialog('/pedir', [
     function (session, results, next) {
-        session.send('Ok (y) ¿Qué te gustaría pedir?');
+        session.send("what_you_want_to_eat?");
         builder.Prompts.choice(session, elegirTipoAlimento(session), "Comida|Bebida|Postre");
     },
     function (session, results) {
@@ -105,7 +105,7 @@ bot.dialog('/pedir', [
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
             mysql.getData(session, 'categoria', 'Id_tipo =' + session.userData.Id_tipo, 'Nombre', function (err, resultados) {
                 session.userData.productos = resultados;
-                builder.Prompts.choice(session, '¿Que tipo te apetece?:P', session.userData.productos);
+                builder.Prompts.choice(session, 'which_type?', session.userData.productos);
             });
 
         }
@@ -150,7 +150,7 @@ bot.dialog('/pedir', [
             session.userData.productos;
             mysql.getData(session, 'producto', 'Id_categoria=' + session.userData.Id_categoria, 'Nombre', function (err, resultados) {
                 session.userData.productos = resultados;
-                builder.Prompts.choice(session, 'Esto es lo que tenemos hoy', session.userData.productos);
+                builder.Prompts.choice(session, 'this_we_have', session.userData.productos);
             });
 
 
@@ -162,6 +162,7 @@ bot.dialog('/pedir', [
             session.userData.pedido.push(results.response.entity);
 
             mysql.getPrice(session, results.response.entity, function (err, resultados) {
+                
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
                 session.send('¡Perfecto! Marchando **%s** por **%s**€', results.response.entity, resultados);
                 builder.Prompts.choice(session, core.confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
