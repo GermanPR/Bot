@@ -28,7 +28,7 @@ exports.confirmacion = function(session, pregunta) {
                 .title(pregunta)
                 .buttons([
                     builder.CardAction.imBack(session, 'Si', 'Si'),
-                    builder.CardAction.imBack(session, 'No', 'Si')
+                    builder.CardAction.imBack(session, 'No', 'No')
                 ])
 
         ]);
