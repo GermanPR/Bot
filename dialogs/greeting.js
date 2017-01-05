@@ -10,10 +10,10 @@ module.exports = [
     },
     function (session, results) {
         switch (results.response.entity) {
-            case 'Si':
+            case 'yes':
                 session.beginDialog('/SaberHora');
                 break;
-            case 'No':
+            case 'no':
                 session.endDialog('no_problem');
         }
     }
