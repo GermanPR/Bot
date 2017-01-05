@@ -90,7 +90,7 @@ bot.dialog('/pedir', [
     function (session, results) {
         if (results.response) {
 
-            session.send('Ok, empecemos con **%s**', results.response.entity);
+            session.send(util.format(session.localizer.gettext(session.preferredLocale(),'lets_start_with'), results.response.entity));
             switch (results.response.entity) {
                 case 'Comida':
                     session.userData.Id_tipo = '1';
@@ -113,7 +113,7 @@ bot.dialog('/pedir', [
     function (session, results) {
         if (results.response) {
             var categoria = results.response.entity;
-            session.send('Has elegido **%s**(cool)', categoria);
+            session.send(util.format(session.localizer.gettext(session.preferredLocale(),'you_chose'), categoria));
             switch (results.response.entity) {
                 case 'Ensalada':
                     session.userData.Id_categoria = 1;
@@ -164,8 +164,8 @@ bot.dialog('/pedir', [
             mysql.getPrice(session, results.response.entity, function (err, resultados) {
                 
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
-                session.send('¡Perfecto! Marchando **%s** por **%s**€', results.response.entity, resultados);
-                builder.Prompts.choice(session, core.confirmacion(session, '¿Quieres pedir algo más?'), "Si|No");
+                session.send(util.format(session.localizer.gettext(session.preferredLocale(),'perfect,food_ordered'), results.response.entity, resultados));
+                builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "Si|No");
             });
 
         }
@@ -176,19 +176,19 @@ bot.dialog('/pedir', [
                 session.beginDialog('/pedir');
                 break;
             case 'No':
-                session.send("Tu pedido es:")
+                session.send("your_request_is")
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
                 }
 
 
                 mysql.horaPedido(session, session.userData.time, function (err, results) {
-                    session.send('Por el precio de **%s**€', session.userData.precio_pedido);
+                    session.send(util.format(session.localizer.gettext(session.preferredLocale(),'for_the_price_of'), session.userData.precio_pedido));
                     var tiempo = 15 + (results.length * 1);
                     session.userData.final_time = session.userData.time + tiempo;
-                    session.send("Y llegará a las **%s%f**", session.userData.time, tiempo);
+                    session.send(util.format(session.localizer.gettext(session.preferredLocale(),"arrival_time"), session.userData.time, tiempo));
 
-                    builder.Prompts.choice(session, core.confirmacion(session, "¿Es correcto?"), 'Si|No');
+                    builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
                     session.userData.pedido = [];
                     session.userData.precio_pedido = 0;
                 });
@@ -202,11 +202,11 @@ bot.dialog('/pedir', [
     function (session, results) {
         switch (results.response.entity) {
             case 'Si':
-                session.endDialog('Vale, Perfecto! El pago se realizará en la cafetería en el momento de la recogida.');
+                session.endDialog('ok_perfect');
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
                 break;
             case 'No':
-                session.endDialog('Vale, pedido cancelado');
+                session.endDialog('ok_canceled');
                 break;
         }
         session.userData.pedido = [];
@@ -220,8 +220,8 @@ intents.matches('VerInventario', function (session, args, next) {
 
 intents.matches('Estado', [
     function (session, args, next) {
-        session.send('Muy bien!!')
-        builder.Prompts.choice(session, core.confirmacion(session, '¿Quieres comer?'), "Si|No");
+        session.send('very_well')
+        builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "Si|No");
         //Mostrar menú con las opciones disponibles *recomendación
     },
     function (session, results) {
