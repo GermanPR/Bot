@@ -165,7 +165,7 @@ bot.dialog('/pedir', [
                 
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
                 session.send(util.format(session.localizer.gettext(session.preferredLocale(),'perfect,food_ordered'), results.response.entity, resultados));
-                builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "Si|No");
+                builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "yes|no");
             });
 
         }
@@ -188,7 +188,7 @@ bot.dialog('/pedir', [
                     session.userData.final_time = session.userData.time + tiempo;
                     session.send(util.format(session.localizer.gettext(session.preferredLocale(),"arrival_time"), session.userData.time, tiempo));
 
-                    builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
+                    builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'yes|no');
                     session.userData.pedido = [];
                     session.userData.precio_pedido = 0;
                 });
@@ -221,7 +221,7 @@ intents.matches('VerInventario', function (session, args, next) {
 intents.matches('Estado', [
     function (session, args, next) {
         session.send('very_well')
-        builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "Si|No");
+        builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "yes|no");
         //Mostrar menú con las opciones disponibles *recomendación
     },
     function (session, results) {

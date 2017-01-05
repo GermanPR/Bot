@@ -16,5 +16,8 @@
     "ok_canceled":"Ok, la comande est annulée.",
     "want_to_eat?":"Veux-tu manger?",
     "very_well":"Parfait!",
-    "lets_start_with":"Ok, commençons par **%s**"
+    "lets_start_with":"Ok, commençons par **%s**",
+    "yes":"Oui",
+    "no":"Non",
+    "yes|no":"Oui|Non"
 }

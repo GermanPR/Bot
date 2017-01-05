@@ -27,8 +27,8 @@ exports.confirmacion = function(session, pregunta) {
             new builder.HeroCard(session)
                 .title(pregunta)
                 .buttons([
-                    builder.CardAction.imBack(session, 'Si', 'Si'),
-                    builder.CardAction.imBack(session, 'No', 'No')
+                    builder.CardAction.imBack(session, 'yes', 'yes'),
+                    builder.CardAction.imBack(session, 'no', 'no')
                 ])
 
         ]);
