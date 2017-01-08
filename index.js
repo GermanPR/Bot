@@ -179,7 +179,6 @@ bot.dialog('/pedir', [
                 session.send("your_request_is")
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
-                    mysql.reducirStock(session,session.userData.pedido);
                 }
 
 
@@ -205,6 +204,9 @@ bot.dialog('/pedir', [
             case 'Si':
                 session.endDialog('ok_perfect');
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
+                for (var i = 0; i < session.userData.pedido.length; i++) {
+                    mysql.reducirStock(session,session.userData.pedido);
+                }
                 break;
             case 'No':
                 session.endDialog('ok_canceled');
