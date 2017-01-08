@@ -189,7 +189,6 @@ bot.dialog('/pedir', [
                     session.send(util.format(session.localizer.gettext(session.preferredLocale(),"arrival_time"), session.userData.time, tiempo));
 
                     builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
-                    session.userData.pedido = [];
                     session.userData.precio_pedido = 0;
                 });
 
@@ -207,9 +206,11 @@ bot.dialog('/pedir', [
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     mysql.reducirStock(session,session.userData.pedido);
                 }
+                session.userData.pedido = [];
                 break;
             case 'No':
                 session.endDialog('ok_canceled');
+                session.userData.pedido = [];
                 break;
         }
         session.userData.pedido = [];
