@@ -232,3 +232,44 @@ exports.insertarPedido = function(nombre_usuario , hora_pedido , id_hora){
 
         connection.end();
 }
+
+exports.reducirStock = function(session,nombre){
+        function getElement(params, key) {
+                for (var i = 0; i < params.length; i++) {
+                        if (params[i].indexOf(key) > -1) {
+                                return params[i].substring(params[i].indexOf('=') + 1);
+                        }
+                }
+
+                throw "Key doesn't exist!";
+        }
+
+        var params = mySQLconnString.split(';'),
+                dbhost = getElement(params, 'Data Source'),
+                dbport = dbhost.substring(dbhost.indexOf(':') + 1),
+                dbhost = dbhost.substring(0, dbhost.indexOf(':')); //host without port    
+
+        var connection = mysql.createConnection({
+                host: dbhost,
+                port: dbport,
+                user: getElement(params, 'User Id'),
+                password: getElement(params, 'Password'),
+                database: getElement(params, 'Database')
+
+        });
+
+        connection.connect(function (error) {
+                if (error) {
+                        console.error(error);
+                }
+        });
+
+        connection.query('UPDATE `producto` SET `Stock`= Stock -1 WHERE Nombre='+nombre, function(err, results){
+                        if(err){
+                                console.log(err);
+                        }else{
+                                console.log(results);
+                        }
+        })
+
+}

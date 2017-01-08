@@ -179,6 +179,7 @@ bot.dialog('/pedir', [
                 session.send("your_request_is")
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
+                    mysql.reducirStock(session,session.userData.pedido);
                 }
 
 
