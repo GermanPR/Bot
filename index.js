@@ -243,6 +243,37 @@ intents.matches('Estado', [
 intents.matches('SaberHoraRecogida', function (session, args, next) {
     session.send('Estara listo a las 13:00, te viene bien?');
 });
+intents.matches('Cambiar idioma', [
+    function (session) {
+        // Prompt the user to select their preferred locale
+        builder.Prompts.choice(session, "What's your preferred language?", 'Francés|Español');
+    },
+    function (session, results) {
+        // Update preferred locale
+        var locale;
+        switch (results.response.entity) {
+            case 'Francés':
+                locale = 'fr';
+                
+                break;
+            case 'Español':
+                locale = 'es';
+            
+                break;
+                
+        }
+        session.preferredLocale(locale, function (err) {
+            if (!err) {
+                // Locale files loaded
+                
+                session.endDialog("Your preferred language is now %s.", results.response.entity);
+            } else {
+                // Problem loading the selected locale
+                session.error(err);
+            }
+        });
+    }
+]);
 
 intents.matches('ConfirmaciónPositiva', function (session, args, next) {
     session.send('Genial');
