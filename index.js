@@ -1,9 +1,10 @@
 var restify = require('restify'),
     config = require('./config'),
     builder = require('botbuilder'),
-    recognizer = new builder.LuisRecognizer(config.LUIS_URL),
+    recognizer_es = new builder.LuisRecognizer(config.LUIS_URL_ES), 
+    recognizer_fr = new builder.LuisRecognizer(config.LUIS_URL_FR),
     intents = new builder.IntentDialog({
-        recognizers: [recognizer]
+        recognizers: [recognizer_es,recognizer_fr]
     }),
     fs = require('fs'),
     util = require('util'),
@@ -31,7 +32,7 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector, {
     localizerSettings: {
         botLocalePath: './locale',
-        defaultLocale: 'fr'
+        defaultLocale: 'es'
     }
 });
 
