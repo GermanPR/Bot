@@ -10,4 +10,4 @@ module.exports = {
     AppPassword: '5SgnD7t00pdGX9zaZ9spHpc'*/
 
 };
-    var Luisarray = ['https://api.projectoxford.ai/luis/v2.0/apps/05cc84c9-6d4a-497f-9981-cbcd438efece?subscription-key=71e4270a84a546fe814e1b0f6d4983cf&verbose=true','d'];
+    
