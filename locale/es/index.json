@@ -19,5 +19,7 @@
     "lets_start_with":"Ok, empecemos con **%s**",
     "yes":"Si",
     "no":"No",
-    "yes|no":"Si|No"
+    "yes|no":"Si|No",
+    "preferred_language?":"¿En qué idioma quieres que te hable?",
+    "Your_preffered_language_is":"Perfecto, a partir de ahora te hablaré en **%s**"
 }
