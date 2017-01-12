@@ -247,7 +247,7 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
 intents.matches('Cambiar idioma', [
     function (session) {
         // Prompt the user to select their preferred locale
-        builder.Prompts.choice(session, "What's your preferred language?", 'Francés|Español');
+        builder.Prompts.choice(session, "preferred_language?", 'Francés|Español');
     },
     function (session, results) {
         // Update preferred locale
@@ -267,7 +267,7 @@ intents.matches('Cambiar idioma', [
             if (!err) {
                 // Locale files loaded
                 
-                session.endDialog("Your preferred language is now %s.", results.response.entity);
+                session.endDialog(util.format(session.localizer.gettext(session.preferredLocale(),"Your_preffered_language_is"), results.response.entity));
             } else {
                 // Problem loading the selected locale
                 session.error(err);
