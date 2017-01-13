@@ -19,19 +19,40 @@ exports.getName = function (session) {
     }
 };
 
-exports.confirmacion = function(session, pregunta) {
-    var confirmacion = new builder.Message(session)
-        .textFormat(builder.TextFormat.xml)
-        .attachmentLayout(builder.AttachmentLayout.carousel)
+// exports.confirmacion = function(session, pregunta) {
+//     var confirmacion = new builder.Message(session)
+//         .textFormat(builder.TextFormat.xml)
+//         .attachmentLayout(builder.AttachmentLayout.carousel)
+//         .attachments([
+//             new builder.HeroCard(session)
+//                 .title(pregunta)
+//                 .buttons([
+//                     builder.CardAction.imBack(session, 'Si', 'Si'),
+//                     builder.CardAction.imBack(session, 'No', 'No')
+//                 ])
+
+//         ]);
+//     return confirmacion;
+
+// };
+
+exports.selectOptions = function(session, text, options) {
+
+    var opts = options.split('|');
+
+    var ops = [];
+
+    for (var i = 0; i < opts.length; i++) {
+        ops.push(builder.CardAction.imBack(session, opts[i], opts[i]));
+    }
+
+    var msg = new builder.Message(session)
         .attachments([
             new builder.HeroCard(session)
-                .title(pregunta)
-                .buttons([
-                    builder.CardAction.imBack(session, 'Si', 'Si'),
-                    builder.CardAction.imBack(session, 'No', 'No')
-                ])
-
+                .title(text)
+                .buttons(ops)
         ]);
-    return confirmacion;
 
-}
+    builder.Prompts.choice(session, msg, options);
+};
+

@@ -1,10 +1,10 @@
 var restify = require('restify'),
     config = require('./config'),
     builder = require('botbuilder'),
-    recognizer_es = new builder.LuisRecognizer(config.LUIS_URL_ES), 
+    recognizer_es = new builder.LuisRecognizer(config.LUIS_URL_ES),
     recognizer_fr = new builder.LuisRecognizer(config.LUIS_URL_FR),
     intents = new builder.IntentDialog({
-        recognizers: [recognizer_es,recognizer_fr]
+        recognizers: [recognizer_es, recognizer_fr]
     }),
     fs = require('fs'),
     util = require('util'),
@@ -22,25 +22,13 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
-
-//Connection with MS Bot Framework
-var connector = new builder.ChatConnector({
-    appId: config.AppId,
-    appPassword: config.AppPassword
-});
-
-var bot = new builder.UniversalBot(connector, {
-    localizerSettings: {
-        botLocalePath: './locale',
-        defaultLocale: 'es'
-    }
-});
-
-server.post('/api/messages', connector.listen());
-
 server.get(/\/public\/?.*/, restify.serveStatic({
     directory: __dirname
 }));
+
+
+var bot = setup.init(server);
+
 
 //=========================================================
 // Bots Dialogs
@@ -86,12 +74,15 @@ bot.dialog('/SaberHora', [
 bot.dialog('/pedir', [
     function (session, results, next) {
         session.send("what_you_want_to_eat?");
-        builder.Prompts.choice(session, elegirTipoAlimento(session), "Comida|Bebida|Postre");
+        // builder.Prompts.choice(session, elegirTipoAlimento(session), "Comida|Bebida|Postre");
+        var options = session.localizer.gettext(session.preferredLocale(), "type_food");
+        core.selectOptions(session, elegirTipoAlimento(session), options);
+
     },
     function (session, results) {
         if (results.response) {
 
-            session.send(util.format(session.localizer.gettext(session.preferredLocale(),'lets_start_with'), results.response.entity));
+            session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'lets_start_with'), results.response.entity));
             switch (results.response.entity) {
                 case 'Comida':
                     session.userData.Id_tipo = '1';
@@ -114,7 +105,7 @@ bot.dialog('/pedir', [
     function (session, results) {
         if (results.response) {
             var categoria = results.response.entity;
-            session.send(util.format(session.localizer.gettext(session.preferredLocale(),'you_chose'), categoria));
+            session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'you_chose'), categoria));
             switch (results.response.entity) {
                 case 'Ensalada':
                     session.userData.Id_categoria = 1;
@@ -163,10 +154,12 @@ bot.dialog('/pedir', [
             session.userData.pedido.push(results.response.entity);
 
             mysql.getPrice(session, results.response.entity, function (err, resultados) {
-                
+
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
-                session.send(util.format(session.localizer.gettext(session.preferredLocale(),'perfect,food_ordered'), results.response.entity, resultados));
-                builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "Si|No");
+                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.entity, resultados));
+                // builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "Si|No");
+                var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
+                core.selectOptions(session, 'anything_else?', options);
             });
 
         }
@@ -184,17 +177,16 @@ bot.dialog('/pedir', [
 
 
                 mysql.horaPedido(session, session.userData.time, function (err, results) {
-                    session.send(util.format(session.localizer.gettext(session.preferredLocale(),'for_the_price_of'), session.userData.precio_pedido));
+                    session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'for_the_price_of'), session.userData.precio_pedido));
                     var tiempo = 15 + (results.length * 1);
                     session.userData.final_time = session.userData.time + tiempo;
-                    session.send(util.format(session.localizer.gettext(session.preferredLocale(),"arrival_time"), session.userData.time, tiempo));
+                    session.send(util.format(session.localizer.gettext(session.preferredLocale(), "arrival_time"), session.userData.time, tiempo));
 
-                    builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
+                    // builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
+                    var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
+                    core.selectOptions(session, 'is_it_correct', options);
                     session.userData.precio_pedido = 0;
                 });
-
-
-
 
                 break;
         }
@@ -205,7 +197,7 @@ bot.dialog('/pedir', [
                 session.endDialog('ok_perfect');
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
                 for (var i = 0; i < session.userData.pedido.length; i++) {
-                    mysql.reducirStock(session,session.userData.pedido);
+                    mysql.reducirStock(session, session.userData.pedido);
                 }
                 session.userData.pedido = [];
                 break;
@@ -225,9 +217,10 @@ intents.matches('VerInventario', function (session, args, next) {
 
 intents.matches('Estado', [
     function (session, args, next) {
-        session.send('very_well')
-        builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "Si|No");
-        //Mostrar menú con las opciones disponibles *recomendación
+        session.send('very_well');
+        var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
+        core.selectOptions(session, 'want_to_eat?', options);
+        // builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "Si|No");
     },
     function (session, results) {
         switch (results.response.entity) {
@@ -247,27 +240,29 @@ intents.matches('SaberHoraRecogida', function (session, args, next) {
 intents.matches('Cambiar idioma', [
     function (session) {
         // Prompt the user to select their preferred locale
-        builder.Prompts.choice(session, "preferred_language?", 'Francés|Español');
+        // builder.Prompts.choice(session, "preferred_language?", 'Francés|Español');
+         var options = session.localizer.gettext(session.preferredLocale(), "languages");
+        core.selectOptions(session, 'preferred_language', options);
     },
     function (session, results) {
         // Update preferred locale
         var locale;
-        switch (results.response.entity) {
-            case 'Francés':
+        switch (results.response.index) {
+            case 0:
                 locale = 'fr';
-                
+
                 break;
-            case 'Español':
+            case 1:
                 locale = 'es';
-            
+
                 break;
-                
+
         }
         session.preferredLocale(locale, function (err) {
             if (!err) {
                 // Locale files loaded
-                
-                session.endDialog(util.format(session.localizer.gettext(session.preferredLocale(),"Your_preffered_language_is"), results.response.entity));
+
+                session.endDialog(util.format(session.localizer.gettext(session.preferredLocale(), "Your_preffered_language_is"), results.response.entity));
             } else {
                 // Problem loading the selected locale
                 session.error(err);
@@ -309,29 +304,29 @@ function elegirTipoAlimento(session) {
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
             new builder.HeroCard(session)
-                .title("Comida")
-                .images([
-                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
-                ])
-                .buttons([
-                    builder.CardAction.imBack(session, "Comida", "Seleccionar")
-                ]),
+            .title("Comida")
+            .images([
+                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+            ])
+            .buttons([
+                builder.CardAction.imBack(session, "Comida", "Seleccionar")
+            ]),
             new builder.HeroCard(session)
-                .title("Bebida")
-                .images([
-                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
-                ])
-                .buttons([
-                    builder.CardAction.imBack(session, "Bebida", "Seleccionar")
-                ]),
+            .title("Bebida")
+            .images([
+                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
+            ])
+            .buttons([
+                builder.CardAction.imBack(session, "Bebida", "Seleccionar")
+            ]),
             new builder.HeroCard(session)
-                .title("Postre")
-                .images([
-                    builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
-                ])
-                .buttons([
-                    builder.CardAction.imBack(session, "Postre", "Seleccionar")
-                ])
+            .title("Postre")
+            .images([
+                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
+            ])
+            .buttons([
+                builder.CardAction.imBack(session, "Postre", "Seleccionar")
+            ])
         ]);
     return msg;
 }
@@ -343,20 +338,20 @@ function elegirHoraRecogida(session) {
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
             new builder.HeroCard(session)
-                .title("12:15 - 13:15")
-                .buttons([
-                    builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
-                ]),
+            .title("12:15 - 13:15")
+            .buttons([
+                builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
+            ]),
             new builder.HeroCard(session)
-                .title("13:15 - 14:15")
-                .buttons([
-                    builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
-                ]),
+            .title("13:15 - 14:15")
+            .buttons([
+                builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
+            ]),
             new builder.HeroCard(session)
-                .title("14:15 - 15:15")
-                .buttons([
-                    builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
-                ]),
+            .title("14:15 - 15:15")
+            .buttons([
+                builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
+            ]),
         ]);
     return msg;
 }
