@@ -39,6 +39,7 @@ exports.getName = function (session) {
 exports.selectOptions = function(session, text, options) {
 
     var opts = options.split('|');
+    var literal = session.localizer.gettext(session.preferredLocale(),text);   
 
     var ops = [];
 
@@ -49,7 +50,7 @@ exports.selectOptions = function(session, text, options) {
     var msg = new builder.Message(session)
         .attachments([
             new builder.HeroCard(session)
-                .title(text)
+                .title(literal)
                 .buttons(ops)
         ]);
 

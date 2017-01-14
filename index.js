@@ -1,6 +1,7 @@
 var restify = require('restify'),
     config = require('./config'),
     builder = require('botbuilder'),
+    setup = require('./core/setup'),
     recognizer_es = new builder.LuisRecognizer(config.LUIS_URL_ES),
     recognizer_fr = new builder.LuisRecognizer(config.LUIS_URL_FR),
     intents = new builder.IntentDialog({
@@ -8,9 +9,9 @@ var restify = require('restify'),
     }),
     fs = require('fs'),
     util = require('util'),
-    core = require('./core/core');
-
-var mysql = require('./db/sql_server.js');
+    core = require('./core/core'),
+    mysql = require('./db/sql_server.js');
+    
 
 //=========================================================
 // Bot Setup
@@ -74,23 +75,21 @@ bot.dialog('/SaberHora', [
 bot.dialog('/pedir', [
     function (session, results, next) {
         session.send("what_you_want_to_eat?");
-        // builder.Prompts.choice(session, elegirTipoAlimento(session), "Comida|Bebida|Postre");
         var options = session.localizer.gettext(session.preferredLocale(), "type_food");
-        core.selectOptions(session, elegirTipoAlimento(session), options);
-
+        builder.Prompts.choice(session, elegirTipoAlimento(session, options), options);
     },
     function (session, results) {
         if (results.response) {
 
             session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'lets_start_with'), results.response.entity));
-            switch (results.response.entity) {
-                case 'Comida':
+            switch (results.response.index) {
+                case 0:
                     session.userData.Id_tipo = '1';
                     break;
-                case 'Bebida':
+                case 1:
                     session.userData.Id_tipo = '2';
                     break;
-                case 'Postre':
+                case 2:
                     session.userData.Id_tipo = '3';
                     break;
             }
@@ -241,7 +240,7 @@ intents.matches('Cambiar idioma', [
     function (session) {
         // Prompt the user to select their preferred locale
         // builder.Prompts.choice(session, "preferred_language?", 'Francés|Español');
-         var options = session.localizer.gettext(session.preferredLocale(), "languages");
+        var options = session.localizer.gettext(session.preferredLocale(), "languages");
         core.selectOptions(session, 'preferred_language', options);
     },
     function (session, results) {
@@ -298,36 +297,38 @@ intents.matches('Despedida', function (session, args, next) {
 //FUNCTIONS
 
 //Función para elegir el tipo de alimento que el usuario quiere
-function elegirTipoAlimento(session) {
+function elegirTipoAlimento(session,options) {
+     var opts = options.split('|');
+     
     var msg = new builder.Message(session)
         .textFormat(builder.TextFormat.xml)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
-            new builder.HeroCard(session)
-            .title("Comida")
+        new builder.HeroCard(session)
+            .title(opts[0])
             .images([
-                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
-            ])
+            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+        ])
             .buttons([
-                builder.CardAction.imBack(session, "Comida", "Seleccionar")
-            ]),
-            new builder.HeroCard(session)
-            .title("Bebida")
+            builder.CardAction.imBack(session, opts[0], "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
+            .title(opts[1])
             .images([
-                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
-            ])
+            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
+        ])
             .buttons([
-                builder.CardAction.imBack(session, "Bebida", "Seleccionar")
-            ]),
-            new builder.HeroCard(session)
-            .title("Postre")
+            builder.CardAction.imBack(session, opts[1], "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
+            .title(opts[2])
             .images([
-                builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
-            ])
+            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
+        ])
             .buttons([
-                builder.CardAction.imBack(session, "Postre", "Seleccionar")
-            ])
-        ]);
+            builder.CardAction.imBack(session, opts[2], "Seleccionar")
+        ])
+    ]);
     return msg;
 }
 
@@ -337,21 +338,21 @@ function elegirHoraRecogida(session) {
         .textFormat(builder.TextFormat.xml)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments([
-            new builder.HeroCard(session)
+        new builder.HeroCard(session)
             .title("12:15 - 13:15")
             .buttons([
-                builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
-            ]),
-            new builder.HeroCard(session)
+            builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
             .title("13:15 - 14:15")
             .buttons([
-                builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
-            ]),
-            new builder.HeroCard(session)
+            builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
             .title("14:15 - 15:15")
             .buttons([
-                builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
-            ]),
-        ]);
+            builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
+        ]),
+    ]);
     return msg;
 }

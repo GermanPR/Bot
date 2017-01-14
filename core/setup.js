@@ -1,7 +1,7 @@
 var exports = module.exports = {},
     builder = require('botbuilder'),
     restify = require('restify'),
-    config = require('./config');
+    config = require('../config');
 
 exports.init = function (server) {
 

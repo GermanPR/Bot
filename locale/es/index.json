@@ -20,7 +20,8 @@
     "yes":"Si",
     "no":"No",
     "yes|no":"Si|No",
-    "preferred_language?":"¿En qué idioma quieres que te hable?",
+    "preferred_language":"¿En qué idioma quieres que te hable?",
     "languages": "Français|Español",
-    "Your_preffered_language_is":"Perfecto, a partir de ahora te hablaré en **%s**"
+    "Your_preffered_language_is":"Perfecto, a partir de ahora te hablaré en **%s**",
+    "type_food": "Comida|Bebida|Postre"
 }

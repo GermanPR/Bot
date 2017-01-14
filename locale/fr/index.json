@@ -20,7 +20,8 @@
     "yes": "Oui",
     "no": "Non",
     "yes|no": "Oui|Non",
-    "preferred_language?": "Quel langue préfères-tu?",
+    "preferred_language": "Quel langue préfères-tu?",
     "languages": "Français|Español",
-    "Your_preffered_language_is": "Parfait, je te parlerais en **%s** alors"
+    "Your_preffered_language_is": "Parfait, je te parlerais en **%s** alors",
+    "type_food":"Alimentation|Boissons|Dessert"
 }
