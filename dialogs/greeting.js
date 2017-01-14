@@ -11,11 +11,15 @@ module.exports = [
         // builder.Prompts.choice(session, core.confirmacion(session, nombre), "Si|No");
     },
     function (session, results) {
+        
+        var yes = session.localizer.gettext(session.preferredLocale(), 'yes');
+        var no = session.localizer.gettext(session.preferredLocale(), 'no');
+        
         switch (results.response.entity) {
-            case 'Si':
+            case yes:
                 session.beginDialog('/SaberHora');
                 break;
-            case 'No':
+            case no:
                 session.endDialog('no_problem');
         }
     }
