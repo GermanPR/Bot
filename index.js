@@ -164,11 +164,15 @@ bot.dialog('/pedir', [
         }
     },
     function (session, results) {
+        
+        var yes = session.localizer.gettext(session.preferredLocale(), 'yes');
+        var no = session.localizer.gettext(session.preferredLocale(), 'no');
+        
         switch (results.response.entity) {
-            case 'Si':
+            case yes:
                 session.beginDialog('/pedir');
                 break;
-            case 'No':
+            case no:
                 session.send("your_request_is")
                 for (var i = 0; i < session.userData.pedido.length; i++) {
                     session.send(session.userData.pedido[i]);
@@ -191,8 +195,10 @@ bot.dialog('/pedir', [
         }
     },
     function (session, results) {
+        var yes = session.localizer.gettext(session.preferredLocale(), 'yes');
+        var no = session.localizer.gettext(session.preferredLocale(), 'no');
         switch (results.response.entity) {
-            case 'Si':
+            case yes:
                 session.endDialog('ok_perfect');
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
                 for (var i = 0; i < session.userData.pedido.length; i++) {
@@ -200,7 +206,7 @@ bot.dialog('/pedir', [
                 }
                 session.userData.pedido = [];
                 break;
-            case 'No':
+            case no:
                 session.endDialog('ok_canceled');
                 session.userData.pedido = [];
                 break;
