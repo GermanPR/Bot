@@ -72,11 +72,11 @@ bot.dialog('/SaberHora', require('./dialogs/chooseTime'));/*[
     }
 ]);*/
 
-bot.dialog('/pedir', [
+bot.dialog('/pedir', require('./dialogs/order')); /*[
     function (session, results, next) {
         session.send("what_you_want_to_eat?");
         var options = session.localizer.gettext(session.preferredLocale(), "type_food");
-        builder.Prompts.choice(session, elegirTipoAlimento(session, options), options);
+        builder.Prompts.choice(session, core.elegirTipoAlimento(session, options), options);
     },
     function (session, results) {
         if (results.response) {
@@ -224,7 +224,7 @@ bot.dialog('/pedir', [
         session.userData.pedido = [];
         session.userData.precio_pedido = 0;
     }
-]);
+]);*/
 
 intents.matches('VerInventario', function (session, args, next) {
     session.beginDialog('/pedir');
@@ -313,7 +313,7 @@ intents.matches('Despedida', function (session, args, next) {
 //FUNCTIONS
 
 //Función para elegir el tipo de alimento que el usuario quiere
-function elegirTipoAlimento(session,options) {
+/*function elegirTipoAlimento(session,options) {
      var opts = options.split('|');
      
     var msg = new builder.Message(session)
@@ -346,29 +346,7 @@ function elegirTipoAlimento(session,options) {
         ])
     ]);
     return msg;
-}
+}*/
 
 //Función que permite preguntar a traves de una HeroCard en que intervalo de tiempo el usuario quiere recoger el pedido.
-function elegirHoraRecogida(session) {
-    var msg = new builder.Message(session)
-        .textFormat(builder.TextFormat.xml)
-        .attachmentLayout(builder.AttachmentLayout.carousel)
-        .attachments([
-        new builder.HeroCard(session)
-            .title("12:15 - 13:15")
-            .buttons([
-            builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
-        ]),
-        new builder.HeroCard(session)
-            .title("13:15 - 14:15")
-            .buttons([
-            builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
-        ]),
-        new builder.HeroCard(session)
-            .title("14:15 - 15:15")
-            .buttons([
-            builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
-        ]),
-    ]);
-    return msg;
-}
+
