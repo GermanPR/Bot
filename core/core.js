@@ -80,3 +80,38 @@ exports.elegirHoraRecogida = function(session) {
     ]);
     return msg;
 }
+
+exports.elegirTipoAlimento = function(session,options) {
+     var opts = options.split('|');
+     
+    var msg = new builder.Message(session)
+        .textFormat(builder.TextFormat.xml)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments([
+        new builder.HeroCard(session)
+            .title(opts[0])
+            .images([
+            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
+        ])
+            .buttons([
+            builder.CardAction.imBack(session, opts[0], "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
+            .title(opts[1])
+            .images([
+            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
+        ])
+            .buttons([
+            builder.CardAction.imBack(session, opts[1], "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
+            .title(opts[2])
+            .images([
+            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
+        ])
+            .buttons([
+            builder.CardAction.imBack(session, opts[2], "Seleccionar")
+        ])
+    ]);
+    return msg;
+}
