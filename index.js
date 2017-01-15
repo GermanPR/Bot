@@ -44,7 +44,7 @@ bot.dialog('/Saludo', require('./dialogs/greeting'));
 intents.matches('Pedir', '/SaberHora');
 
 //Pregunta por la hora a la que el pedido sera recogido a traves de una HeroCard
-bot.dialog('/SaberHora', require('./dialogs/chooseTime.js'));/*[
+bot.dialog('/SaberHora', require('./dialogs/chooseTime'));/*[
     function (session, args, next) {
         session.send("what_time");
         session.userData.precio_pedido = 0;
