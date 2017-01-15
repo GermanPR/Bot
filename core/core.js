@@ -57,3 +57,26 @@ exports.selectOptions = function(session, text, options) {
     builder.Prompts.choice(session, msg, options);
 };
 
+exports.elegirHoraRecogida = function(session) {
+    var msg = new builder.Message(session)
+        .textFormat(builder.TextFormat.xml)
+        .attachmentLayout(builder.AttachmentLayout.carousel)
+        .attachments([
+        new builder.HeroCard(session)
+            .title("12:15 - 13:15")
+            .buttons([
+            builder.CardAction.imBack(session, "12:15 - 13:15", "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
+            .title("13:15 - 14:15")
+            .buttons([
+            builder.CardAction.imBack(session, "13:15 - 14:15", "Seleccionar")
+        ]),
+        new builder.HeroCard(session)
+            .title("14:15 - 15:15")
+            .buttons([
+            builder.CardAction.imBack(session, "14:15 - 15:15", "Seleccionar")
+        ]),
+    ]);
+    return msg;
+}

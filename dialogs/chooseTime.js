@@ -7,7 +7,7 @@ module.exports = [
         session.send("what_time");
         session.userData.precio_pedido = 0;
 
-        builder.Prompts.choice(session, elegirHoraRecogida(session), "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
+        builder.Prompts.choice(session, core.elegirHoraRecogida(session), "12:15 - 13:15|13:15 - 14:15|14:15 - 15:15");
     },
     function (session, results) {
         session.userData.time = null;
