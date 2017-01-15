@@ -51,7 +51,7 @@ intents.matches('VerInventario', function (session, args, next) {
     session.beginDialog('/pedir');
 });
 
-intents.matches('Estado', [
+intents.matches('Estado', require('./dialogs/formalities'));/*[
     function (session, args, next) {
         session.send('very_well');
         var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
@@ -67,13 +67,13 @@ intents.matches('Estado', [
                 session.endDialog("no_problem")
         }
     }
-]);
+]);*/
 
 
 intents.matches('SaberHoraRecogida', function (session, args, next) {
     session.send('Estara listo a las 13:00, te viene bien?');
 });
-intents.matches('Cambiar idioma', [
+intents.matches('Cambiar idioma', require('./dialogs/changeLanguage'));/* [
     function (session) {
         // Prompt the user to select their preferred locale
         // builder.Prompts.choice(session, "preferred_language?", 'Francés|Español');
@@ -105,7 +105,7 @@ intents.matches('Cambiar idioma', [
             }
         });
     }
-]);
+]);*/
 
 intents.matches('ConfirmaciónPositiva', function (session, args, next) {
     session.send('Genial');
