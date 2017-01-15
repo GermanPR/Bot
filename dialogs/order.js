@@ -1,6 +1,6 @@
 var builder = require('botbuilder'),
     util = require('util'),
-    mysql = require('./db/sql_server.js'),
+    mysql = require('../db/sql_server.js'),
     fs = require('fs'),
     util = require('util'),
     core = require('../core/core');
