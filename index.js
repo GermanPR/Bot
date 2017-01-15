@@ -51,61 +51,12 @@ intents.matches('VerInventario', function (session, args, next) {
     session.beginDialog('/pedir');
 });
 
-intents.matches('Estado', require('./dialogs/formalities'));/*[
-    function (session, args, next) {
-        session.send('very_well');
-        var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
-        core.selectOptions(session, 'want_to_eat?', options);
-        // builder.Prompts.choice(session, core.confirmacion(session, 'want_to_eat?'), "Si|No");
-    },
-    function (session, results) {
-        switch (results.response.entity) {
-            case 'Si':
-                session.beginDialog('/SaberHora');
-                break;
-            case 'No':
-                session.endDialog("no_problem")
-        }
-    }
-]);*/
-
+intents.matches('Estado', require('./dialogs/formalities'));
 
 intents.matches('SaberHoraRecogida', function (session, args, next) {
     session.send('Estara listo a las 13:00, te viene bien?');
 });
-intents.matches('Cambiar idioma', require('./dialogs/changeLanguage'));/* [
-    function (session) {
-        // Prompt the user to select their preferred locale
-        // builder.Prompts.choice(session, "preferred_language?", 'Francés|Español');
-        var options = session.localizer.gettext(session.preferredLocale(), "languages");
-        core.selectOptions(session, 'preferred_language', options);
-    },
-    function (session, results) {
-        // Update preferred locale
-        var locale;
-        switch (results.response.index) {
-            case 0:
-                locale = 'fr';
-
-                break;
-            case 1:
-                locale = 'es';
-
-                break;
-
-        }
-        session.preferredLocale(locale, function (err) {
-            if (!err) {
-                // Locale files loaded
-
-                session.endDialog(util.format(session.localizer.gettext(session.preferredLocale(), "Your_preffered_language_is"), results.response.entity));
-            } else {
-                // Problem loading the selected locale
-                session.error(err);
-            }
-        });
-    }
-]);*/
+intents.matches('Cambiar idioma', require('./dialogs/changeLanguage'));
 
 intents.matches('ConfirmaciónPositiva', function (session, args, next) {
     session.send('Genial');
