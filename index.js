@@ -113,7 +113,7 @@ bot.dialog('/pedir', [
                 case 'Ensalada'||'Salade':
                     session.userData.Id_categoria = 1;
                     break;
-                case 'Sopas':
+                case 'Sopas'||'Soupe':
                     session.userData.Id_categoria = 2;
                     break;
                 case 'Sandwich':
@@ -122,19 +122,19 @@ bot.dialog('/pedir', [
                 case 'Pizzas':
                     session.userData.Id_categoria = 4;
                     break;
-                case 'Platos':
+                case 'Platos'||'Plats':
                     session.userData.Id_categoria = 5;
                     break;
-                case 'Aguas y Zumos':
+                case 'Aguas y Zumos'||'Bouteilles d\'eau et Jus':
                     session.userData.Id_categoria = 6;
                     break;
-                case 'Refrescos':
+                case 'Refrescos'||'Rafraîchissements':
                     session.userData.Id_categoria = 7;
                     break;
-                case 'Frutas y yogures':
+                case 'Frutas y yogures'||'Fruits et yaourts':
                     session.userData.Id_categoria = 8;
                     break;
-                case 'Bolleria':
+                case 'Bolleria'||'Pâtisseries':
                     session.userData.Id_categoria = 9;
                     break;
             }
