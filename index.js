@@ -95,7 +95,11 @@ bot.dialog('/pedir', [
             }
             //Primero se filtra por categoría de comida (ensalada, bocata, pizza, tortilla, plato del día, wrap)
             mysql.getData(session, 'categoria', 'Id_tipo =' + session.userData.Id_tipo, 'Nombre', function (err, resultados) {
-                session.userData.productos = resultados;
+                session.userData.productos =[];
+                
+                for (var i = 0; i < resultados.length ; i++) {
+                    session.userData.productos.push(session.localizer.gettext(session.preferredLocale(),resultados[i],'products'));
+                }
                 builder.Prompts.choice(session, 'which_type?', session.userData.productos);
             });
 
@@ -106,7 +110,7 @@ bot.dialog('/pedir', [
             var categoria = results.response.entity;
             session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'you_chose'), categoria));
             switch (results.response.entity) {
-                case 'Ensalada':
+                case 'Ensalada'||'Salade':
                     session.userData.Id_categoria = 1;
                     break;
                 case 'Sopas':
@@ -140,7 +144,12 @@ bot.dialog('/pedir', [
 
             session.userData.productos;
             mysql.getData(session, 'producto', 'Id_categoria=' + session.userData.Id_categoria, 'Nombre', function (err, resultados) {
-                session.userData.productos = resultados;
+                session.userData.productos = [];
+                session.userData.productos_Es = [];
+                for (var i = 0; i < resultados.length ; i++) {
+                    session.userData.productos_Es.push(resultados[i]);
+                    session.userData.productos.push(session.localizer.gettext(session.preferredLocale(),resultados[i],'products'));
+                }
                 builder.Prompts.choice(session, 'this_we_have', session.userData.productos);
             });
 
@@ -152,7 +161,7 @@ bot.dialog('/pedir', [
         if (results.response) {
             session.userData.pedido.push(results.response.entity);
 
-            mysql.getPrice(session, results.response.entity, function (err, resultados) {
+            mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
                 session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.entity, resultados));
@@ -175,7 +184,7 @@ bot.dialog('/pedir', [
             case no:
                 session.send("your_request_is")
                 for (var i = 0; i < session.userData.pedido.length; i++) {
-                    session.send(session.userData.pedido[i]);
+                    session.send(session.localizer.gettext(session.preferredLocale(),session.userData.pedido[i],'products'));
                 }
 
 
