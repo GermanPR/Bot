@@ -110,10 +110,10 @@ bot.dialog('/pedir', [
             var categoria = results.response.entity;
             session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'you_chose'), categoria));
             switch (results.response.entity) {
-                case 'Ensalada'||'Salade':
+                case session.localizer.gettext(session.preferredLocale(),'Ensalada','products'):
                     session.userData.Id_categoria = 1;
                     break;
-                case 'Sopas'||'Soupe':
+                case session.localizer.gettext(session.preferredLocale(),'Sopas','products'):
                     session.userData.Id_categoria = 2;
                     break;
                 case 'Sandwich':
@@ -122,19 +122,19 @@ bot.dialog('/pedir', [
                 case 'Pizzas':
                     session.userData.Id_categoria = 4;
                     break;
-                case 'Platos'||'Plats':
+                case session.localizer.gettext(session.preferredLocale(),'Platos','products'):
                     session.userData.Id_categoria = 5;
                     break;
-                case 'Aguas y Zumos'||'Bouteilles d\'eau et Jus':
+                case session.localizer.gettext(session.preferredLocale(),'Aguas y Zumos','products'):
                     session.userData.Id_categoria = 6;
                     break;
-                case 'Refrescos'||'Rafraîchissements':
+                case session.localizer.gettext(session.preferredLocale(),'Refrescos','products'):
                     session.userData.Id_categoria = 7;
                     break;
-                case 'Frutas y yogures'||'Fruits et yaourts':
+                case session.localizer.gettext(session.preferredLocale(),'Frutas y yogures','products'):
                     session.userData.Id_categoria = 8;
                     break;
-                case 'Bolleria'||'Pâtisseries':
+                case session.localizer.gettext(session.preferredLocale(),'Bolleria','products'):
                     session.userData.Id_categoria = 9;
                     break;
             }
@@ -160,6 +160,7 @@ bot.dialog('/pedir', [
 
         if (results.response) {
             session.userData.pedido.push(results.response.entity);
+            session.userData.pedido.push(session.userData.productos_Es[results.response.index]);
 
             mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
@@ -183,7 +184,7 @@ bot.dialog('/pedir', [
                 break;
             case no:
                 session.send("your_request_is")
-                for (var i = 0; i < session.userData.pedido.length; i++) {
+                for (var i = 1; i < session.userData.pedido.length; i=i+2) {
                     session.send(session.localizer.gettext(session.preferredLocale(),session.userData.pedido[i],'products'));
                 }
 
@@ -210,8 +211,8 @@ bot.dialog('/pedir', [
             case yes:
                 session.endDialog('ok_perfect');
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
-                for (var i = 0; i < session.userData.pedido.length; i++) {
-                    mysql.reducirStock(session, session.userData.pedido);
+                for (var i = 1; i < session.userData.pedido.length; i=i+2) {
+                    mysql.reducirStock(session, session.userData.pedido[i]);
                 }
                 session.userData.pedido = [];
                 break;
