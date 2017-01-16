@@ -28,6 +28,7 @@
     "didnt_understand":"Lo siento, no te he entendido",
     "Perfect":"Perfecto",
     "Welcome":"De nada",
-    "it_will_arrive_at":"Tu pedido llegará a las **%s**"
+    "it_will_arrive_at":"Tu pedido llegará a las **%s**",
+    "goodbye":"Adios %s, hasta la próxima!"
 
 }

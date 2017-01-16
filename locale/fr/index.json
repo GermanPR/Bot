@@ -28,5 +28,6 @@
     "didnt_understand":"Je suis desolé, j'ai pas compris",
     "Perfect":"Parfait",
     "Welcome":"De rien",
-    "it_will_arrive_at":"Votre commande arrivera à **%s**"
+    "it_will_arrive_at":"Votre commande arrivera à **%s**",
+    "goodbye":"À bientôt %s!"
 }

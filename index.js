@@ -54,16 +54,16 @@ intents.matches('VerInventario', function (session, args, next) {
 intents.matches('Estado', require('./dialogs/formalities'));
 
 intents.matches('SaberHoraRecogida', function (session, args, next) {
-    session.send('Estara listo a las 13:00, te viene bien?');
+    session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'it_will_arrive_at'), session.userData.final_time));
 });
 intents.matches('Cambiar idioma', require('./dialogs/changeLanguage'));
 
 intents.matches('ConfirmaciónPositiva', function (session, args, next) {
-    session.send('Genial');
+    session.send('Perfect');
 });
 
 intents.matches('Agradecimiento', function (session, args, next) {
-    session.send('De nada');
+    session.send('Welcome');
 });
 
 intents.matches('EasterEggFisica', function (session, args, next) {
@@ -75,10 +75,10 @@ intents.matches('TeamCounter', function (session, args, next) {
 });
 
 intents.onDefault(function (session) {
-    session.send('Lo siento, no lo he entendido.');
+    session.send('didnt_understand');
 });
 
 intents.matches('Despedida', function (session, args, next) {
-    session.send('Adios %s, hasta la proxima.', core.getName(session));
+    session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'goodbye'), core.getName(session)));
 });
 
