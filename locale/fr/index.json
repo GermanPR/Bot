@@ -24,5 +24,9 @@
     "preferred_language": "Quel langue préfères-tu?",
     "languages": "Français|Español",
     "Your_preffered_language_is": "Parfait, je te parlerais en **%s** alors",
-    "type_food":"Alimentation|Boissons|Dessert"
+    "type_food":"Alimentation|Boissons|Dessert",
+    "didnt_understand":"Je suis desolé, j'ai pas compris",
+    "Perfect":"Parfait",
+    "Welcome":"De rien",
+    "it_will_arrive_at":"Votre commande arrivera à **%s**"
 }

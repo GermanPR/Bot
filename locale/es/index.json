@@ -24,5 +24,10 @@
     "preferred_language":"¿En qué idioma quieres que te hable?",
     "languages": "Français|Español",
     "Your_preffered_language_is":"Perfecto, a partir de ahora te hablaré en **%s**",
-    "type_food": "Comida|Bebida|Postre"
+    "type_food": "Comida|Bebida|Postre",
+    "didnt_understand":"Lo siento, no te he entendido",
+    "Perfect":"Perfecto",
+    "Welcome":"De nada",
+    "it_will_arrive_at":"Tu pedido llegará a las **%s**"
+
 }
