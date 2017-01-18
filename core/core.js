@@ -11,7 +11,7 @@ exports.getName = function (session) {
     } else if (user == 'PLSY') {
         user = 'chache tu eres mi sielo';
         return user;
-    } else if (user == 'German Parada' || user == 'Adrian Gabas') {
+    } else if (/*user == 'German Parada' ||*/ user == 'Adrian Gabas') {
         user = 'jefe';
         return user;
     } else {
@@ -82,7 +82,7 @@ exports.elegirHoraRecogida = function(session) {
 }
 
 exports.elegirTipoAlimento = function(session,options) {
-     var opts = options.split('|');
+    var opts = options.split('|');
      
     var msg = new builder.Message(session)
         .textFormat(builder.TextFormat.xml)
@@ -90,28 +90,17 @@ exports.elegirTipoAlimento = function(session,options) {
         .attachments([
         new builder.HeroCard(session)
             .title(opts[0])
-            .images([
-            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")
-        ])
-            .buttons([
-            builder.CardAction.imBack(session, opts[0], "Seleccionar")
-        ]),
+            .images([builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/comida-320px.jpg")])
+            .buttons([builder.CardAction.imBack(session, opts[0], "Seleccionar")]),
         new builder.HeroCard(session)
             .title(opts[1])
-            .images([
-            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")
-        ])
+            .images([builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/bebidas-320px.jpg")])
             .buttons([
-            builder.CardAction.imBack(session, opts[1], "Seleccionar")
-        ]),
+            builder.CardAction.imBack(session, opts[1], "Seleccionar")]),
         new builder.HeroCard(session)
             .title(opts[2])
-            .images([
-            builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")
-        ])
-            .buttons([
-            builder.CardAction.imBack(session, opts[2], "Seleccionar")
-        ])
+            .images([builder.CardImage.create(session, "https://botcafeteria.azurewebsites.net/public/images/postres-320px.jpg")])
+            .buttons([ builder.CardAction.imBack(session, opts[2], "Seleccionar")])
     ]);
     return msg;
 }
