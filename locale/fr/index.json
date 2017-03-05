@@ -20,7 +20,7 @@
     "yes": "Oui",
     "no": "Non",
     "yes|no": "Oui|Non",
-    "is_it_correct":"C'est correcte?",
+    "is_it_correct":"Est-ce bien cela?",
     "preferred_language": "Quel langue préfères-tu?",
     "languages": "Français|Español",
     "Your_preffered_language_is": "Parfait, je te parlerais en **%s** alors",
