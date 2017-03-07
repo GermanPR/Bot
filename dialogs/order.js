@@ -152,6 +152,7 @@ module.exports = [
                     mysql.reducirStock(session, session.userData.pedido[i]);
                 }
                 session.userData.pedido = [];
+                session.userData.elementos = '';
                 break;
             case no:
                 session.endDialog('ok_canceled');
