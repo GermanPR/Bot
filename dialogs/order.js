@@ -130,7 +130,7 @@ module.exports = [
                     // builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
                     var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
                     core.selectOptions(session, 'is_it_correct', options);
-                    session.userData.precio_pedido = 0;
+                    
                 });
 
                 break;
@@ -142,7 +142,12 @@ module.exports = [
         switch (results.response.entity) {
             case yes:
                 session.endDialog('ok_perfect');
-                mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time);
+                /*session.userData.elementos = '';*/
+                 for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
+                    session.userData.elementos = session.userData.elementos + ' ' + session.userData.pedido[i];
+                }
+                
+                mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time, session.userData.elementos, session.userData.precio_pedido);
                 for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
                     mysql.reducirStock(session, session.userData.pedido[i]);
                 }

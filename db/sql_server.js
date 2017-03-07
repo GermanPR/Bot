@@ -187,7 +187,7 @@ exports.horaPedido = function (session, id_hora, callback) {
 
 }
 
-exports.insertarPedido = function (nombre_usuario, hora_pedido, id_hora) {
+exports.insertarPedido = function (nombre_usuario, hora_pedido, id_hora, elementos, precio) {
 
         function getElement(params, key) {
                 for (var i = 0; i < params.length; i++) {
@@ -219,7 +219,7 @@ exports.insertarPedido = function (nombre_usuario, hora_pedido, id_hora) {
                 }
         });
 
-        var busqueda = ('INSERT INTO `pedidos`( `Nombre`, `Hora` , `id_hora` ) VALUES (\'' + nombre_usuario + '\',\'' + hora_pedido + '\',\'' + id_hora + '\')');
+        var busqueda = ('INSERT INTO `pedidos`( `Nombre`, `Hora` , `id_hora`, `Elementos`, `Precio`) VALUES (\'' + nombre_usuario + '\',\'' + hora_pedido + '\',\'' + id_hora + '\',\'' + elementos + '\',' + precio +')');
         connection.query(busqueda, function (err, results) {
 
                 if (err) {
