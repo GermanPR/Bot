@@ -75,7 +75,7 @@ module.exports = [
             //Dentro de esa categoría habría que mostar los productos que hay
 
             session.userData.productos;
-            mysql.getData(session, 'producto', 'Id_categoria=' + session.userData.Id_categoria, 'Nombre', function (err, resultados) {
+            mysql.getData(session, 'producto', 'Id_categoria=' + session.userData.Id_categoria + ' AND Stock<>0', 'Nombre', function (err, resultados) {
                 session.userData.productos = [];
                 session.userData.productos_Es = [];
                 for (var i = 0; i < resultados.length; i++) {
