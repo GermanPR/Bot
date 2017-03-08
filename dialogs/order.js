@@ -141,9 +141,8 @@ module.exports = [
         var no = session.localizer.gettext(session.preferredLocale(), 'no');
         switch (results.response.entity) {
             case yes:
-                session.endDialog('ok_perfect');
-                /*session.userData.elementos = '';*/
-                 for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
+
+                for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
                     session.userData.elementos = session.userData.elementos + ' ' + session.userData.pedido[i];
                 }
                 
@@ -153,6 +152,7 @@ module.exports = [
                 }
                 session.userData.pedido = [];
                 session.userData.elementos = '';
+                session.endDialog('ok_perfect');
                 break;
             case no:
                 session.endDialog('ok_canceled');
