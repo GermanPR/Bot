@@ -111,7 +111,7 @@ module.exports = [
             mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
             session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados) * results.response.index;
-                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.index, session.userData.pedido, resultados * results.response.index));
+                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.index, session.userData.producto, resultados * results.response.index));
                 var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
                 core.selectOptions(session, 'anything_else?', options);
             });
