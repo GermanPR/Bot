@@ -95,7 +95,7 @@ module.exports = [
 
                 session.userData.producto = results.response.entity;
                 session.send('you have chosen ' + results.response.entity);
-                core.selectOptions(session, 'how many do you want?', '1|2|3|4');
+                core.selectOptions(session, 'Combien en veux-tu?', '1|2|3|4');
                
             };
 
@@ -111,7 +111,7 @@ module.exports = [
             mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
             session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados) * results.response.index;
-                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.index, session.userData.producto, resultados * results.response.index));
+                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.entity, session.userData.producto, resultados * results.response.entity));
                 var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
                 core.selectOptions(session, 'anything_else?', options);
             });
