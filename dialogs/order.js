@@ -7,8 +7,8 @@ var builder = require('botbuilder'),
 module.exports = [
     function (session, results, next) {
         session.send("what_you_want_to_eat?");
-        var options = session.localizer.gettext(session.preferredLocale(), "type_food");
-        builder.Prompts.choice(session, core.elegirTipoAlimento(session, options), options);
+        var option = session.localizer.gettext(session.preferredLocale(), "type_food");
+        builder.Prompts.choice(session, core.elegirTipoAlimento(session, option), option);
     },
     function (session, results) {
         if (results.response) {
@@ -94,11 +94,24 @@ module.exports = [
             session.userData.pedido.push(results.response.entity);
             session.userData.pedido.push(session.userData.productos_Es[results.response.index]);
 
+            
+                session.send('you have chosen ' + results.response.entity);
+                core.selectOptions(session, 'how many do you want?', '1|2|3|4');
+               
+            };
+
+        },
+    function (session, results) {
+
+        if (results.response) {
+            session.userData.pedido.push(results.response.entity);
+            session.userData.pedido.push(session.userData.productos_Es[results.response.index]);
+
             mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
                 session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
+                session.send('you have chosen ' + results.response.entity);
                 session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.entity, resultados));
-                // builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "Si|No");
                 var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
                 core.selectOptions(session, 'anything_else?', options);
             });
