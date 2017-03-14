@@ -91,8 +91,7 @@ module.exports = [
     function (session, results) {
 
         if (results.response) {
-            session.userData.pedido.push(results.response.entity);
-            session.userData.pedido.push(session.userData.productos_Es[results.response.index]);
+            
 
             
                 session.send('you have chosen ' + results.response.entity);
@@ -100,18 +99,19 @@ module.exports = [
                
             };
 
-        },
+        }
+,
     function (session, results) {
 
         if (results.response) {
+            session.userData.pedido.push(results.response.index)
             session.userData.pedido.push(results.response.entity);
             session.userData.pedido.push(session.userData.productos_Es[results.response.index]);
 
             mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
-                session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
-                session.send('you have chosen ' + results.response.entity);
-                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.entity, resultados));
+            session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados) * results.response.index;
+                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.index, results.response.entity, resultados));
                 var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
                 core.selectOptions(session, 'anything_else?', options);
             });
@@ -129,7 +129,7 @@ module.exports = [
                 break;
             case no:
                 session.send("your_request_is")
-                for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
+                for (var i = 2; i < session.userData.pedido.length; i = i + 3) {
                     session.send(session.localizer.gettext(session.preferredLocale(), session.userData.pedido[i], 'products'));
                 }
 
@@ -155,12 +155,12 @@ module.exports = [
         switch (results.response.entity) {
             case yes:
 
-                for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
+                for (var i = 2; i < session.userData.pedido.length; i = i + 3) {
                     session.userData.elementos = session.userData.elementos + ' ' + session.userData.pedido[i];
                 }
                 
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time, session.userData.elementos, session.userData.precio_pedido);
-                for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
+                for (var i = 2; i < session.userData.pedido.length; i = i + 3) {
                     mysql.reducirStock(session, session.userData.pedido[i]);
                 }
                 session.userData.pedido = [];
