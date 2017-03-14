@@ -73,7 +73,7 @@ module.exports = [
 
 
             //Dentro de esa categoría habría que mostar los productos que hay
-
+            session.userData.producto = '';
             session.userData.productos;
             mysql.getData(session, 'producto', 'Id_categoria=' + session.userData.Id_categoria + ' AND Stock<>0', 'Nombre', function (err, resultados) {
                 session.userData.productos = [];
@@ -93,7 +93,7 @@ module.exports = [
         if (results.response) {
             
 
-            
+                session.userData.producto = results.response.entity;
                 session.send('you have chosen ' + results.response.entity);
                 core.selectOptions(session, 'how many do you want?', '1|2|3|4');
                
@@ -111,7 +111,7 @@ module.exports = [
             mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
             session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados) * results.response.index;
-                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.index, results.response.entity, resultados * results.response.index));
+                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.index, session.userData.pedido, resultados * results.response.index));
                 var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
                 core.selectOptions(session, 'anything_else?', options);
             });
