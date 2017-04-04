@@ -7,8 +7,8 @@ var builder = require('botbuilder'),
 module.exports = [
     function (session, results, next) {
         session.send("what_you_want_to_eat?");
-        var option = session.localizer.gettext(session.preferredLocale(), "type_food");
-        builder.Prompts.choice(session, core.elegirTipoAlimento(session, option), option);
+        var options = session.localizer.gettext(session.preferredLocale(), "type_food");
+        builder.Prompts.choice(session, core.elegirTipoAlimento(session, options), options);
     },
     function (session, results) {
         if (results.response) {
@@ -73,7 +73,7 @@ module.exports = [
 
 
             //Dentro de esa categoría habría que mostar los productos que hay
-            session.userData.producto = '';
+
             session.userData.productos;
             mysql.getData(session, 'producto', 'Id_categoria=' + session.userData.Id_categoria + ' AND Stock<>0', 'Nombre', function (err, resultados) {
                 session.userData.productos = [];
@@ -91,27 +91,14 @@ module.exports = [
     function (session, results) {
 
         if (results.response) {
-            
-
-                session.userData.producto = results.response.entity;
-                session.send('you have chosen ' + results.response.entity);
-                core.selectOptions(session, 'Combien en veux-tu?', '1|2|3|4');
-               
-            };
-
-        }
-,
-    function (session, results) {
-
-        if (results.response) {
-            session.userData.pedido.push(results.response.index)
             session.userData.pedido.push(results.response.entity);
             session.userData.pedido.push(session.userData.productos_Es[results.response.index]);
 
             mysql.getPrice(session, session.userData.productos_Es[results.response.index], function (err, resultados) {
 
-            session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados) * results.response.index;
-                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.entity, session.userData.producto, resultados * results.response.entity));
+                session.userData.precio_pedido = session.userData.precio_pedido + parseFloat(resultados);
+                session.send(util.format(session.localizer.gettext(session.preferredLocale(), 'perfect,food_ordered'), results.response.entity, resultados));
+                // builder.Prompts.choice(session, core.confirmacion(session, 'anything_else?'), "Si|No");
                 var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
                 core.selectOptions(session, 'anything_else?', options);
             });
@@ -129,7 +116,7 @@ module.exports = [
                 break;
             case no:
                 session.send("your_request_is")
-                for (var i = 2; i < session.userData.pedido.length; i = i + 3) {
+                for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
                     session.send(session.localizer.gettext(session.preferredLocale(), session.userData.pedido[i], 'products'));
                 }
 
@@ -155,12 +142,12 @@ module.exports = [
         switch (results.response.entity) {
             case yes:
 
-                for (var i = 2; i < session.userData.pedido.length; i = i + 3) {
+                for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
                     session.userData.elementos = session.userData.elementos + ' ' + session.userData.pedido[i];
                 }
                 
                 mysql.insertarPedido(session.message.address.user.name, session.userData.final_time, session.userData.time, session.userData.elementos, session.userData.precio_pedido);
-                for (var i = 2; i < session.userData.pedido.length; i = i + 3) {
+                for (var i = 1; i < session.userData.pedido.length; i = i + 2) {
                     mysql.reducirStock(session, session.userData.pedido[i]);
                 }
                 session.userData.pedido = [];
