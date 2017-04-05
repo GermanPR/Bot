@@ -6,7 +6,7 @@
     "which_type?": " De quoi as-tu envie? ?",
     "you_chose": "Tu as choisi **%s**(cool)",
     "this_we_have": "C'est ce que nous avons aujourd'hui pour déjeuner:",
-    "perfect,food_ordered": "¡Parfait! Tu as commandé: %s **%s** pour le prix de **%s**€",
+    "perfect,food_ordered": "¡Parfait! Tu as commandé: **%s** pour le prix de **%s**€",
     "anything_else?": "Veux-tu quelque chose d'autre?",
     "your_request_is": "Voici ta commande:",
     "for_the_price_of": "Pour le prix de **%s**€",
