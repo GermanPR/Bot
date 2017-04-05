@@ -126,13 +126,9 @@ module.exports = [
                     var tiempo = 15 + (results.length * 1);
                     session.userData.final_time = session.userData.time + tiempo;
                     session.send(util.format(session.localizer.gettext(session.preferredLocale(), "arrival_time"), session.userData.time, tiempo));
-
-                    // builder.Prompts.choice(session, core.confirmacion(session, "is_it_correct?"), 'Si|No');
                     var options = session.localizer.gettext(session.preferredLocale(), "yes|no");
-                    core.selectOptions(session, 'is_it_correct', options);
-                    
+                    core.selectOptions(session, 'is_it_correct', options);      
                 });
-
                 break;
         }
     },
