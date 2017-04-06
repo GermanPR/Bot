@@ -155,7 +155,7 @@ module.exports = [
                 session.userData.pedido = [];
                 break;
         }
-        session.userData.pedido = [];
-        session.userData.precio_pedido = 0;
+/*        session.userData.pedido = [];
+        session.userData.precio_pedido = 0;*/
     }
 ]
