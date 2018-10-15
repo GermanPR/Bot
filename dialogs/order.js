@@ -32,7 +32,7 @@ module.exports = [
                 for (var i = 0; i < resultados.length; i++) {
                     session.userData.productos.push(session.localizer.gettext(session.preferredLocale(), resultados[i], 'products'));
                 }
-                builder.Prompts.choice(session, 'which_type?', session.userData.productos);
+                builder.Prompts.choice(session, 'which_type?', session.userData.productos,{listStyle: builder.ListStyle.button} );
             });
 
         }
@@ -82,7 +82,7 @@ module.exports = [
                     session.userData.productos_Es.push(resultados[i]);
                     session.userData.productos.push(session.localizer.gettext(session.preferredLocale(), resultados[i], 'products'));
                 }
-                builder.Prompts.choice(session, 'this_we_have', session.userData.productos);
+                builder.Prompts.choice(session, 'this_we_have', session.userData.productos,{listStyle: builder.ListStyle.list});
             });
 
 
